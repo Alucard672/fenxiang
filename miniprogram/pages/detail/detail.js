@@ -1,6 +1,7 @@
 // 作品详情页逻辑
 Page({
   data: {
+    editMode: false,
     workDetail: {
       creator: '云作品小萌新',
       client: '待点添加',
@@ -36,6 +37,7 @@ Page({
     console.log('初始化新作品:', id, name);
     // 设置新作品的基本信息
     this.setData({
+      editMode: true,
       workDetail: {
         ...this.data.workDetail,
         id: id,
@@ -76,8 +78,13 @@ Page({
 
   // 编辑简介
   editIntro() {
+    // 切换编辑模式
+    this.setData({
+      editMode: !this.data.editMode
+    });
+    
     wx.showToast({
-      title: '编辑功能',
+      title: this.data.editMode ? '退出编辑模式' : '进入编辑模式',
       icon: 'none'
     });
   },

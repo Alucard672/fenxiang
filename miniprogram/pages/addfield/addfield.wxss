@@ -1,0 +1,36 @@
+/* 新增字段页面样式 */
+
+view {
+  box-sizing: border-box;
+}
+
+input {
+  background: transparent;
+}
+
+/* 图标选择样式 */
+.icon-item {
+  transition: all 0.2s ease;
+}
+
+.icon-item:active {
+  transform: scale(0.95);
+}
+
+/* 颜色选择样式 */
+.color-item {
+  transition: all 0.2s ease;
+}
+
+.color-item:active {
+  transform: scale(0.95);
+}
+
+/* 按钮样式 */
+.save-button {
+  transition: all 0.2s ease;
+}
+
+.save-button:active {
+  transform: scale(0.98);
+}

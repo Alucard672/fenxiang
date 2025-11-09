@@ -26,6 +26,12 @@ Page({
       watermarkPoster: true
     },
     
+    // 弹窗状态
+    showCustomFieldsModal: false,
+    
+    // 自定义字段列表
+    customFields: [],
+    
     // 排序选项
     homeSortOrderOptions: [
       { value: 'earliest', text: '最早加入主页的在前' },
@@ -71,6 +77,9 @@ Page({
   onLoad() {
     // 加载保存的设置
     this.loadSettings();
+    
+    // 加载自定义字段
+    this.loadCustomFields();
   },
 
   // 加载设置
@@ -93,6 +102,209 @@ Page({
     } catch (error) {
       console.error('加载设置失败:', error);
     }
+  },
+
+  // 打开自定义字段管理
+  openCustomFields() {
+    this.setData({
+      showCustomFieldsModal: true
+    });
+  },
+
+  // 关闭自定义字段弹窗
+  closeCustomFields() {
+    this.setData({
+      showCustomFieldsModal: false
+    });
+  },
+
+  // 添加新字段
+  addNewField() {
+    wx.navigateTo({
+      url: '/pages/addfield/addfield'
+    });
+  },
+
+  // 编辑字段
+  editField(e) {
+    const field = e.currentTarget.dataset.field;
+    wx.navigateTo({
+      url: `/pages/addfield/addfield?field=${field}&mode=edit`
+    });
+  },
+
+  // 删除字段
+  deleteField(e) {
+    const field = e.currentTarget.dataset.field;
+    wx.showModal({
+      title: '删除字段',
+      content: '确定要删除这个字段吗？删除后相关数据将无法恢复。',
+      success: (res) => {
+        if (res.confirm) {
+          // 获取现有字段
+          let customFields = wx.getStorageSync('customFields') || [];
+          
+          // 删除指定字段
+          customFields = customFields.filter(f => f.id !== field);
+          
+          // 保存到本地存储
+          wx.setStorageSync('customFields', customFields);
+          
+          // 重新加载字段列表
+          this.loadCustomFields();
+          
+          wx.showToast({
+            title: '删除成功',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  },
+
+  // 加载自定义字段
+  loadCustomFields() {
+    // 获取保存的字段顺序
+    const fieldOrder = wx.getStorageSync('fieldOrder') || [];
+    
+    // 默认字段
+    const defaultFields = [
+      {
+        id: 'client',
+        name: '客户',
+        icon: 'client-icon',
+        color: 'orange',
+        colorObj: {
+          background: 'linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%)',
+          text: '#92400E'
+        },
+        isDefault: true
+      },
+      {
+        id: 'industry',
+        name: '行业',
+        icon: 'industry-icon',
+        color: 'green',
+        colorObj: {
+          background: 'linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%)',
+          text: '#065F46'
+        },
+        isDefault: true
+      },
+      {
+        id: 'amount',
+        name: '金额',
+        icon: 'amount-icon',
+        color: 'yellow',
+        colorObj: {
+          background: 'linear-gradient(135deg, #FDE68A 0%, #FCD34D 100%)',
+          text: '#78350F'
+        },
+        isDefault: true
+      },
+      {
+        id: 'description',
+        name: '描述',
+        icon: 'description-icon',
+        color: 'purple',
+        colorObj: {
+          background: 'linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%)',
+          text: '#5B21B6'
+        },
+        isDefault: true
+      },
+      {
+        id: 'remark',
+        name: '备注',
+        icon: 'remark-icon',
+        color: 'blue',
+        colorObj: {
+          background: 'linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%)',
+          text: '#1E3A8A'
+        },
+        isDefault: true
+      }
+    ];
+
+    // 获取自定义字段
+    const customFields = wx.getStorageSync('customFields') || [];
+    
+    // 合并默认字段和自定义字段
+    let allFields = [...defaultFields, ...customFields];
+    
+    // 根据保存的顺序重新排列
+    if (fieldOrder.length > 0) {
+      allFields.sort((a, b) => {
+        const aIndex = fieldOrder.indexOf(a.id);
+        const bIndex = fieldOrder.indexOf(b.id);
+        
+        if (aIndex === -1 && bIndex === -1) return 0;
+        if (aIndex === -1) return 1;
+        if (bIndex === -1) return -1;
+        
+        return aIndex - bIndex;
+      });
+    }
+    
+    this.setData({
+      customFields: allFields
+    });
+  },
+
+  // 上移字段
+  moveFieldUp(e) {
+    const index = e.currentTarget.dataset.index;
+    if (index <= 0) return;
+    
+    const customFields = [...this.data.customFields];
+    const field = customFields[index];
+    
+    // 交换位置
+    customFields[index] = customFields[index - 1];
+    customFields[index - 1] = field;
+    
+    this.setData({
+      customFields: customFields
+    });
+    
+    // 保存新的顺序
+    this.saveFieldOrder(customFields);
+  },
+
+  // 下移字段
+  moveFieldDown(e) {
+    const index = e.currentTarget.dataset.index;
+    if (index >= this.data.customFields.length - 1) return;
+    
+    const customFields = [...this.data.customFields];
+    const field = customFields[index];
+    
+    // 交换位置
+    customFields[index] = customFields[index + 1];
+    customFields[index + 1] = field;
+    
+    this.setData({
+      customFields: customFields
+    });
+    
+    // 保存新的顺序
+    this.saveFieldOrder(customFields);
+  },
+
+  // 保存字段顺序
+  saveFieldOrder(fields) {
+    const fieldOrder = fields.map(field => field.id);
+    wx.setStorageSync('fieldOrder', fieldOrder);
+  },
+
+  // 更新显示文本
+  updateDisplayText() {
+    this.setData({
+      homeSortOrderText: this.data.homeSortOrderOptions[this.data.homeSortOrderIndex].text,
+      workSortOrderText: this.data.workSortOrderOptions[this.data.workSortOrderIndex].text,
+      homeDisplayStyleText: this.data.homeDisplayStyleOptions[this.data.homeDisplayStyleIndex].text,
+      workDisplayStyleText: this.data.workDisplayStyleOptions[this.data.workDisplayStyleIndex].text
+    });
   },
 
   // 保存设置
@@ -120,16 +332,6 @@ Page({
         duration: 1500
       });
     }
-  },
-
-  // 更新显示文本
-  updateDisplayText() {
-    this.setData({
-      homeSortOrderText: this.data.homeSortOrderOptions[this.data.homeSortOrderIndex].text,
-      workSortOrderText: this.data.workSortOrderOptions[this.data.workSortOrderIndex].text,
-      homeDisplayStyleText: this.data.homeDisplayStyleOptions[this.data.homeDisplayStyleIndex].text,
-      workDisplayStyleText: this.data.workDisplayStyleOptions[this.data.workDisplayStyleIndex].text
-    });
   },
 
   // 返回上一页
@@ -217,116 +419,35 @@ Page({
     });
   },
 
-  // 编辑作品标签
-  editWorkTags() {
-    wx.showToast({
-      title: '跳转到编辑作品标签',
-      icon: 'none',
-      duration: 1500
+  // 主页排序选择
+  onHomeSortOrderChange(e) {
+    this.setData({
+      homeSortOrderIndex: e.detail.value
     });
-    // 这里可以跳转到编辑作品标签页面
-    // wx.navigateTo({
-    //   url: '/pages/edittags/edittags'
-    // });
+    this.updateDisplayText();
   },
 
-  // 设置水印样式
-  setWatermarkStyle() {
-    wx.showToast({
-      title: '跳转到水印样式设置',
-      icon: 'none',
-      duration: 1500
+  // 作品排序选择
+  onWorkSortOrderChange(e) {
+    this.setData({
+      workSortOrderIndex: e.detail.value
     });
-    // 这里可以跳转到水印样式设置页面
-    // wx.navigateTo({
-    //   url: '/pages/watermark/watermark'
-    // });
+    this.updateDisplayText();
   },
 
-  // 查看示例
-  viewCoverExample() {
-    this.showExample('作品封面图');
-  },
-
-  viewDetailExample() {
-    this.showExample('作品详情图');
-  },
-
-  viewPreviewExample() {
-    this.showExample('作品预览图');
-  },
-
-  viewPosterExample() {
-    this.showExample('作品海报图');
-  },
-
-  showExample(type) {
-    wx.showModal({
-      title: type + '示例',
-      content: '这里将显示' + type + '的水印效果示例',
-      showCancel: false,
-      confirmText: '知道了'
+  // 主页显示样式选择
+  onHomeDisplayStyleChange(e) {
+    this.setData({
+      homeDisplayStyleIndex: e.detail.value
     });
+    this.updateDisplayText();
   },
 
-  // 修改主页排序方式
-  changeHomeSortOrder() {
-    const options = this.data.homeSortOrderOptions.map(option => option.text);
-    wx.showActionSheet({
-      itemList: options,
-      success: (res) => {
-        this.setData({
-          homeSortOrderIndex: res.tapIndex
-        });
-        this.updateDisplayText();
-      }
+  // 作品显示样式选择
+  onWorkDisplayStyleChange(e) {
+    this.setData({
+      workDisplayStyleIndex: e.detail.value
     });
-  },
-
-  // 修改作品排序方式
-  changeWorkSortOrder() {
-    const options = this.data.workSortOrderOptions.map(option => option.text);
-    wx.showActionSheet({
-      itemList: options,
-      success: (res) => {
-        this.setData({
-          workSortOrderIndex: res.tapIndex
-        });
-        this.updateDisplayText();
-      }
-    });
-  },
-
-  // 修改主页显示样式
-  changeHomeDisplayStyle() {
-    const options = this.data.homeDisplayStyleOptions.map(option => option.text);
-    wx.showActionSheet({
-      itemList: options,
-      success: (res) => {
-        this.setData({
-          homeDisplayStyleIndex: res.tapIndex
-        });
-        this.updateDisplayText();
-      }
-    });
-  },
-
-  // 修改作品显示样式
-  changeWorkDisplayStyle() {
-    const options = this.data.workDisplayStyleOptions.map(option => option.text);
-    wx.showActionSheet({
-      itemList: options,
-      success: (res) => {
-        this.setData({
-          workDisplayStyleIndex: res.tapIndex
-        });
-        this.updateDisplayText();
-      }
-    });
-  },
-
-  // 页面卸载时保存设置
-  onUnload() {
-    this.saveSettings();
+    this.updateDisplayText();
   }
 });

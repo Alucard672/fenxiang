@@ -1,0 +1,85 @@
+<view style="width: 393px; min-height: 844px; background: #F8F9FD; padding: 21px 14px;">
+  
+  <!-- 字段名称 -->
+  <view style="width: 365px; height: 87.50px; margin-bottom: 21px;">
+    <view style="width: 365px; height: 24.50px; margin-bottom: 14px;">
+      <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400;">字段名称</text>
+    </view>
+    <view style="width: 365px; height: 49px; background: white; border-radius: 10.50px; outline: 1px #E5E7EB solid; outline-offset: -1px; padding: 0 14px; display: flex; align-items: center;">
+      <input 
+        style="flex: 1; height: 21px; color: #1A1D2E; font-size: 14px; font-weight: 400; border: none; outline: none;" 
+        placeholder="请输入字段名称" 
+        value="{{fieldName}}" 
+        bindinput="onFieldNameInput"
+        maxlength="10"
+      />
+    </view>
+  </view>
+
+  <!-- 图标选择 -->
+  <view style="width: 365px; height: 175px; margin-bottom: 21px;">
+    <view style="width: 365px; height: 24.50px; margin-bottom: 14px;">
+      <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400;">图标</text>
+    </view>
+    <view style="width: 365px; height: 136.50px; background: white; border-radius: 10.50px; outline: 1px #E5E7EB solid; outline-offset: -1px; padding: 14px;">
+      <view style="display: flex; flex-wrap: wrap; gap: 10.50px;">
+        <view 
+          wx:for="{{iconList}}" 
+          wx:key="index"
+          style="width: 42px; height: 42px; border-radius: 8.50px; display: flex; align-items: center; justify-content: center; background: {{selectedIcon === item ? '#FF6B6B' : '#F9FAFB'}}; border: {{selectedIcon === item ? '2px solid #FF6B6B' : '1px solid #E5E7EB'}};"
+          bindtap="selectIcon"
+          data-icon="{{item}}"
+        >
+          <image src="/assets/images/{{item}}.svg" style="width: 21px; height: 21px;"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 颜色选择 -->
+  <view style="width: 365px; height: 175px; margin-bottom: 21px;">
+    <view style="width: 365px; height: 24.50px; margin-bottom: 14px;">
+      <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400;">颜色</text>
+    </view>
+    <view style="width: 365px; height: 136.50px; background: white; border-radius: 10.50px; outline: 1px #E5E7EB solid; outline-offset: -1px; padding: 14px;">
+      <view style="display: flex; flex-wrap: wrap; gap: 10.50px;">
+        <view 
+          wx:for="{{colorList}}" 
+          wx:key="index"
+          style="width: 42px; height: 42px; border-radius: 8.50px; background: {{item.background}}; border: {{selectedColor === item.name ? '3px solid #1A1D2E' : '3px solid transparent'}}; position: relative;"
+          bindtap="selectColor"
+          data-color="{{item}}"
+        >
+          <view wx:if="{{selectedColor === item.name}}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 18px; height: 18px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+            <text style="color: #1A1D2E; font-size: 12px; font-weight: bold;">✓</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预览 -->
+  <view style="width: 365px; height: 87.50px; margin-bottom: 40px;">
+    <view style="width: 365px; height: 24.50px; margin-bottom: 14px;">
+      <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400;">预览</text>
+    </view>
+    <view style="width: 365px; height: 49px; background: white; border-radius: 10.50px; outline: 1px #E5E7EB solid; outline-offset: -1px; padding: 0 14px; display: flex; align-items: center;">
+      <view style="width: 49px; height: 21px; background: {{selectedColorObj.background}}; border-radius: 16777200px; margin-right: 14px; display: flex; align-items: center; justify-content: center;">
+        <image src="/assets/images/{{selectedIcon}}.svg" style="width: 10.50px; height: 10.50px; margin-right: 3.50px;"></image>
+        <text style="color: {{selectedColorObj.text}}; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px;">{{fieldName || '字段名称'}}</text>
+      </view>
+      <text style="color: #9CA3AF; font-size: 14px; font-weight: 400;">待点添加</text>
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view style="width: 365px; height: 50px; display: flex; justify-content: center;">
+    <view 
+      style="width: 200px; height: 44px; background: {{fieldName && selectedIcon && selectedColor ? '#FF6B6B' : '#D1D5DB'}}; border-radius: 22px; display: flex; align-items: center; justify-content: center;" 
+      bindtap="saveField"
+    >
+      <text style="color: white; font-size: 16px; font-weight: 400;">{{isEditMode ? '保存修改' : '添加字段'}}</text>
+    </view>
+  </view>
+
+</view>

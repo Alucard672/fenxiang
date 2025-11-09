@@ -7,7 +7,70 @@ Page({
     userInfo: {
       name: '云作品小萌新',
       title: '个人信息'
-    }
+    },
+    showCustomFieldsModal: false,
+    customFields: [
+      {
+        id: '1',
+        name: '客户',
+        icon: '11',
+        color: 'orange',
+        colorObj: {
+          background: 'linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%)',
+          text: '#92400E'
+        }
+      },
+      {
+        id: '2',
+        name: '行业',
+        icon: '15',
+        color: 'green',
+        colorObj: {
+          background: 'linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%)',
+          text: '#065F46'
+        }
+      },
+      {
+        id: '3',
+        name: '金额',
+        icon: '19',
+        color: 'yellow',
+        colorObj: {
+          background: 'linear-gradient(135deg, #FDE68A 0%, #FCD34D 100%)',
+          text: '#78350F'
+        }
+      },
+      {
+        id: '4',
+        name: '描述',
+        icon: '23',
+        color: 'purple',
+        colorObj: {
+          background: 'linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%)',
+          text: '#5B21B6'
+        }
+      },
+      {
+        id: '5',
+        name: '备注',
+        icon: '27',
+        color: 'blue',
+        colorObj: {
+          background: 'linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%)',
+          text: '#1E3A8A'
+        }
+      },
+      {
+        id: '5',
+        name: '备注',
+        icon: '27',
+        color: 'blue',
+        colorObj: {
+          background: 'linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%)',
+          text: '#1E3A8A'
+        }
+      }
+    ]
   },
 
   onLoad() {
@@ -207,6 +270,98 @@ Page({
       title: '作品标签功能开发中',
       icon: 'none'
     })
+  },
+
+  // 自定义字段
+  handleCustomFields() {
+    console.log('点击自定义字段')
+    // 显示底部弹出模态框，同时隐藏个人资料菜单
+    this.setData({
+      showCustomFieldsModal: true,
+      showProfile: false
+    })
+  },
+
+  // 隐藏自定义字段模态框
+  hideCustomFieldsModal() {
+    this.setData({
+      showCustomFieldsModal: false
+    })
+  },
+
+  // 跳转到添加字段页面
+  goToAddField() {
+    wx.navigateTo({
+      url: '/pages/addfield/addfield'
+    })
+  },
+
+  // 编辑字段
+  editField(e) {
+    const fieldId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: `/pages/addfield/addfield?mode=edit&field=${fieldId}`
+    });
+  },
+
+  // 删除字段
+  deleteField(e) {
+    const fieldId = e.currentTarget.dataset.id;
+    const fieldName = e.currentTarget.dataset.name;
+    
+    wx.showModal({
+      title: '删除字段',
+      content: `确定要删除字段"${fieldName}"吗？`,
+      confirmText: '删除',
+      confirmColor: '#E7000B',
+      success: (res) => {
+        if (res.confirm) {
+          let customFields = this.data.customFields;
+          customFields = customFields.filter(field => field.id !== fieldId);
+          
+          this.setData({
+            customFields: customFields
+          });
+          
+          wx.showToast({
+            title: '删除成功',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  },
+
+  // 字段上移
+  moveFieldUp(e) {
+    const fieldId = e.currentTarget.dataset.id;
+    let customFields = this.data.customFields;
+    const index = customFields.findIndex(field => field.id === fieldId);
+    
+    if (index > 0) {
+      // 交换位置
+      [customFields[index], customFields[index - 1]] = [customFields[index - 1], customFields[index]];
+      
+      this.setData({
+        customFields: customFields
+      });
+    }
+  },
+
+  // 字段下移
+  moveFieldDown(e) {
+    const fieldId = e.currentTarget.dataset.id;
+    let customFields = this.data.customFields;
+    const index = customFields.findIndex(field => field.id === fieldId);
+    
+    if (index < customFields.length - 1) {
+      // 交换位置
+      [customFields[index], customFields[index + 1]] = [customFields[index + 1], customFields[index]];
+      
+      this.setData({
+        customFields: customFields
+      });
+    }
   },
 
   // 作品评分

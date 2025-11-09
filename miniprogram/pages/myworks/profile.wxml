@@ -1,82 +1,110 @@
 <!-- 个人资料侧边栏 - 完全按照Figma设计 -->
 <view class="profile-overlay" wx:if="{{showProfile}}">
-  <!-- 遮罩层 -->
-  <view class="mask" bindtap="hideProfile"></view>
+  <!-- 遮罩层: 393px × 852px -->
+  <view class="mask" style="width: 393px; height: 852px; left: 0px; top: 0px; position: absolute; background: rgba(0, 0, 0, 0.50)" bindtap="hideProfile"></view>
   
-  <!-- 侧边栏 -->
-  <view class="sidebar">
-    <!-- 头部信息 -->
-    <view class="header">
-      <!-- 用户信息 -->
-      <view class="user-info">
-        <view class="user-details">
-          <view class="username">云作品小萌新</view>
-          <view class="user-title" bindtap="handleProfile">
-            <text>个人信息</text>
-            <view class="arrow-icon">
-              <image src="/assets/images/10.svg" class="arrow-icon-img" />
+  <!-- 侧边栏: 300px × 852px -->
+  <view class="sidebar" style="width: 300px; height: 852px; left: 93px; top: 0px; position: absolute; background: #F8F9FD; box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.10),0px 10px 15px -3px rgba(0, 0, 0, 0.10); overflow: hidden; border-left: 1px #E5E7EB solid">
+    <!-- 头部信息: 299px × 85px -->
+    <view class="header" style="width: 299px; height: 85px; left: 1px; top: 0px; position: absolute; border-bottom: 1px #E5E7EB solid">
+      <!-- 用户信息: 257px × 49px -->
+      <view class="user-info" style="width: 257px; height: 49px; left: 21px; top: 17.50px; position: absolute">
+        <view class="user-details" style="width: 208px; height: 45.50px; left: 0px; top: 1.75px; position: absolute">
+          <view class="username" style="width: 208px; height: 24.50px; left: 0px; top: 0px; position: absolute">
+            <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 17.50px; font-family: Inter; font-weight: 500">云作品小萌新</text>
+          </view>
+          <view class="user-title" style="width: 63px; height: 17.50px; left: 0px; top: 28px; position: absolute" bindtap="handleProfile">
+            <text style="left: 0px; top: 0.50px; position: absolute; color: #1A1D2E; font-size: 12.25px; font-family: Inter; font-weight: 500">个人信息</text>
+            <view class="arrow-icon" style="left: 52.50px; top: 3.50px; position: absolute">
+              <image src="/assets/images/10.svg" style="width: 14px; height: 14px" />
             </view>
           </view>
         </view>
-        <!-- 用户头像 -->
-        <view class="avatar">
-          <image src="/assets/images/11.svg" class="avatar-img" />
+        <!-- 用户头像: 49px × 49px -->
+        <view class="avatar" style="width: 49px; height: 49px; left: 208px; top: 0px; position: absolute; overflow: hidden; border-radius: 16777200px">
+          <image src="/assets/images/11.svg" style="width: 49px; height: 49px" />
         </view>
       </view>
     </view>
 
-    <!-- 菜单区域 -->
-    <view class="menu-area">
+    <!-- 菜单区域: 299px × 241.50px -->
+    <view class="menu-area" style="width: 299px; height: 241.50px; left: 1px; top: 99px; position: absolute">
       <!-- 访客 -->
-      <view class="menu-item visitors" bindtap="handleVisitors">
-        <view class="menu-icon">
-          <image src="/assets/images/12.svg" />
+      <view class="menu-item visitors" style="width: 285px; height: 45.50px; left: 7px; top: 7px; position: absolute; border-radius: 10.50px" bindtap="handleVisitors">
+        <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
+          <image src="/assets/images/12.svg" style="width: 14px; height: 14px" />
         </view>
-        <view class="menu-text">访客</view>
+        <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
+          <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">访客</text>
+        </view>
       </view>
 
       <!-- 作品标签 -->
-      <view class="menu-item tags" bindtap="handleTags">
-        <view class="menu-icon">
-          <image src="/assets/images/13.svg" />
+      <view class="menu-item tags" style="width: 285px; height: 45.50px; left: 7px; top: 52.50px; position: absolute; border-radius: 10.50px" bindtap="handleTags">
+        <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
+          <image src="/assets/images/13.svg" style="width: 14px; height: 14px" />
         </view>
-        <view class="menu-text">作品标签</view>
+        <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
+          <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">作品标签</text>
+        </view>
       </view>
 
       <!-- 作品评分 -->
-      <view class="menu-item rating" bindtap="handleRating">
-        <view class="menu-icon">
-          <image src="/assets/images/14.svg" />
+      <view class="menu-item rating" style="width: 285px; height: 45.50px; left: 7px; top: 98px; position: absolute; border-radius: 10.50px" bindtap="handleRating">
+        <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
+          <image src="/assets/images/14.svg" style="width: 14px; height: 14px" />
         </view>
-        <view class="menu-text">作品评分</view>
+        <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
+          <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">作品评分</text>
+        </view>
+      </view>
+
+      <!-- 自定义字段 -->
+      <view class="menu-item custom-fields" style="width: 285px; height: 45.50px; left: 7px; top: 143.50px; position: absolute; border-radius: 10.50px" bindtap="handleCustomFields">
+        <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
+          <image src="/assets/images/15.svg" style="width: 14px; height: 14px" />
+        </view>
+        <view class="menu-text" style="width: 197.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
+          <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">自定义字段</text>
+        </view>
+        <view class="arrow-icon" style="left: 257px; top: 15.75px; position: absolute">
+          <image src="/assets/images/16.svg" style="width: 14px; height: 14px" />
+        </view>
       </view>
 
       <!-- 团队管理 -->
-      <view class="menu-item team" bindtap="handleTeam">
-        <view class="menu-icon">
-          <image src="/assets/images/15.svg" />
+      <view class="menu-item team" style="width: 285px; height: 45.50px; left: 7px; top: 189px; position: absolute; border-radius: 10.50px" bindtap="handleTeam">
+        <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
+          <image src="/assets/images/17.svg" style="width: 14px; height: 14px" />
         </view>
-        <view class="menu-text">团队管理</view>
-        <view class="upgrade-btn" catchtap="handleUpgrade">
-          <text>立即开通</text>
-          <view class="btn-icon">
-            <image src="/assets/images/16.svg" />
+        <view class="menu-text" style="width: 134.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
+          <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">团队管理</text>
+        </view>
+        <view class="upgrade-btn" style="width: 77px; height: 21px; left: 194px; top: 12.25px; position: absolute; background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%); border-radius: 16777200px" catchtap="handleUpgrade">
+          <text style="left: 7px; top: 2.25px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 400">立即开通</text>
+          <view class="btn-icon" style="left: 59.50px; top: 5.25px; position: absolute">
+            <image src="/assets/images/18.svg" style="width: 14px; height: 14px" />
           </view>
         </view>
       </view>
     </view>
 
-    <!-- 分割线 -->
-    <view class="divider"></view>
+    <!-- 分割线: 299px × 1px -->
+    <view class="divider" style="width: 299px; height: 1px; left: 1px; top: 361.50px; position: absolute; background: #E5E7EB"></view>
 
-    <!-- 偏好设置 -->
-    <view class="settings" bindtap="handleSettings">
-      <image src="/assets/images/17.svg" style="width: 17.5px; height: 17.5px;" />
+    <!-- 偏好设置: 285px × 45.50px -->
+    <view class="settings" style="width: 285px; height: 45.50px; left: 8px; top: 390.50px; position: absolute; border-radius: 10.50px" bindtap="handleSettings">
+      <view style="left: 14px; top: 14px; position: absolute">
+        <image src="/assets/images/19.svg" style="width: 14px; height: 14px" />
+      </view>
+      <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
+        <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">偏好设置</text>
+      </view>
     </view>
 
-    <!-- 关闭按钮 -->
-    <view class="close-btn" bindtap="hideProfile">
-      <image src="/assets/images/18.svg" class="close-icon" />
+    <!-- 关闭按钮: 14px × 14px -->
+    <view class="close-btn" style="width: 14px; height: 14px; left: 272px; top: 14px; position: absolute; opacity: 0.70; border-radius: 1.75px" bindtap="hideProfile">
+      <image src="/assets/images/20.svg" style="width: 14px; height: 14px" />
     </view>
   </view>
 </view>
