@@ -4,7 +4,8 @@
     "pages/detail/detail",
     "pages/settings/settings",
     "pages/addfield/addfield",
-    "pages/customfields/customfields"
+    "pages/customfields/customfields",
+    "pages/tags/tags"
   ],
   "window": {
     "backgroundTextStyle": "light",

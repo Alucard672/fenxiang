@@ -1,0 +1,69 @@
+<!-- 标签页面 - 1:1像素级还原Figma设计 -->
+<view class="page" style="width: 393px; height: 865px; left: 0px; top: 0px; position: absolute; background: #F8F9FD; overflow: hidden">
+  
+  <!-- 头部: 393px × 57px -->
+  <view style="width: 393px; height: 57px; left: 0px; top: 0px; position: absolute; background: white; border-bottom: 1px #F3F4F6 solid">
+    <view style="width: 365px; height: 35px; left: 14px; top: 10.50px; position: absolute">
+      <!-- 返回按钮: 35px × 35px -->
+      <view style="width: 35px; height: 35px; left: 0px; top: 0px; position: absolute" bindtap="goBack">
+        <image src="/assets/images/8.svg" style="width: 35px; height: 35px; left: 0px; top: 0px; position: absolute" />
+      </view>
+      <!-- 标题 -->
+      <view style="width: 140px; height: 35px; left: 140px; top: 0px; position: absolute">
+        <text style="left: 0px; top: 7px; position: absolute; color: #1A1D2E; font-size: 18px; font-family: Inter; font-weight: 600">作品标签</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容: 393px × 738.41px -->
+  <view style="width: 393px; height: 738.41px; left: 0px; top: 57px; position: absolute; background: #F9FAFB">
+    
+    <!-- 标签库统计卡片: 365px × 65px -->
+    <view style="width: 365px; height: 65px; left: 14px; top: 14px; position: absolute; background: linear-gradient(90deg, #EFF6FF 0%, #FAF5FF 100%); border-radius: 14.50px; outline: 1px #DBEAFE solid; outline-offset: -1px">
+      <view style="width: 75.16px; height: 33.25px; left: 11.50px; top: 15.88px; position: absolute">
+        <view style="width: 75.16px; height: 17.50px; left: 0px; top: 0px; position: absolute">
+          <text style="left: 0px; top: 0.50px; position: absolute; color: #101828; font-size: 12.25px; font-family: Inter; font-weight: 500">标签库</text>
+        </view>
+        <view style="width: 75.16px; height: 14px; left: 0px; top: 19.25px; position: absolute">
+          <text style="left: 0px; top: 0px; position: absolute; color: #6A7282; font-size: 10.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.09px">已创建 {{tags.length}} 个标签</text>
+        </view>
+      </view>
+      <view style="width: 42px; height: 42px; left: 311.50px; top: 11.50px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px" bindtap="addNewTag">
+        <image src="/assets/images/30.svg" style="left: 10.50px; top: 10.50px; position: absolute; width: 21px; height: 21px" />
+      </view>
+    </view>
+
+    <!-- 标签列表区域: 365px × 314.25px -->
+    <view style="width: 365px; height: 600px; left: 14px; top: 93px; position: absolute; overflow-y: auto" catchtouchmove="true">
+      
+      <view wx:for="{{tags}}" wx:key="id" wx:for-index="index" style="width: 178.13px; height: 72px; left: {{index % 2 === 0 ? '0px' : '186.88px'}}; top: {{Math.floor(index / 2) * 80.75}}px; position: absolute; background: {{item.background}}; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); overflow: hidden; border-radius: 14.50px" bindtap="editTag" data-id="{{item.id}}">
+        <view style="width: 178.13px; height: 57px; left: 0px; top: 0px; position: absolute">
+          <view style="width: 109.88px; height: 17.50px; left: 12.25px; top: 12.25px; position: absolute; overflow: hidden">
+            <text style="left: 0px; top: 0.50px; position: absolute; color: {{item.color}}; font-size: 12.25px; font-family: Inter; font-weight: 500">{{item.name}}</text>
+          </view>
+          <view style="width: 109.88px; height: 15px; left: 12.25px; top: 31.50px; position: absolute; opacity: 0.60">
+            <text style="left: 0px; top: 0.50px; position: absolute; color: {{item.color}}; font-size: 10px; font-family: Inter; font-weight: 400; letter-spacing: 0.12px">#{{item.rank}}</text>
+          </view>
+        </view>
+        <view style="width: 52.50px; height: 24.50px; left: 118.63px; top: 7px; position: absolute">
+          <!-- 编辑按钮 -->
+          <view style="width: 24.50px; height: 24.50px; left: 0px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.95); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 10.50px" catchtap="editTag" data-id="{{item.id}}">
+            <image src="/assets/images/28.svg" style="left: 6.13px; top: 6.13px; position: absolute; width: 12.25px; height: 12.25px" />
+          </view>
+          <!-- 删除按钮 -->
+          <view style="width: 24.50px; height: 24.50px; left: 28px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.95); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 10.50px" catchtap="deleteTag" data-id="{{item.id}}" data-name="{{item.name}}">
+            <image src="/assets/images/29.svg" style="left: 6.13px; top: 6.13px; position: absolute; width: 12.25px; height: 12.25px" />
+          </view>
+        </view>
+      </view>
+      
+    </view>
+
+    <!-- 添加新标签按钮: 365px × 42px -->
+    <view style="width: 365px; height: 42px; left: 14px; bottom: 20px; position: absolute; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px" bindtap="addNewTag">
+      <image src="/assets/images/30.svg" style="left: 137.88px; top: 14px; position: absolute; width: 14px; height: 14px" />
+      <text style="left: 165.88px; top: 12.75px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 500">添加新标签</text>
+    </view>
+  </view>
+
+</view>

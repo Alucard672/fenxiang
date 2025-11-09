@@ -64,7 +64,7 @@
         <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
           <image src="/assets/images/15.svg" style="width: 14px; height: 14px" />
         </view>
-        <view class="menu-text" style="width: 197.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
+        <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
           <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">自定义字段</text>
         </view>
         <view class="arrow-icon" style="left: 257px; top: 15.75px; position: absolute">
@@ -92,13 +92,13 @@
     <!-- 分割线: 299px × 1px -->
     <view class="divider" style="width: 299px; height: 1px; left: 1px; top: 361.50px; position: absolute; background: #E5E7EB"></view>
 
-    <!-- 偏好设置: 285px × 45.50px -->
-    <view class="settings" style="width: 285px; height: 45.50px; left: 8px; top: 390.50px; position: absolute; border-radius: 10.50px" bindtap="handleSettings">
-      <view style="left: 14px; top: 14px; position: absolute">
+    <!-- 系统设置: 285px × 45.50px -->
+    <view class="settings" style="width: 285px; height: 45.50px; left: 7px; top: 390.50px; position: absolute; border-radius: 10.50px" bindtap="handleSettings">
+      <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
         <image src="/assets/images/19.svg" style="width: 14px; height: 14px" />
       </view>
       <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
-        <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">偏好设置</text>
+        <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">系统设置</text>
       </view>
     </view>
 

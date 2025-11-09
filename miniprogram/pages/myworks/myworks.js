@@ -266,9 +266,9 @@ Page({
   // 作品标签
   handleTags() {
     console.log('点击作品标签')
-    wx.showToast({
-      title: '作品标签功能开发中',
-      icon: 'none'
+    // 跳转到标签页面
+    wx.navigateTo({
+      url: '/pages/tags/tags'
     })
   },
 
@@ -393,10 +393,10 @@ Page({
     })
   },
 
-  // 偏好设置
+  // 系统设置
   handleSettings() {
-    console.log('点击偏好设置')
-    // 跳转到偏好设置页面
+    console.log('点击系统设置')
+    // 跳转到系统设置页面
     wx.navigateTo({
       url: '/pages/settings/settings'
     })

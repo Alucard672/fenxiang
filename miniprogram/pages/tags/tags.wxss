@@ -1,0 +1,35 @@
+/* 标签页面样式 */
+.page {
+  width: 393px;
+  height: 865px;
+  background: #F8F9FD;
+  overflow: hidden;
+}
+
+/* 滚动区域样式 */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* 标签卡片悬停效果 */
+view[bindtap="editTag"]:active {
+  opacity: 0.8;
+  transform: scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* 按钮点击效果 */
+view[bindtap="addNewTag"]:active {
+  opacity: 0.9;
+  transform: scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* 操作按钮点击效果 */
+view[catchtap="editTag"]:active,
+view[catchtap="deleteTag"]:active {
+  opacity: 0.7;
+  transform: scale(0.9);
+  transition: all 0.1s ease;
+}
