@@ -1,0 +1,82 @@
+<!-- 个人资料侧边栏 - 完全按照Figma设计 -->
+<view class="profile-overlay" wx:if="{{showProfile}}">
+  <!-- 遮罩层 -->
+  <view class="mask" bindtap="hideProfile"></view>
+  
+  <!-- 侧边栏 -->
+  <view class="sidebar">
+    <!-- 头部信息 -->
+    <view class="header">
+      <!-- 用户信息 -->
+      <view class="user-info">
+        <view class="user-details">
+          <view class="username">云作品小萌新</view>
+          <view class="user-title" bindtap="handleProfile">
+            <text>个人信息</text>
+            <view class="arrow-icon">
+              <image src="/assets/images/10.svg" class="arrow-icon-img" />
+            </view>
+          </view>
+        </view>
+        <!-- 用户头像 -->
+        <view class="avatar">
+          <image src="/assets/images/11.svg" class="avatar-img" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 菜单区域 -->
+    <view class="menu-area">
+      <!-- 访客 -->
+      <view class="menu-item visitors" bindtap="handleVisitors">
+        <view class="menu-icon">
+          <image src="/assets/images/12.svg" />
+        </view>
+        <view class="menu-text">访客</view>
+      </view>
+
+      <!-- 作品标签 -->
+      <view class="menu-item tags" bindtap="handleTags">
+        <view class="menu-icon">
+          <image src="/assets/images/13.svg" />
+        </view>
+        <view class="menu-text">作品标签</view>
+      </view>
+
+      <!-- 作品评分 -->
+      <view class="menu-item rating" bindtap="handleRating">
+        <view class="menu-icon">
+          <image src="/assets/images/14.svg" />
+        </view>
+        <view class="menu-text">作品评分</view>
+      </view>
+
+      <!-- 团队管理 -->
+      <view class="menu-item team" bindtap="handleTeam">
+        <view class="menu-icon">
+          <image src="/assets/images/15.svg" />
+        </view>
+        <view class="menu-text">团队管理</view>
+        <view class="upgrade-btn" catchtap="handleUpgrade">
+          <text>立即开通</text>
+          <view class="btn-icon">
+            <image src="/assets/images/16.svg" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 分割线 -->
+    <view class="divider"></view>
+
+    <!-- 偏好设置 -->
+    <view class="settings" bindtap="handleSettings">
+      <image src="/assets/images/17.svg" style="width: 17.5px; height: 17.5px;" />
+    </view>
+
+    <!-- 关闭按钮 -->
+    <view class="close-btn" bindtap="hideProfile">
+      <image src="/assets/images/18.svg" class="close-icon" />
+    </view>
+  </view>
+</view>

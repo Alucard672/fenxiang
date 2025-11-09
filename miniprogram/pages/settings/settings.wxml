@@ -1,0 +1,252 @@
+<view style="width: 393px; min-height: 852px; background: #F8F9FD">
+  
+  <!-- 顶部导航栏 -->
+  <view style="width: 393px; height: 57px; background: white; border-bottom: 1px #F3F4F6 solid; position: fixed; top: 0; z-index: 1000">
+    <view style="width: 365px; height: 35px; margin-left: 14px; margin-top: 10.50px; display: flex; justify-content: space-between; align-items: center">
+      <view style="width: 98px; height: 24.50px; display: flex; align-items: center">
+        <view style="width: 24.50px; height: 24.50px; border-radius: 10.50px; display: flex; align-items: center; justify-content: center" bindtap="goBack">
+          <image src="/assets/images/19.svg" style="width: 17.50px; height: 17.50px;" />
+        </view>
+        <view style="width: 63px; height: 24.50px; margin-left: 35px; display: flex; align-items: center">
+          <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400">偏好设置</text>
+        </view>
+      </view>
+      <view style="width: 108.50px; height: 31.50px; display: flex; gap: 7px">
+        <view style="width: 31.50px; height: 31.50px; border-radius: 10.50px; display: flex; align-items: center; justify-content: center">
+          <image src="/assets/images/20.svg" style="width: 17.50px; height: 17.50px;" />
+        </view>
+        <view style="width: 31.50px; height: 31.50px; border-radius: 10.50px; display: flex; align-items: center; justify-content: center">
+          <image src="/assets/images/21.svg" style="width: 17.50px; height: 17.50px;" />
+        </view>
+        <view style="width: 31.50px; height: 31.50px; border-radius: 10.50px; display: flex; align-items: center; justify-content: center">
+          <image src="/assets/images/22.svg" style="width: 17.50px; height: 17.50px;" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容区域 -->
+  <scroll-view scroll-y style="width: 393px; height: calc(100vh - 57px); margin-top: 57px;">
+    <view style="padding: 21px 14px;">
+      
+      <!-- 访客提醒规则 -->
+      <view style="width: 364px; height: 101.50px; margin-bottom: 21px;">
+        <view style="width: 364px; height: 24.50px; margin-bottom: 14px;">
+          <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400">访客提醒规则</text>
+        </view>
+        <view style="width: 364px; height: 63px;">
+          <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px;">
+            <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">新访客提醒</text>
+            <switch checked="{{settings.newVisitorAlert}}" bindchange="onNewVisitorAlertChange" color="#FF6B6B" />
+          </view>
+          <view style="width: 364px; height: 35px;">
+            <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">开启后，新访客到来时，你可以通过云作品微信公众号收到一条提醒。</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="width: 364px; height: 1px; background: #E5E7EB; margin-bottom: 21px;"></view>
+
+      <!-- 访客登录方式 -->
+      <view style="width: 364px; height: 178.50px; margin-bottom: 21px;">
+        <view style="width: 364px; height: 24.50px; margin-bottom: 14.50px;">
+          <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400">访客登录方式</text>
+        </view>
+        
+        <view style="width: 364px; height: 63px; margin-bottom: 14.50px;">
+          <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px;">
+            <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">免申请</text>
+            <switch checked="{{settings.noApplication}}" bindchange="onNoApplicationChange" color="#FF6B6B" />
+          </view>
+          <view style="width: 364px; height: 35px;">
+            <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">开启后，访客无需填写姓名就能浏览你的作品，同时你也无法获知访客的姓名。</text>
+          </view>
+        </view>
+
+        <view style="width: 364px; height: 63px;">
+          <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px;">
+            <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">免授权手机号</text>
+            <switch checked="{{settings.noPhoneAuth}}" bindchange="onNoPhoneAuthChange" color="#FF6B6B" />
+          </view>
+          <view style="width: 364px; height: 35px;">
+            <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">开启后，访客无需授权手机号就能进行查看履历、保存等敏感操作，同时你也无法获取访客的手机号。</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="width: 364px; height: 1px; background: #E5E7EB; margin-bottom: 21px;"></view>
+
+      <!-- 访客浏览权限 -->
+      <view style="width: 364px; height: 178.50px; margin-bottom: 21px;">
+        <view style="width: 364px; height: 24.50px; margin-bottom: 14.50px;">
+          <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400">访客浏览权限</text>
+        </view>
+        
+        <view style="width: 364px; height: 63px; margin-bottom: 14.50px;">
+          <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px;">
+            <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">照片的EXIF信息</text>
+            <switch checked="{{settings.showEXIF}}" bindchange="onShowEXIFChange" color="#FF6B6B" />
+          </view>
+          <view style="width: 364px; height: 35px;">
+            <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">开启后，访客可以在文件信息中，看到相机型号、拍摄参数等照片原始信息。</text>
+          </view>
+        </view>
+
+        <view style="width: 364px; height: 63px;">
+          <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px;">
+            <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">相同标签作品</text>
+            <switch checked="{{settings.showSameTagWorks}}" bindchange="onShowSameTagWorksChange" color="#FF6B6B" />
+          </view>
+          <view style="width: 364px; height: 35px; position: relative;">
+            <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">开启后，访客可以在你的作品底部，看到你的全部相同标签的作品。</text>
+            <view style="width: 84.63px; height: 17.50px; position: absolute; left: 28px; top: 17.50px;" bindtap="editWorkTags">
+              <text style="color: #2B7FFF; font-size: 12.25px; font-weight: 400">编辑作品标签 ></text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view style="width: 364px; height: 1px; background: #E5E7EB; margin-bottom: 21px;"></view>
+
+      <!-- 访客保存权限 -->
+      <view style="width: 364px; height: 129.50px; margin-bottom: 21px;">
+        <view style="width: 364px; height: 24.50px; margin-bottom: 14px;">
+          <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400">访客保存权限</text>
+        </view>
+        
+        <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10.50px;">
+          <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">有水印小图（1200像素宽）</text>
+          <switch checked="{{settings.watermarkSmall}}" bindchange="onWatermarkSmallChange" color="#FF6B6B" />
+        </view>
+
+        <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10.50px;">
+          <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">无水印小图（1200像素宽）</text>
+          <switch checked="{{settings.noWatermarkSmall}}" bindchange="onNoWatermarkSmallChange" color="#FF6B6B" />
+        </view>
+
+        <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center;">
+          <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">无水印原图</text>
+          <switch checked="{{settings.noWatermarkOriginal}}" bindchange="onNoWatermarkOriginalChange" color="#FF6B6B" />
+        </view>
+      </view>
+
+      <view style="width: 364px; height: 1px; background: #E5E7EB; margin-bottom: 21px;"></view>
+
+      <!-- 默认排序 -->
+      <view style="width: 364px; height: 185.50px; margin-bottom: 21px;">
+        <view style="width: 364px; height: 24.50px; margin-bottom: 14px;">
+          <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400">默认排序</text>
+        </view>
+        
+        <view style="width: 364px; height: 35px; margin-bottom: 14px;">
+          <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">设置后，新建主页或作品会默认采用该规则。同时，你可以选择是否批量修改已有主页或作品的设置。</text>
+        </view>
+
+        <view style="width: 364px; height: 45.50px; background: #F9FAFB; border-radius: 10.50px; margin-bottom: 10.50px; display: flex; justify-content: space-between; align-items: center; padding: 0 14px;">
+          <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">主页中的作品</text>
+          <view style="width: 131.25px; height: 17.50px; display: flex; align-items: center; justify-content: space-between;" bindtap="changeHomeSortOrder">
+            <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">{{homeSortOrderText}}</text>
+            <image src="/assets/images/arrow-down.svg" style="width: 14px; height: 14px;" />
+          </view>
+        </view>
+
+        <view style="width: 364px; height: 45.50px; background: #F9FAFB; border-radius: 10.50px; display: flex; justify-content: space-between; align-items: center; padding: 0 14px;">
+          <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">作品中的内容</text>
+          <view style="width: 131.25px; height: 17.50px; display: flex; align-items: center; justify-content: space-between;" bindtap="changeWorkSortOrder">
+            <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">{{workSortOrderText}}</text>
+            <image src="/assets/images/arrow-down.svg" style="width: 14px; height: 14px;" />
+          </view>
+        </view>
+      </view>
+
+      <view style="width: 364px; height: 1px; background: #E5E7EB; margin-bottom: 21px;"></view>
+
+      <!-- 默认样式 -->
+      <view style="width: 364px; height: 185.50px; margin-bottom: 21px;">
+        <view style="width: 364px; height: 24.50px; margin-bottom: 14px;">
+          <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400">默认样式</text>
+        </view>
+        
+        <view style="width: 364px; height: 35px; margin-bottom: 14px;">
+          <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">设置后，新建主页或作品会默认采用该样式。同时，你可以选择是否批量修改已有主页或作品的设置。</text>
+        </view>
+
+        <view style="width: 364px; height: 45.50px; background: #F9FAFB; border-radius: 10.50px; margin-bottom: 10.50px; display: flex; justify-content: space-between; align-items: center; padding: 0 14px;">
+          <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">主页中的作品</text>
+          <view style="width: 45.50px; height: 17.50px; display: flex; align-items: center; justify-content: space-between;" bindtap="changeHomeDisplayStyle">
+            <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">{{homeDisplayStyleText}}</text>
+            <image src="/assets/images/arrow-down.svg" style="width: 14px; height: 14px;" />
+          </view>
+        </view>
+
+        <view style="width: 364px; height: 45.50px; background: #F9FAFB; border-radius: 10.50px; display: flex; justify-content: space-between; align-items: center; padding: 0 14px;">
+          <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">作品中的内容</text>
+          <view style="width: 119px; height: 17.50px; display: flex; align-items: center; justify-content: space-between;" bindtap="changeWorkDisplayStyle">
+            <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">{{workDisplayStyleText}}</text>
+            <image src="/assets/images/arrow-down.svg" style="width: 14px; height: 14px;" />
+          </view>
+        </view>
+      </view>
+
+      <view style="width: 364px; height: 1px; background: #E5E7EB; margin-bottom: 21px;"></view>
+
+      <!-- 水印展示范围 -->
+      <view style="width: 364px; height: 203px; margin-bottom: 40px;">
+        <view style="width: 364px; height: 24.50px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
+          <text style="color: #1A1D2E; font-size: 15.75px; font-weight: 400">水印展示范围</text>
+          <view style="width: 84.63px; height: 17.50px;" bindtap="setWatermarkStyle">
+            <text style="color: #2B7FFF; font-size: 12.25px; font-weight: 400">设置水印样式 ></text>
+          </view>
+        </view>
+        
+        <view style="width: 364px; height: 35px; margin-bottom: 14px;">
+          <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">开启后，你和访客可以在这些图片上，看到用于防盗图的满屏水印。</text>
+        </view>
+
+        <view style="width: 364px; height: 115.50px;">
+          <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10.50px;">
+            <view style="width: 112.63px; height: 21px; display: flex; align-items: center;">
+              <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">作品封面图</text>
+              <view style="width: 35.63px; height: 17.50px; margin-left: 7px;" bindtap="viewCoverExample">
+                <text style="color: #99A1AF; font-size: 12.25px; font-weight: 400">示例 ></text>
+              </view>
+            </view>
+            <switch checked="{{settings.watermarkCover}}" bindchange="onWatermarkCoverChange" color="#FF6B6B" />
+          </view>
+
+          <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10.50px;">
+            <view style="width: 112.63px; height: 21px; display: flex; align-items: center;">
+              <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">作品详情图</text>
+              <view style="width: 35.63px; height: 17.50px; margin-left: 7px;" bindtap="viewDetailExample">
+                <text style="color: #99A1AF; font-size: 12.25px; font-weight: 400">示例 ></text>
+              </view>
+            </view>
+            <switch checked="{{settings.watermarkDetail}}" bindchange="onWatermarkDetailChange" color="#FF6B6B" />
+          </view>
+
+          <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10.50px;">
+            <view style="width: 112.63px; height: 21px; display: flex; align-items: center;">
+              <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">作品预览图</text>
+              <view style="width: 35.63px; height: 17.50px; margin-left: 7px;" bindtap="viewPreviewExample">
+                <text style="color: #99A1AF; font-size: 12.25px; font-weight: 400">示例 ></text>
+              </view>
+            </view>
+            <switch checked="{{settings.watermarkPreview}}" bindchange="onWatermarkPreviewChange" color="#FF6B6B" />
+          </view>
+
+          <view style="width: 364px; height: 21px; display: flex; justify-content: space-between; align-items: center;">
+            <view style="width: 112.63px; height: 21px; display: flex; align-items: center;">
+              <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">作品海报图</text>
+              <view style="width: 35.63px; height: 17.50px; margin-left: 7px;" bindtap="viewPosterExample">
+                <text style="color: #99A1AF; font-size: 12.25px; font-weight: 400">示例 ></text>
+              </view>
+            </view>
+            <switch checked="{{settings.watermarkPoster}}" bindchange="onWatermarkPosterChange" color="#FF6B6B" />
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+
+</view>

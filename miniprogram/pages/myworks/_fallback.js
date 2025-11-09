@@ -1,0 +1,8 @@
+// 本地兜底数据（用于云开发未初始化时的展示）
+const fallbackCards = [
+  { id: 1, img: '/assets/CodeBubbyAssets/1_2/8.png', title: '未命名作品', badges: '13张图片', tags: ['网页设计','UI设计'], gradient: false, gradientClass: '' },
+  { id: 2, img: '/assets/CodeBubbyAssets/1_2/11.png', title: '未命名作品', badges: '13张图片', tags: ['品牌设计','平面设计','+1'], gradient: false, gradientClass: '' },
+  { id: 3, img: '/assets/CodeBubbyAssets/1_2/9.png', title: '2025双11，屏下满山云作品！', badges: '2张图片', tags: ['电商设计','海报设计'], gradient: true, gradientClass: 'cyan' },
+  { id: 4, img: '/assets/CodeBubbyAssets/1_2/7.png', title: '云作品写给你的欢迎信', badges: '2张图片', tags: ['插画','摄影'], gradient: true, gradientClass: 'red' }
+]
+module.exports = fallbackCards

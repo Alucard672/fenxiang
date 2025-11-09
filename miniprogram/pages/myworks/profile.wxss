@@ -1,0 +1,253 @@
+/* 个人资料侧边栏样式 - 完全按照Figma设计 */
+.profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.50);
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 1;
+}
+
+.sidebar {
+  position: absolute;
+  left: 93px;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background: #F8F9FD;
+  box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.10), 0px 10px 15px -3px rgba(0, 0, 0, 0.10);
+  border-left: 1px solid #E5E7EB;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.header {
+  position: absolute;
+  left: 1px;
+  top: 0px;
+  width: 299px;
+  height: 85px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.user-info {
+  position: absolute;
+  left: 21px;
+  top: 17.50px;
+  width: 257px;
+  height: 49px;
+}
+
+.user-details {
+  position: absolute;
+  left: 0px;
+  top: 1.75px;
+  width: 208px;
+  height: 45.50px;
+}
+
+.username {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  color: #1A1D2E;
+  font-size: 17.50px;
+  font-weight: 500;
+}
+
+.user-title {
+  position: absolute;
+  left: 0px;
+  top: 28px;
+  width: 63px;
+  height: 17.50px;
+  display: flex;
+  align-items: center;
+}
+
+.user-title text {
+  position: absolute;
+  left: 0px;
+  top: 0.50px;
+  color: #1A1D2E;
+  font-size: 12.25px;
+  font-weight: 500;
+}
+
+.arrow-icon {
+  position: absolute;
+  left: 52.50px;
+  top: 3.50px;
+  width: 14px;
+  height: 14px;
+}
+
+.arrow-icon-img {
+  width: 14px;
+  height: 14px;
+}
+
+.avatar {
+  position: absolute;
+  left: 208px;
+  top: 0px;
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 49px;
+  height: 49px;
+}
+
+.menu-area {
+  position: absolute;
+  left: 1px;
+  top: 99px;
+  width: 299px;
+  height: 196px;
+}
+
+.menu-item {
+  position: absolute;
+  width: 285px;
+  height: 45.50px;
+  border-radius: 10.50px;
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+.menu-icon image {
+  width: 14px;
+  height: 14px;
+}
+
+.menu-text {
+  position: absolute;
+  left: 45.50px;
+  top: 12.25px;
+  color: #1A1D2E;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* 访客 */
+.menu-item.visitors {
+  left: 7px;
+  top: 7px;
+}
+
+/* 作品标签 */
+.menu-item.tags {
+  left: 7px;
+  top: 52.50px;
+}
+
+/* 作品评分 */
+.menu-item.rating {
+  left: 7px;
+  top: 98px;
+}
+
+/* 团队管理 */
+.menu-item.team {
+  left: 7px;
+  top: 143.50px;
+}
+
+.upgrade-btn {
+  position: absolute;
+  left: 194px;
+  top: 12.25px;
+  width: 77px;
+  height: 21px;
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upgrade-btn text {
+  position: absolute;
+  left: 7px;
+  top: 2.25px;
+  color: white;
+  font-size: 12.25px;
+  font-weight: 400;
+}
+
+.btn-icon {
+  position: absolute;
+  left: 59.50px;
+  top: 5.25px;
+  width: 14px;
+  height: 14px;
+}
+
+.btn-icon image {
+  width: 14px;
+  height: 14px;
+}
+
+.divider {
+  position: absolute;
+  left: 1px;
+  top: 316px;
+  width: 299px;
+  height: 1px;
+  background: #E5E7EB;
+}
+
+.settings {
+  position: absolute;
+  left: 8px;
+  top: 345px;
+  width: 285px;
+  height: 45.50px;
+  border-radius: 10.50px;
+  display: flex;
+  align-items: center;
+}
+
+.settings image {
+  margin-left: 14px;
+  width: 17.5px;
+  height: 17.5px;
+}
+
+.close-btn {
+  position: absolute;
+  left: 272px;
+  top: 14px;
+  width: 14px;
+  height: 14px;
+  opacity: 0.70;
+  border-radius: 1.75px;
+}
+
+.close-icon {
+  width: 14px;
+  height: 14px;
+}

@@ -1,0 +1,18 @@
+/* 作品详情页样式 - 使用内联样式，这里只需要基础重置 */
+
+/* 基础重置 */
+view, text, image {
+  box-sizing: border-box;
+}
+
+/* SVG图标处理 */
+view[data-svg-wrapper] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+view[data-svg-wrapper] image {
+  width: 14px;
+  height: 14px;
+}

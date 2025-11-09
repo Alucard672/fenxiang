@@ -1,0 +1,285 @@
+<!-- 1:1像素级还原Figma设计 - 严格按绝对定位 -->
+<view class="page" style="width: 393px; height: 865px; left: 0px; top: 0px; position: absolute; background: #F8F9FD">
+  
+  <!-- 头部: 393px × 57px -->
+  <view style="width: 393px; height: 57px; left: 0px; top: 0px; position: absolute; background: white; border-bottom: 1px #F3F4F6 solid">
+    <view style="width: 365px; height: 35px; left: 14px; top: 10.50px; position: absolute">
+      <view style="width: 140px; height: 35px; left: 0px; top: 0px; position: absolute">
+        <!-- 头像: 35px × 35px -->
+        <view style="width: 35px; height: 35px; left: 0px; top: 0px; position: absolute; overflow: hidden; border-radius: 16777200px" bindtap="showProfile">
+          <image src="/assets/images/8.svg" style="width: 35px; height: 35px; left: 0px; top: 0px; position: absolute" />
+        </view>
+        <!-- 新建按钮: 94.50px × 31.50px - 向右移动避免遮挡头像 -->
+        <view style="width: 94.50px; height: 31.50px; left: 45.50px; top: 1.75px; position: absolute; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px" bindtap="onNewWork">
+          <image src="/assets/images/1_new.svg" style="left: 10.50px; top: 8.75px; position: absolute; width: 14px; height: 14px" />
+          <text style="left: 35px; top: 7.50px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 500">新建作品</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容: 393px × 738.41px -->
+  <view style="width: 393px; height: 738.41px; left: 0px; top: 57px; position: absolute; background: #F9FAFB">
+    
+    <!-- 标题行: 365px × 28px -->
+    <view style="width: 365px; height: 28px; left: 14px; top: 14px; position: absolute">
+      <view style="width: 87.20px; height: 24.50px; left: 0px; top: 1.75px; position: absolute">
+        <view style="width: 63px; height: 24.50px; left: 0px; top: 0px; position: absolute">
+          <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 15.75px; font-family: Inter; font-weight: 500">我的作品</text>
+        </view>
+        <view style="width: 17.20px; height: 17.50px; left: 70px; top: 3.50px; position: absolute">
+          <text style="width: 18px; left: 0px; top: 0.50px; position: absolute; color: #6A7282; font-size: 12.25px; font-family: Inter; font-weight: 400">(4)</text>
+        </view>
+      </view>
+      <!-- 搜索按钮: 61.25px × 28px -->
+      <view style="width: 61.25px; height: 28px; left: 303.75px; top: 0px; position: absolute; background: #F3F4F6; border-radius: 8.50px">
+        <image src="/assets/images/2_new.svg" style="left: 8.75px; top: 7px; position: absolute; width: 14px; height: 14px" />
+        <text style="left: 31.50px; top: 7px; position: absolute; color: #1A1D2E; font-size: 10.50px; font-family: Inter; font-weight: 500; letter-spacing: 0.09px">搜索</text>
+      </view>
+      
+
+    </view>
+
+    <!-- 卡片区域: 365px × 668.41px -->
+    <view style="width: 365px; height: 668.41px; left: 14px; top: 56px; position: absolute">
+      
+      <!-- 左上卡片: 177.25px × 300.33px -->
+      <view style="width: 177.25px; height: 300.33px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); overflow: hidden; border-radius: 14px" bindtap="goToDetail" data-id="1" data-name="未命名作品">
+        <!-- 卡片内容区: 156.25px × 43px -->
+        <view style="width: 156.25px; height: 43px; left: 10.50px; top: 246.83px; position: absolute">
+          <view style="width: 135.25px; height: 43px; left: 0px; top: 0px; position: absolute">
+            <view style="width: 135.25px; height: 17.50px; left: 0px; top: 0px; position: absolute; overflow: hidden">
+              <text style="left: 0px; top: 0.50px; position: absolute; color: black; font-size: 12.25px; font-family: Inter; font-weight: 500">未命名作品</text>
+            </view>
+            <view style="width: 135.25px; height: 18.50px; left: 0px; top: 24.50px; position: absolute">
+              <view style="width: 54px; height: 18.50px; left: 0px; top: 0px; position: absolute; background: linear-gradient(135deg, #FECACA 0%, #FCA5A5 100%); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px">
+                <text style="left: 7px; top: 2.25px; position: absolute; color: #1F2937; font-size: 10px; font-family: Inter; font-weight: 500; letter-spacing: 0.12px">网页设计</text>
+              </view>
+              <view style="width: 44.54px; height: 18.50px; left: 57.50px; top: 0px; position: absolute; background: linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px">
+                <text style="left: 7px; top: 2.25px; position: absolute; color: #1F2937; font-size: 10px; font-family: Inter; font-weight: 500; letter-spacing: 0.12px">UI设计</text>
+              </view>
+            </view>
+          </view>
+          <view style="width: 21px; height: 21px; left: 135.25px; top: -3.50px; position: absolute; border-radius: 8.50px" bindtap="showEditModal" data-id="1" data-name="未命名作品">
+            <image src="/assets/images/3_new.svg" style="left: 3.50px; top: 3.50px; position: absolute; width: 14px; height: 14px" />
+          </view>
+        </view>
+        <!-- 图片区: 177.25px × 236.33px -->
+        <view style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute">
+          <image src="/assets/images/8.png" style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute" />
+          <view style="width: 57.14px; height: 21px; left: 7px; top: 7px; position: absolute; background: rgba(0, 0, 0, 0.40); border-radius: 3.50px">
+            <text style="width: 44px; left: 7px; top: 3.50px; position: absolute; color: white; font-size: 10.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.09px">13张图片</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 右上卡片: 177.25px × 322.33px -->
+      <view style="width: 177.25px; height: 322.33px; left: 187.75px; top: 0px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); overflow: hidden; border-radius: 14px" bindtap="goToDetail" data-id="2" data-name="未命名作品">
+        <!-- 卡片内容区: 156.25px × 65px -->
+        <view style="width: 156.25px; height: 65px; left: 10.50px; top: 246.83px; position: absolute">
+          <view style="width: 135.25px; height: 65px; left: 0px; top: 0px; position: absolute">
+            <view style="width: 135.25px; height: 17.50px; left: 0px; top: 0px; position: absolute; overflow: hidden">
+              <text style="left: 0px; top: 0.50px; position: absolute; color: black; font-size: 12.25px; font-family: Inter; font-weight: 500">未命名作品</text>
+            </view>
+            <view style="width: 135.25px; height: 40.50px; left: 0px; top: 24.50px; position: absolute">
+              <view style="width: 54px; height: 18.50px; left: 0px; top: 0px; position: absolute; background: linear-gradient(135deg, #FECACA 0%, #FCA5A5 100%); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px">
+                <text style="left: 7px; top: 2.25px; position: absolute; color: #1F2937; font-size: 10px; font-family: Inter; font-weight: 500; letter-spacing: 0.12px">品牌设计</text>
+              </view>
+              <view style="width: 54px; height: 18.50px; left: 57.50px; top: 0px; position: absolute; background: linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px">
+                <text style="left: 7px; top: 2.25px; position: absolute; color: #1F2937; font-size: 10px; font-family: Inter; font-weight: 500; letter-spacing: 0.12px">平面设计</text>
+              </view>
+              <view style="width: 25.48px; height: 18.50px; left: 0px; top: 22px; position: absolute; background: rgba(0, 0, 0, 0.08); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px">
+                <text style="width: 12px; left: 7px; top: 2.25px; position: absolute; color: #666666; font-size: 10px; font-family: Inter; font-weight: 500; letter-spacing: 0.12px">+1</text>
+              </view>
+            </view>
+          </view>
+          <view style="width: 21px; height: 21px; left: 135.25px; top: -3.50px; position: absolute; border-radius: 8.50px" bindtap="showEditModal" data-id="2" data-name="未命名作品">
+            <image src="/assets/images/4_new.svg" style="left: 3.50px; top: 3.50px; position: absolute; width: 14px; height: 14px" />
+          </view>
+        </view>
+        <!-- 图片区: 177.25px × 236.33px -->
+        <view style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute">
+          <image src="/assets/images/11.png" style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute" />
+          <view style="width: 57.14px; height: 21px; left: 7px; top: 7px; position: absolute; background: rgba(0, 0, 0, 0.40); border-radius: 3.50px">
+            <text style="width: 44px; left: 7px; top: 3.50px; position: absolute; color: white; font-size: 10.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.09px">13张图片</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 左下卡片: 177.25px × 335.58px 青色渐变 -->
+      <view style="width: 177.25px; height: 335.58px; left: 0px; top: 332.83px; position: absolute; background: linear-gradient(135deg, #14B8A6 0%, #06B6D4 100%); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); overflow: hidden; border-radius: 14px" bindtap="goToDetail" data-id="3" data-name="2025双11，幕下满山云作品！">
+        <!-- 卡片内容区: 156.25px × 78.25px -->
+        <view style="width: 156.25px; height: 78.25px; left: 10.50px; top: 246.83px; position: absolute">
+          <view style="width: 135.25px; height: 78.25px; left: 0px; top: 0px; position: absolute">
+            <view style="width: 135.25px; height: 35px; left: 0px; top: 0px; position: absolute; overflow: hidden">
+              <text style="width: 135.25px; left: 0px; top: 0.50px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 500">2025双11，幕下满山云作品！</text>
+            </view>
+            <view style="width: 135.25px; height: 14px; left: 0px; top: 36.75px; position: absolute">
+              <text style="width: 50px; left: 0px; top: 0px; position: absolute; color: rgba(255, 254.99, 254.98, 0.70); font-size: 10.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.09px">2张图片</text>
+            </view>
+            <view style="width: 135.25px; height: 20.50px; left: 0px; top: 52.50px; position: absolute">
+              <view style="width: 56px; height: 20.50px; left: 0px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px">
+                <text style="left: 8px; top: 3.25px; position: absolute; color: white; font-size: 10px; font-family: Inter; font-weight: 500; letter-spacing: 0.12px">电商设计</text>
+              </view>
+              <view style="width: 56px; height: 20.50px; left: 59.50px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px">
+                <text style="left: 8px; top: 3.25px; position: absolute; color: white; font-size: 10px; font-family: Inter; font-weight: 500; letter-spacing: 0.12px">海报设计</text>
+              </view>
+            </view>
+          </view>
+          <view style="width: 21px; height: 21px; left: 135.25px; top: -3.50px; position: absolute; border-radius: 8.50px" bindtap="showEditModal" data-id="3" data-name="2025双11，幕下满山云作品！">
+            <image src="/assets/images/5_new.svg" style="left: 3.50px; top: 3.50px; position: absolute; width: 14px; height: 14px" />
+          </view>
+        </view>
+        <!-- 图片区: 177.25px × 236.33px -->
+        <view style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute">
+          <image src="/assets/images/9.png" style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute; opacity: 0.60" />
+          <view style="width: 60px; height: 21px; left: 7px; top: 7px; position: absolute; background: rgba(0, 0, 0, 0.40); border-radius: 3.50px">
+            <text style="width: 50px; left: 7px; top: 3.50px; position: absolute; color: white; font-size: 10.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.09px">2张图片</text>
+          </view>
+          <view style="width: 63.22px; height: 28px; left: 57.02px; top: 194.33px; position: absolute">
+            <text style="left: 0px; top: -0.50px; position: absolute; color: #FB2C36; font-size: 21px; font-family: Inter; font-weight: 400">11.11</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 右下卡片: 177.25px × 318.08px 红色渐变 -->
+      <view style="width: 177.25px; height: 318.08px; left: 187.75px; top: 332.83px; position: absolute; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); overflow: hidden; border-radius: 14px" bindtap="goToDetail" data-id="4" data-name="云作品写给你的欢迎信">
+        <!-- 卡片内容区: 156.25px × 60.75px -->
+        <view style="width: 156.25px; height: 60.75px; left: 10.50px; top: 246.83px; position: absolute">
+          <view style="width: 135.25px; height: 60.75px; left: 0px; top: 0px; position: absolute">
+            <view style="width: 135.25px; height: 17.50px; left: 0px; top: 0px; position: absolute; overflow: hidden">
+              <text style="left: 0px; top: 0.50px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 500">云作品写给你的欢迎信</text>
+            </view>
+            <view style="width: 135.25px; height: 14px; left: 0px; top: 19.25px; position: absolute">
+              <text style="width: 50px; left: 0px; top: 0px; position: absolute; color: rgba(255, 254.99, 254.98, 0.70); font-size: 10.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.09px">2张图片</text>
+            </view>
+            <view style="width: 135.25px; height: 20.50px; left: 0px; top: 35px; position: absolute">
+              <view style="width: 36px; height: 20.50px; left: 0px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px">
+                <text style="left: 8px; top: 3.25px; position: absolute; color: white; font-size: 10px; font-family: Inter; font-weight: 500; letter-spacing: 0.12px">插画</text>
+              </view>
+              <view style="width: 36px; height: 20.50px; left: 39.50px; top: 0px; position: absolute; background: rgba(255, 255, 255, 0.25); box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px">
+                <text style="left: 8px; top: 3.25px; position: absolute; color: white; font-size: 10px; font-family: Inter; font-weight: 500; letter-spacing: 0.12px">摄影</text>
+              </view>
+            </view>
+          </view>
+          <view style="width: 21px; height: 21px; left: 135.25px; top: -3.50px; position: absolute; border-radius: 8.50px" bindtap="showEditModal" data-id="4" data-name="云作品写给你的欢迎信">
+            <image src="/assets/images/6_new.svg" style="left: 3.50px; top: 3.50px; position: absolute; width: 14px; height: 14px" />
+          </view>
+        </view>
+        <!-- 图片区: 177.25px × 236.33px -->
+        <view style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute">
+          <image src="/assets/images/7.png" style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute; opacity: 0.60" />
+          <view style="width: 60px; height: 21px; left: 7px; top: 7px; position: absolute; background: rgba(0, 0, 0, 0.40); border-radius: 3.50px">
+            <text style="width: 50px; left: 7px; top: 3.50px; position: absolute; color: white; font-size: 10.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.09px">2张图片</text>
+          </view>
+          <view style="width: 120px; height: 35px; left: 14px; top: 187.33px; position: absolute">
+            <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 31.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.40px">👋👋👋</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <!-- 编辑弹窗 -->
+  <view class="edit-modal" wx:if="{{showEditModal}}" style="width: 393px; height: 865px; left: 0px; top: 0px; position: fixed; z-index: 1000">
+    <!-- 遮罩层 -->
+    <view class="modal-mask" style="width: 393px; height: 852px; left: 0px; top: 0px; position: absolute; background: rgba(0, 0, 0, 0.50)" bindtap="hideEditModal"></view>
+    
+    <!-- 弹窗内容: 393px × 509.50px -->
+    <view class="modal-content" style="width: 393px; height: 509.50px; left: 0px; bottom: 0px; position: absolute; background: #F8F9FD; border-top-left-radius: 10.50px; border-top-right-radius: 10.50px; border-top: 1px #E5E7EB solid">
+      <!-- 拖拽条 -->
+      <view style="width: 100px; height: 7px; left: 146.50px; top: 15px; position: absolute; background: #F1F3F9; border-radius: 16777200px"></view>
+      
+      <!-- 标题栏: 393px × 50px -->
+      <view style="width: 393px; height: 50px; left: 0px; top: 22px; position: absolute; border-bottom: 1px #E5E7EB solid">
+        <view style="width: 365px; height: 21px; left: 14px; top: 14px; position: absolute">
+          <view style="left: 147.50px; top: 0px; position: absolute; text-align: center">
+            <text style="color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 600">{{currentWorkName}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 菜单列表: 393px × 385px -->
+      <view style="width: 393px; height: 385px; left: 0px; top: 72px; position: absolute">
+        <!-- 编辑作品 -->
+        <view class="menu-item" style="width: 393px; height: 45.50px; left: 0px; top: 7px; position: absolute" bindtap="editWork">
+          <image src="/assets/images/10.svg" style="left: 14px; top: 14px; position: absolute; width: 14px; height: 14px" />
+          <view style="width: 56px; height: 21px; left: 42px; top: 12.25px; position: absolute">
+            <text style="color: #101828; font-size: 14px; font-family: Inter; font-weight: 400">编辑作品</text>
+          </view>
+        </view>
+        
+        <!-- 重命名 -->
+        <view class="menu-item" style="width: 393px; height: 45.50px; left: 0px; top: 52.50px; position: absolute" bindtap="renameWork">
+          <image src="/assets/images/11.svg" style="left: 14px; top: 14px; position: absolute; width: 14px; height: 14px" />
+          <view style="width: 42px; height: 21px; left: 42px; top: 12.25px; position: absolute">
+            <text style="color: #101828; font-size: 14px; font-family: Inter; font-weight: 400">重命名</text>
+          </view>
+        </view>
+        
+        <!-- 设置封面 -->
+        <view class="menu-item" style="width: 393px; height: 45.50px; left: 0px; top: 98px; position: absolute" bindtap="setCover">
+          <image src="/assets/images/12.svg" style="left: 14px; top: 14px; position: absolute; width: 14px; height: 14px" />
+          <view style="width: 56px; height: 21px; left: 42px; top: 12.25px; position: absolute">
+            <text style="color: #101828; font-size: 14px; font-family: Inter; font-weight: 400">设置封面</text>
+          </view>
+        </view>
+        
+        <!-- 管理标签 -->
+        <view class="menu-item" style="width: 393px; height: 45.50px; left: 0px; top: 143.50px; position: absolute" bindtap="manageTags">
+          <image src="/assets/images/13.svg" style="left: 14px; top: 14px; position: absolute; width: 14px; height: 14px" />
+          <view style="width: 56px; height: 21px; left: 42px; top: 12.25px; position: absolute">
+            <text style="color: #101828; font-size: 14px; font-family: Inter; font-weight: 400">管理标签</text>
+          </view>
+        </view>
+        
+        <!-- 卡片装饰 -->
+        <view class="menu-item" style="width: 393px; height: 45.50px; left: 0px; top: 189px; position: absolute" bindtap="cardDecoration">
+          <image src="/assets/images/14.svg" style="left: 14px; top: 14px; position: absolute; width: 14px; height: 14px" />
+          <view style="width: 56px; height: 21px; left: 42px; top: 12.25px; position: absolute">
+            <text style="color: #101828; font-size: 14px; font-family: Inter; font-weight: 400">卡片装饰</text>
+          </view>
+        </view>
+        
+        <!-- 分享作品 -->
+        <view class="menu-item" style="width: 393px; height: 45.50px; left: 0px; top: 234.50px; position: absolute" bindtap="shareWork">
+          <image src="/assets/images/15.svg" style="left: 14px; top: 14px; position: absolute; width: 14px; height: 14px" />
+          <view style="width: 56px; height: 21px; left: 42px; top: 12.25px; position: absolute">
+            <text style="color: #101828; font-size: 14px; font-family: Inter; font-weight: 400">分享作品</text>
+          </view>
+        </view>
+        
+        <!-- 复制作品 -->
+        <view class="menu-item" style="width: 393px; height: 45.50px; left: 0px; top: 280px; position: absolute" bindtap="copyWork">
+          <image src="/assets/images/16.svg" style="left: 14px; top: 14px; position: absolute; width: 14px; height: 14px" />
+          <view style="width: 56px; height: 21px; left: 42px; top: 12.25px; position: absolute">
+            <text style="color: #101828; font-size: 14px; font-family: Inter; font-weight: 400">复制作品</text>
+          </view>
+        </view>
+        
+        <!-- 分隔线 -->
+        <view style="width: 393px; height: 7px; left: 0px; top: 325.50px; position: absolute; background: #F3F4F6"></view>
+        
+        <!-- 删除作品 -->
+        <view class="menu-item danger" style="width: 393px; height: 45.50px; left: 0px; top: 332.50px; position: absolute" bindtap="deleteWork">
+          <image src="/assets/images/17.svg" style="left: 14px; top: 14px; position: absolute; width: 14px; height: 14px" />
+          <view style="width: 56px; height: 21px; left: 42px; top: 12.25px; position: absolute">
+            <text style="color: #E7000B; font-size: 14px; font-family: Inter; font-weight: 400">删除作品</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 取消按钮 -->
+      <view class="cancel-btn" style="width: 365px; height: 31.50px; left: 14px; bottom: 14px; position: absolute; background: #F8F9FD; border-radius: 8.50px; outline: 1px #E5E7EB solid; outline-offset: -1px" bindtap="hideEditModal">
+        <text style="left: 170.25px; top: 7.50px; position: absolute; color: #1A1D2E; font-size: 12.25px; font-family: Inter; font-weight: 500">取消</text>
+      </view>
+    </view>
+  </view>
+
+
+  
+  <!-- 引入个人资料侧边栏 -->
+  <include src="./profile.wxml" />
+
+</view>
