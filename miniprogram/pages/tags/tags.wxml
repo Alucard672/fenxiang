@@ -1,48 +1,16 @@
 <!-- 标签页面 - 1:1像素级还原Figma设计 -->
 <view class="page" style="width: 393px; height: 865px; left: 0px; top: 0px; position: absolute; background: #F8F9FD; overflow: hidden">
   
-  <!-- 头部: 393px × 57px -->
-  <view style="width: 393px; height: 57px; left: 0px; top: 0px; position: absolute; background: white; border-bottom: 1px #F3F4F6 solid">
-    <view style="width: 365px; height: 35px; left: 14px; top: 10.50px; position: absolute">
-      <!-- 返回按钮: 35px × 35px -->
-      <view style="width: 35px; height: 35px; left: 0px; top: 0px; position: absolute" bindtap="goBack">
-        <image src="/assets/images/8.svg" style="width: 35px; height: 35px; left: 0px; top: 0px; position: absolute" />
-      </view>
-      <!-- 标题 -->
-      <view style="width: 140px; height: 35px; left: 140px; top: 0px; position: absolute">
-        <text style="left: 0px; top: 7px; position: absolute; color: #1A1D2E; font-size: 18px; font-family: Inter; font-weight: 600">作品标签</text>
-      </view>
-    </view>
-  </view>
-
-  <!-- 主内容: 393px × 738.41px -->
-  <view style="width: 393px; height: 738.41px; left: 0px; top: 57px; position: absolute; background: #F9FAFB">
+  <!-- 主内容: 393px × 795.41px -->
+  <view style="width: 393px; height: 795.41px; left: 0px; top: 0px; position: absolute; background: #F9FAFB">
     
-    <!-- 标签库统计卡片: 365px × 65px -->
-    <view style="width: 365px; height: 65px; left: 14px; top: 14px; position: absolute; background: linear-gradient(90deg, #EFF6FF 0%, #FAF5FF 100%); border-radius: 14.50px; outline: 1px #DBEAFE solid; outline-offset: -1px">
-      <view style="width: 75.16px; height: 33.25px; left: 11.50px; top: 15.88px; position: absolute">
-        <view style="width: 75.16px; height: 17.50px; left: 0px; top: 0px; position: absolute">
-          <text style="left: 0px; top: 0.50px; position: absolute; color: #101828; font-size: 12.25px; font-family: Inter; font-weight: 500">标签库</text>
-        </view>
-        <view style="width: 75.16px; height: 14px; left: 0px; top: 19.25px; position: absolute">
-          <text style="left: 0px; top: 0px; position: absolute; color: #6A7282; font-size: 10.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.09px">已创建 {{tags.length}} 个标签</text>
-        </view>
-      </view>
-      <view style="width: 42px; height: 42px; left: 311.50px; top: 11.50px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 16777200px" bindtap="addNewTag">
-        <image src="/assets/images/30.svg" style="left: 10.50px; top: 10.50px; position: absolute; width: 21px; height: 21px" />
-      </view>
-    </view>
-
-    <!-- 标签列表区域: 365px × 314.25px -->
-    <view style="width: 365px; height: 600px; left: 14px; top: 93px; position: absolute; overflow-y: auto" catchtouchmove="true">
+    <!-- 标签列表区域: 365px × 600px -->
+    <view style="width: 365px; height: 600px; left: 14px; top: 14px; position: absolute; overflow-y: auto" catchtouchmove="true">
       
       <view wx:for="{{tags}}" wx:key="id" wx:for-index="index" style="width: 178.13px; height: 72px; left: {{index % 2 === 0 ? '0px' : '186.88px'}}; top: {{Math.floor(index / 2) * 80.75}}px; position: absolute; background: {{item.background}}; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); overflow: hidden; border-radius: 14.50px" bindtap="editTag" data-id="{{item.id}}">
         <view style="width: 178.13px; height: 57px; left: 0px; top: 0px; position: absolute">
-          <view style="width: 109.88px; height: 17.50px; left: 12.25px; top: 12.25px; position: absolute; overflow: hidden">
+          <view style="width: 109.88px; height: 17.50px; left: 12.25px; top: 27.25px; position: absolute; overflow: hidden">
             <text style="left: 0px; top: 0.50px; position: absolute; color: {{item.color}}; font-size: 12.25px; font-family: Inter; font-weight: 500">{{item.name}}</text>
-          </view>
-          <view style="width: 109.88px; height: 15px; left: 12.25px; top: 31.50px; position: absolute; opacity: 0.60">
-            <text style="left: 0px; top: 0.50px; position: absolute; color: {{item.color}}; font-size: 10px; font-family: Inter; font-weight: 400; letter-spacing: 0.12px">#{{item.rank}}</text>
           </view>
         </view>
         <view style="width: 52.50px; height: 24.50px; left: 118.63px; top: 7px; position: absolute">
@@ -60,9 +28,69 @@
     </view>
 
     <!-- 添加新标签按钮: 365px × 42px -->
-    <view style="width: 365px; height: 42px; left: 14px; bottom: 20px; position: absolute; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px" bindtap="addNewTag">
+    <view style="width: 365px; height: 42px; left: 14px; top: 695px; position: absolute; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px; z-index: 100" bindtap="showAddTagModal">
       <image src="/assets/images/30.svg" style="left: 137.88px; top: 14px; position: absolute; width: 14px; height: 14px" />
       <text style="left: 165.88px; top: 12.75px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 500">添加新标签</text>
+    </view>
+  </view>
+
+  <!-- 新增标签弹窗 -->
+  <view wx:if="{{showAddTagModal}}" style="width: 393px; height: 865px; left: 0px; top: 0px; position: fixed; z-index: 1000">
+    <!-- 遮罩层 -->
+    <view style="width: 393px; height: 865px; left: 0px; top: 0px; position: absolute; background: rgba(0, 0, 0, 0.50)" bindtap="hideAddTagModal"></view>
+    
+    <!-- 弹窗内容: 393px × 400px -->
+    <view style="width: 393px; height: 400px; left: 0px; top: 232.50px; position: absolute; background: #F8F9FD; border-radius: 10.50px; border: 1px #E5E7EB solid">
+      <!-- 拖拽条 -->
+      <view style="width: 100px; height: 7px; left: 146.50px; top: 15px; position: absolute; background: #F1F3F9; border-radius: 16777200px"></view>
+      
+      <!-- 标题: 393px × 21px -->
+      <view style="width: 365px; height: 21px; left: 14px; top: 36px; position: absolute">
+        <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 600">新增标签</text>
+      </view>
+      
+      <!-- 表单内容: 393px × 250px -->
+      <view style="width: 393px; height: 250px; left: 0px; top: 71px; position: absolute">
+        <!-- 标签名称输入框 -->
+        <view style="width: 365px; height: 80px; left: 14px; top: 14px; position: absolute">
+          <view style="width: 365px; height: 17.50px; left: 0px; top: 0px; position: absolute">
+            <text style="left: 0px; top: 0.50px; position: absolute; color: #101828; font-size: 12.25px; font-family: Inter; font-weight: 500">标签名称</text>
+          </view>
+          <input style="width: 365px; height: 45.50px; left: 0px; top: 24.50px; position: absolute; background: white; border-radius: 8.50px; border: 1px #E5E7EB solid; padding: 0 14px; color: #101828; font-size: 14px; font-family: Inter" placeholder="请输入标签名称" value="{{newTagName}}" bindinput="onTagNameInput" />
+        </view>
+        
+        <!-- 标签颜色选择 -->
+        <view style="width: 365px; height: 80px; left: 14px; top: 102px; position: absolute">
+          <view style="width: 365px; height: 17.50px; left: 0px; top: 0px; position: absolute">
+            <text style="left: 0px; top: 0.50px; position: absolute; color: #101828; font-size: 12.25px; font-family: Inter; font-weight: 500">选择颜色</text>
+          </view>
+          <view style="width: 365px; height: 52.50px; left: 0px; top: 24.50px; position: absolute">
+            <view wx:for="{{colorOptions}}" wx:key="index" wx:for-index="index" style="width: 42px; height: 42px; left: {{index * 52.50}}px; top: 0px; position: absolute; background: {{item.background}}; border-radius: 8.50px; border: 2px solid {{selectedColorIndex === index ? item.color : 'transparent'}}" bindtap="selectColor" data-index="{{index}}">
+              <view style="width: 21px; height: 21px; left: 10.50px; top: 10.50px; position: absolute; background: {{item.color}}; border-radius: 16777200px"></view>
+            </view>
+          </view>
+        </view>
+        
+        <!-- 排序输入框 -->
+        <view style="width: 365px; height: 50px; left: 14px; top: 190px; position: absolute">
+          <view style="width: 365px; height: 17.50px; left: 0px; top: 0px; position: absolute">
+            <text style="left: 0px; top: 0.50px; position: absolute; color: #101828; font-size: 12.25px; font-family: Inter; font-weight: 500">排序</text>
+          </view>
+          <input style="width: 365px; height: 45.50px; left: 0px; top: 24.50px; position: absolute; background: white; border-radius: 8.50px; border: 1px #E5E7EB solid; padding: 0 14px; color: #101828; font-size: 14px; font-family: Inter" placeholder="请输入排序数字" value="{{newTagRank}}" type="number" bindinput="onTagRankInput" />
+        </view>
+      </view>
+      
+      <!-- 按钮区域: 393px × 50px -->
+      <view style="width: 393px; height: 50px; left: 0px; bottom: 14px; position: absolute">
+        <!-- 取消按钮 -->
+        <view style="width: 175.50px; height: 31.50px; left: 14px; top: 9.25px; position: absolute; background: #F8F9FD; border-radius: 8.50px; border: 1px #E5E7EB solid" bindtap="hideAddTagModal">
+          <text style="left: 76.75px; top: 7.50px; position: absolute; color: #1A1D2E; font-size: 12.25px; font-family: Inter; font-weight: 500">取消</text>
+        </view>
+        <!-- 确认按钮 -->
+        <view style="width: 175.50px; height: 31.50px; left: 203.50px; top: 9.25px; position: absolute; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); border-radius: 8.50px" bindtap="confirmAddTag">
+          <text style="left: 76.75px; top: 7.50px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 500">确认</text>
+        </view>
+      </view>
     </view>
   </view>
 

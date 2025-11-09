@@ -102,9 +102,6 @@
       </view>
     </view>
 
-    <!-- 关闭按钮: 14px × 14px -->
-    <view class="close-btn" style="width: 14px; height: 14px; left: 272px; top: 14px; position: absolute; opacity: 0.70; border-radius: 1.75px" bindtap="hideProfile">
-      <image src="/assets/images/20.svg" style="width: 14px; height: 14px" />
-    </view>
+
   </view>
 </view>

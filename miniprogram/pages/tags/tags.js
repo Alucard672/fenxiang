@@ -50,6 +50,40 @@ Page({
         background: 'linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%)',
         rank: 7
       }
+    ],
+    showAddTagModal: false,
+    newTagName: '',
+    newTagRank: '',
+    selectedColorIndex: 0,
+    colorOptions: [
+      {
+        color: '#DC2626',
+        background: 'linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%)'
+      },
+      {
+        color: '#2563EB',
+        background: 'linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%)'
+      },
+      {
+        color: '#7C3AED',
+        background: 'linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%)'
+      },
+      {
+        color: '#D97706',
+        background: 'linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%)'
+      },
+      {
+        color: '#EA580C',
+        background: 'linear-gradient(135deg, #FFEDD5 0%, #FED7AA 100%)'
+      },
+      {
+        color: '#DB2777',
+        background: 'linear-gradient(135deg, #FCE7F3 0%, #FBCFE8 100%)'
+      },
+      {
+        color: '#059669',
+        background: 'linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%)'
+      }
     ]
   },
 
@@ -68,13 +102,89 @@ Page({
     })
   },
 
-  // 添加新标签
-  addNewTag() {
-    wx.showToast({
-      title: '添加新标签功能',
-      icon: 'none'
+  // 显示新增标签弹窗
+  showAddTagModal() {
+    this.setData({
+      showAddTagModal: true,
+      newTagName: '',
+      newTagRank: '',
+      selectedColorIndex: 0
     })
-    // TODO: 跳转到添加标签页面或显示添加标签弹窗
+  },
+
+  // 隐藏新增标签弹窗
+  hideAddTagModal() {
+    this.setData({
+      showAddTagModal: false
+    })
+  },
+
+  // 输入标签名称
+  onTagNameInput(e) {
+    this.setData({
+      newTagName: e.detail.value
+    })
+  },
+
+  // 输入标签排序
+  onTagRankInput(e) {
+    this.setData({
+      newTagRank: e.detail.value
+    })
+  },
+
+  // 选择颜色
+  selectColor(e) {
+    const index = e.currentTarget.dataset.index
+    this.setData({
+      selectedColorIndex: index
+    })
+  },
+
+  // 确认添加标签
+  confirmAddTag() {
+    const { newTagName, newTagRank, selectedColorIndex, colorOptions } = this.data
+    
+    if (!newTagName.trim()) {
+      wx.showToast({
+        title: '请输入标签名称',
+        icon: 'none'
+      })
+      return
+    }
+
+    if (!newTagRank.trim()) {
+      wx.showToast({
+        title: '请输入排序',
+        icon: 'none'
+      })
+      return
+    }
+
+    const newTag = {
+      id: Date.now().toString(),
+      name: newTagName,
+      color: colorOptions[selectedColorIndex].color,
+      background: colorOptions[selectedColorIndex].background,
+      rank: parseInt(newTagRank)
+    }
+
+    const tags = [...this.data.tags, newTag].sort((a, b) => a.rank - b.rank)
+    
+    this.setData({
+      tags,
+      showAddTagModal: false
+    })
+
+    wx.showToast({
+      title: '添加成功',
+      icon: 'success'
+    })
+  },
+
+  // 添加新标签（兼容旧方法）
+  addNewTag() {
+    this.showAddTagModal()
   },
 
   // 编辑标签
