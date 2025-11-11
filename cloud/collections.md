@@ -26,6 +26,75 @@
 
 ---
 
+## 集合：customFields（自定义字段）
+### 字段
+- `_id`: ObjectId（主键）
+- `openid`: String（用户唯一标识）
+- `name`: String（字段名称，例：\"客户\"）
+- `icon`: String（图标编号，例：\"11\"）
+- `color`: String（颜色类型，例：\"orange\"）
+- `colorObj`: Object（颜色配置对象）
+  - `background`: String（背景渐变）
+  - `text`: String（文字颜色）
+- `rank`: Number（排序权重）
+- `createdAt`: Date（创建时间）
+- `updatedAt`: Date（更新时间）
+
+### 索引
+- `openid` + `rank`（复合索引，用户自定义字段排序）
+
+### 权限
+- 读：仅创建者可读
+- 写：仅创建者可写
+- 管理员：全读写
+
+---
+
+## 集合：tags（标签）
+### 字段
+- `_id`: ObjectId（主键）
+- `openid`: String（用户唯一标识）
+- `name`: String（标签名称，例："品牌设计"）
+- `color`: String（标签颜色，例："#DC2626"）
+- `background`: String（背景渐变，例："linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%)"）
+- `rank`: Number（排序权重）
+- `createdAt`: Date（创建时间）
+- `updatedAt`: Date（更新时间）
+
+### 索引
+- `openid` + `rank`（复合索引，用户标签排序）
+
+### 权限
+- 读：仅创建者可读
+- 写：仅创建者可写
+- 管理员：全读写
+
+---
+
+## 集合：customFields（自定义字段）
+### 字段
+- `_id`: ObjectId（主键）
+- `openid`: String（用户唯一标识）
+- `name`: String（字段名称，例：\"客户\"）
+- `icon`: String（图标编号，例：\"11\"）
+- `color`: String（颜色类型，例：\"orange\"）
+- `colorObj`: Object（颜色配置对象）
+  - `background`: String（背景渐变）
+  - `text`: String（文字颜色）
+- `rank`: Number（排序权重）
+- `createdAt`: Date（创建时间）
+- `updatedAt`: Date（更新时间）
+
+### 索引
+- `openid` + `rank`（复合索引，用户自定义字段排序）
+
+### 权限
+- 读：仅创建者可读
+- 写：仅创建者可写
+- 管理员：全读写
+
+---
+
 ## 集合：users（用户）
 ### 字段
 - `_id`: ObjectId
@@ -44,9 +113,57 @@
 
 ---
 
+## 集合：customFields（自定义字段）
+### 字段
+- `_id`: ObjectId（主键）
+- `openid`: String（用户唯一标识）
+- `name`: String（字段名称，例：\"客户\"）
+- `icon`: String（图标编号，例：\"11\"）
+- `color`: String（颜色类型，例：\"orange\"）
+- `colorObj`: Object（颜色配置对象）
+  - `background`: String（背景渐变）
+  - `text`: String（文字颜色）
+- `rank`: Number（排序权重）
+- `createdAt`: Date（创建时间）
+- `updatedAt`: Date（更新时间）
+
+### 索引
+- `openid` + `rank`（复合索引，用户自定义字段排序）
+
+### 权限
+- 读：仅创建者可读
+- 写：仅创建者可写
+- 管理员：全读写
+
+---
+
 ## 云存储目录
 - `covers/`：封面图
 - `images/`：作品内容图片
+
+---
+
+## 集合：customFields（自定义字段）
+### 字段
+- `_id`: ObjectId（主键）
+- `openid`: String（用户唯一标识）
+- `name`: String（字段名称，例：\"客户\"）
+- `icon`: String（图标编号，例：\"11\"）
+- `color`: String（颜色类型，例：\"orange\"）
+- `colorObj`: Object（颜色配置对象）
+  - `background`: String（背景渐变）
+  - `text`: String（文字颜色）
+- `rank`: Number（排序权重）
+- `createdAt`: Date（创建时间）
+- `updatedAt`: Date（更新时间）
+
+### 索引
+- `openid` + `rank`（复合索引，用户自定义字段排序）
+
+### 权限
+- 读：仅创建者可读
+- 写：仅创建者可写
+- 管理员：全读写
 
 ---
 
@@ -57,7 +174,33 @@
 4. `uploadImages`：批量上传图片到云存储，返回 fileId 列表
 5. `updateWork`：更新作品信息（标题、标签、描述）
 6. `deleteWork`：删除作品（级联删除云存储图片）
-7. `getUserInfo`：获取用户信息（昵称、头像）
+7. `getUserInfo`：获取/更新用户信息（昵称、头像）
+8. `manageTags`：标签管理（增删改查）
+9. `manageCustomFields`：自定义字段管理（增删改查、排序）
+
+---
+
+## 集合：customFields（自定义字段）
+### 字段
+- `_id`: ObjectId（主键）
+- `openid`: String（用户唯一标识）
+- `name`: String（字段名称，例：\"客户\"）
+- `icon`: String（图标编号，例：\"11\"）
+- `color`: String（颜色类型，例：\"orange\"）
+- `colorObj`: Object（颜色配置对象）
+  - `background`: String（背景渐变）
+  - `text`: String（文字颜色）
+- `rank`: Number（排序权重）
+- `createdAt`: Date（创建时间）
+- `updatedAt`: Date（更新时间）
+
+### 索引
+- `openid` + `rank`（复合索引，用户自定义字段排序）
+
+### 权限
+- 读：仅创建者可读
+- 写：仅创建者可写
+- 管理员：全读写
 
 ---
 

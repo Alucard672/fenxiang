@@ -15,5 +15,19 @@
   },
   "cloud": true,
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.writePhotosAlbum": {
+      "desc": "用于保存图片到相册"
+    },
+    "scope.camera": {
+      "desc": "用于拍摄照片"
+    },
+    "scope.album": {
+      "desc": "用于从相册选择图片"
+    }
+  },
+  "requiredPrivateInfos": [
+    "chooseLocation"
+  ]
 }

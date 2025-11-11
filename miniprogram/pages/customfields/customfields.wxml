@@ -1,4 +1,5 @@
-<view style="width: 393px; min-height: 844px; background: #F8F9FD; padding: 21px 14px;">
+<scroll-view style="width: 393px; height: 844px; background: #F8F9FD;" scroll-y="true" enhanced="true" show-scrollbar="false">
+  <view style="padding: 21px 14px;">
   
   <!-- 页面标题 -->
   <view style="width: 365px; height: 50px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 21px;">
@@ -9,14 +10,20 @@
   </view>
 
   <!-- 字段列表 -->
-  <view wx:if="{{customFields.length > 0}}" style="width: 365px;">
-    <view wx:for="{{customFields}}" wx:key="id" style="width: 365px; height: 87.50px; background: white; border-radius: 10.50px; outline: 1px #E5E7EB solid; outline-offset: -1px; margin-bottom: 14px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+  <view wx:if="{{customFields.length > 0}}" style="width: 365px; padding-bottom: 120px; box-sizing: border-box;">
+    <view wx:for="{{customFields}}" wx:key="_id"
+          data-index="{{index}}"
+          bindlongpress="handleDragStart"
+          catchtouchmove="handleDragMove"
+          catchtouchend="handleDragEnd"
+          catchtouchcancel="handleDragCancel"
+          style="width: 365px; height: 87.50px; background: white; border-radius: 10.50px; outline: 1px #E5E7EB solid; outline-offset: -1px; margin-bottom: 14px; padding: 14px; display: flex; align-items: center; justify-content: space-between; {{draggingIndex === index ? 'opacity:0.85; transform: scale(0.98); box-shadow: 0px 8px 16px rgba(15, 23, 42, 0.12); position: relative; z-index: 10;' : ''}}">
       
       <!-- 左侧：字段预览 -->
       <view style="display: flex; align-items: center; flex: 1;">
-        <view style="width: 49px; height: 21px; background: {{item.colorObj.background}}; border-radius: 16777200px; margin-right: 14px; display: flex; align-items: center; justify-content: center;">
-          <image src="/assets/images/{{item.icon}}.svg" style="width: 10.50px; height: 10.50px; margin-right: 3.50px;"></image>
-          <text style="color: {{item.colorObj.text}}; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px;">{{item.name}}</text>
+        <view style="width: 49px; height: 21px; background: {{item.colorObj.background || '#F3F4F6'}}; border-radius: 16777200px; margin-right: 14px; display: flex; align-items: center; justify-content: center;">
+          <image src="/assets/images/{{item.icon || 'client-icon'}}.svg" style="width: 10.50px; height: 10.50px; margin-right: 3.50px;"></image>
+          <text style="color: {{item.colorObj.text || '#1F2937'}}; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px;">{{item.name}}</text>
         </view>
         <text style="color: #9CA3AF; font-size: 14px; font-weight: 400;">待点添加</text>
       </view>
@@ -24,22 +31,22 @@
       <!-- 右侧：操作按钮 -->
       <view style="display: flex; align-items: center; gap: 8px;">
         <!-- 上移按钮 -->
-        <view wx:if="{{index > 0}}" style="width: 32px; height: 32px; background: #F3F4F6; border-radius: 6px; display: flex; align-items: center; justify-content: center;" bindtap="moveFieldUp" data-id="{{item.id}}">
+        <view wx:if="{{index > 0}}" style="width: 32px; height: 32px; background: #F3F4F6; border-radius: 6px; display: flex; align-items: center; justify-content: center;" catchtap="moveFieldUp" data-id="{{item._id}}">
           <text style="color: #6B7280; font-size: 16px;">↑</text>
         </view>
         
         <!-- 下移按钮 -->
-        <view wx:if="{{index < customFields.length - 1}}" style="width: 32px; height: 32px; background: #F3F4F6; border-radius: 6px; display: flex; align-items: center; justify-content: center;" bindtap="moveFieldDown" data-id="{{item.id}}">
+        <view wx:if="{{index < customFields.length - 1}}" style="width: 32px; height: 32px; background: #F3F4F6; border-radius: 6px; display: flex; align-items: center; justify-content: center;" catchtap="moveFieldDown" data-id="{{item._id}}">
           <text style="color: #6B7280; font-size: 16px;">↓</text>
         </view>
         
         <!-- 编辑按钮 -->
-        <view style="width: 32px; height: 32px; background: #DBEAFE; border-radius: 6px; display: flex; align-items: center; justify-content: center;" bindtap="editField" data-id="{{item.id}}">
+        <view style="width: 32px; height: 32px; background: #DBEAFE; border-radius: 6px; display: flex; align-items: center; justify-content: center;" catchtap="editField" data-id="{{item._id}}">
           <text style="color: #1E40AF; font-size: 12px;">编辑</text>
         </view>
         
         <!-- 删除按钮 -->
-        <view style="width: 32px; height: 32px; background: #FEE2E2; border-radius: 6px; display: flex; align-items: center; justify-content: center;" bindtap="deleteField" data-id="{{item.id}}" data-name="{{item.name}}">
+        <view style="width: 32px; height: 32px; background: #FEE2E2; border-radius: 6px; display: flex; align-items: center; justify-content: center;" catchtap="deleteField" data-id="{{item._id}}" data-name="{{item.name}}">
           <text style="color: #DC2626; font-size: 12px;">删除</text>
         </view>
       </view>
@@ -47,12 +54,14 @@
   </view>
 
   <!-- 空状态 -->
-  <view wx:else style="width: 365px; height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <view wx:else style="width: 365px; height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 120px; box-sizing: border-box;">
     <view style="width: 120px; height: 120px; background: #F3F4F6; border-radius: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 21px;">
       <text style="color: #9CA3AF; font-size: 48px; font-weight: 300;">+</text>
     </view>
     <text style="color: #6B7280; font-size: 16px; font-weight: 400; margin-bottom: 14px;">暂无自定义字段</text>
     <text style="color: #9CA3AF; font-size: 14px; font-weight: 400;">点击右上角 + 添加字段</text>
+  </view>
+
   </view>
 
   <!-- 添加字段弹窗 -->
@@ -73,4 +82,4 @@
     </view>
   </view>
 
-</view>
+</scroll-view>

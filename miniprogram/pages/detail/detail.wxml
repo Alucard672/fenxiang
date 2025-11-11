@@ -1,30 +1,33 @@
+<!-- 1:1像素级还原Figma设计 -->
 <view style="width: 393px; height: 1443rpx; left: 0rpx; top: 0rpx; position: absolute; background: #F8F9FD; display: block; box-sizing: border-box">
   
-
   <!-- 主要内容区域 -->
   <view style="width: 393px; height: 1312rpx; left: 0rpx; top: 0rpx; position: absolute; background: #F9FAFB; display: block; box-sizing: border-box">
     
     <!-- 添加图片区域 -->
-    <view style="width: 177.25px; height: 177.25px; left: 14px; top: 14px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 14px; outline: 2px #D1D5DC solid; outline-offset: -2px" bindtap="addImage">
-      <view style="width: 42px; height: 49px; left: 67.63px; top: 64.13px; position: absolute">
-        <view style="width: 42px; height: 31.50px; left: 0px; top: 0px; position: absolute">
-          <view style="width: 42px; left: 0px; top: 0px; position: absolute; text-align: center">
-            <text style="color: #99A1AF; font-size: 26.25px; font-weight: 400; letter-spacing: 0.24px">+</text>
+    <view style="width: 177.25px; height: 177.25px; left: 14px; top: 14px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 14px; outline: 2px #D1D5DC solid; outline-offset: -2px; overflow: hidden;" bindtap="addImage">
+      <block wx:if="{{workDetail.imagePreviews && workDetail.imagePreviews.length}}">
+        <image src="{{workDetail.imagePreviews[0]}}" style="width: 100%; height: 100%; object-fit: cover;" mode="aspectFill" />
+      </block>
+      <block wx:else>
+        <view style="width: 42px; height: 49px; left: 67.63px; top: 64.13px; position: absolute">
+          <view style="width: 42px; height: 31.50px; left: 0px; top: 0px; position: absolute">
+            <view style="width: 42px; left: 0px; top: 0px; position: absolute; text-align: center">
+              <text style="color: #99A1AF; font-size: 26.25px; font-weight: 400; letter-spacing: 0.24px">+</text>
+            </view>
+          </view>
+          <view style="width: 42px; height: 14px; left: 0px; top: 35px; position: absolute">
+            <view style="left: 0px; top: 0px; position: absolute; text-align: center">
+              <text style="color: #6A7282; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">添加图片</text>
+            </view>
           </view>
         </view>
-        <view style="width: 42px; height: 14px; left: 0px; top: 35px; position: absolute">
-          <view style="left: 0px; top: 0px; position: absolute; text-align: center">
-            <text style="color: #6A7282; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">添加图片</text>
-          </view>
-        </view>
-      </view>
+      </block>
     </view>
     
     <!-- 创作者信息 -->
-    <view style="width: 365px; height: 63px; left: 14px; top: 205.25px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 14px">
+    <view style="width: 365px; min-height: 63px; left: 14px; top: 205.25px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 14px">
       <view style="width: 337px; height: 35px; left: 14px; top: 14px; position: absolute">
-        
-        <!-- 创作者信息文本 -->
         <view style="width: 291.50px; height: 31.50px; left: 60.50px; top: 1.75px; position: absolute">
           <view style="width: 291.50px; height: 17.50px; left: 0px; top: 0px; position: absolute; display: flex; align-items: center">
             <view style="left: 0px; top: 0.50px; position: absolute">
@@ -37,158 +40,49 @@
             </view>
           </view>
         </view>
-        
-        <!-- 创作者头像 -->
         <view style="width: 50px; height: 50px; left: 0px; top: -7.50px; position: absolute; overflow: hidden; border-radius: 16777200px">
           <image src="/assets/images/3.svg" style="width: 100%; height: 100%; object-fit: cover;" />
         </view>
-        
       </view>
     </view>
     
     <!-- 作品简介 -->
-    <view style="width: 365px; height: 904rpx; left: 27rpx; top: 543rpx; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); overflow: hidden; border-radius: 14px; display: block; box-sizing: border-box">
-      
-      <!-- 标题栏 -->
-      <view style="width: 337px; height: 17.50px; left: 14px; top: 14px; position: absolute">
-        <view style="width: 49px; height: 17.50px; left: 0px; top: 0px; position: absolute">
-          <view style="left: 0px; top: 0.50px; position: absolute">
-            <text style="color: #1A1D2E; font-size: 12.25px; font-weight: 500">作品简介</text>
-          </view>
-        </view>
-        <view wx:if="{{!workDetail.isNew}}" style="width: 30.76px; height: 14px; left: 306.24px; top: 1.75px; position: absolute" bindtap="editIntro">
-          <view style="left: 0px; top: 0px; position: absolute">
-            <text style="color: #6A7282; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">编辑&nbsp;></text>
-          </view>
+    <view style="width: 365px; min-height: 320px; left: 14px; top: 274px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; box-sizing: border-box">
+      <view style="display: flex; align-items: center; justify-content: space-between;">
+        <text style="color: #1A1D2E; font-size: 12.25px; font-weight: 500;">作品简介</text>
+        <view wx:if="{{!editMode && !workDetail.isNew}}" style="padding: 0 6px; height: 20px; border-radius: 10px; background: #F3F4F6; display: flex; align-items: center;" bindtap="editIntro">
+          <text style="color: #6A7282; font-size: 10.50px; font-weight: 400;">编辑 ></text>
         </view>
       </view>
-      
-      <!-- 详细信息 -->
-      <view style="width: 337px; height: 221px; left: 14px; top: 45.50px; position: absolute">
-        
-        <!-- 客户信息 -->
-        <view style="width: 337px; height: 45px; left: 0px; top: 0px; position: absolute; border-bottom: 1px #F3F4F6 solid">
-          <view style="width: 49px; height: 21px; left: 0px; top: 7px; position: absolute; background: linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%); border-radius: 16777200px; display: flex; align-items: center; justify-content: center">
-            <view data-svg-wrapper style="position: absolute; left: 7px; top: 50%; transform: translateY(-50%);">
-              <image src="/assets/images/4.svg" style="width: 8px; height: 8px;" />
+      <view style="margin-top: 18px; display: flex; flex-direction: column; gap: 18px; max-height: 480px; overflow-y: auto;">
+        <block wx:for="{{customFields}}" wx:key="_id">
+          <view wx:if="{{editMode || workDetail.isNew || fieldValues[item._id] || fieldValues[item.name]}}" style="display: flex; align-items: flex-start;">
+            <view style="min-width: 60px; height: 21px; padding: 0 12px; background: {{item.colorObj.background || '#F3F4F6'}}; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 4px;">
+              <image src="/assets/images/{{item.icon || 'client-icon'}}.svg" style="width: 10.50px; height: 10.50px;"></image>
+              <text style="color: {{item.colorObj.text || '#1F2937'}}; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px;">{{item.name}}</text>
             </view>
-            <view style="position: absolute; left: 21px; top: 50%; transform: translateY(-50%);">
-              <text style="color: #92400E; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">客户</text>
-            </view>
-          </view>
-          <view style="width: 277.50px; height: 25px; left: 59.50px; top: 5.50px; position: absolute; display: flex; align-items: center">
-            <view wx:if="{{editMode}}" style="left: 0px; top: 0px; position: absolute; width: 100%; border-bottom: 1px solid #D1D5DB; padding: 2px 0;">
-              <input style="color: #364153; font-size: 13px; font-weight: 400; background: transparent; border: none; outline: none; width: 100%;" placeholder="待点添加" bindinput="onRemarkInput" value="{{workDetail.remark}}" />
-            </view>
-            <view wx:else style="left: 0px; top: 2px; position: absolute; width: 100%;">
-              <text style="color: {{workDetail.remark === '待点添加' ? '#9CA3AF' : '#364153'}}; font-size: 13px; font-weight: 400;">{{workDetail.remark}}</text>
+            <view style="flex: 1; margin-left: 14px;">
+              <view wx:if="{{editMode}}" style="border-bottom: 1px solid #D1D5DB; padding: 4px 0;">
+                <input style="color: #364153; font-size: 13px; font-weight: 400; background: transparent; border: none; outline: none; width: 100%;" placeholder="待点添加" data-id="{{item._id}}" data-name="{{item.name}}" bindinput="onFieldInput" value="{{fieldValues[item._id] || fieldValues[item.name]}}" />
+              </view>
+              <view wx:else>
+                <text style="color: #364153; font-size: 13px; font-weight: 400;">{{fieldValues[item._id] || fieldValues[item.name]}}</text>
+              </view>
             </view>
           </view>
-        </view>
-        
-        <!-- 行业信息 -->
-        <view style="width: 337px; height: 45px; left: 0px; top: 55px; position: absolute; border-bottom: 1px #F3F4F6 solid">
-          <view style="width: 49px; height: 21px; left: 0px; top: 7px; position: absolute; background: linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%); border-radius: 16777200px; display: flex; align-items: center; justify-content: center">
-            <view data-svg-wrapper style="position: absolute; left: 7px; top: 50%; transform: translateY(-50%);">
-              <image src="/assets/images/5.svg" style="width: 8px; height: 8px;" />
-            </view>
-            <view style="position: absolute; left: 21px; top: 50%; transform: translateY(-50%);">
-              <text style="color: #065F46; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">行业</text>
-            </view>
-          </view>
-          <view style="width: 277.50px; height: 25px; left: 59.50px; top: 5.50px; position: absolute; display: flex; align-items: center">
-            <view wx:if="{{editMode}}" style="left: 0px; top: 0px; position: absolute; width: 100%; border-bottom: 1px solid #D1D5DB; padding: 2px 0;">
-              <input style="color: #364153; font-size: 13px; font-weight: 400; background: transparent; border: none; outline: none; width: 100%;" placeholder="待点添加" bindinput="onIndustryInput" value="{{workDetail.industry}}" />
-            </view>
-            <view wx:else style="left: 0px; top: 2px; position: absolute; width: 100%;">
-              <text style="color: {{workDetail.industry === '待点添加' ? '#9CA3AF' : '#364153'}}; font-size: 13px; font-weight: 400;">{{workDetail.industry}}</text>
-            </view>
-          </view>
-        </view>
-        
-        <!-- 金额信息 -->
-        <view style="width: 337px; height: 45px; left: 0px; top: 110px; position: absolute; border-bottom: 1px #F3F4F6 solid">
-          <view style="width: 49px; height: 21px; left: 0px; top: 7px; position: absolute; background: linear-gradient(135deg, #FDE68A 0%, #FCD34D 100%); border-radius: 16777200px; display: flex; align-items: center; justify-content: center">
-            <view data-svg-wrapper style="position: absolute; left: 7px; top: 50%; transform: translateY(-50%);">
-              <image src="/assets/images/6.svg" style="width: 8px; height: 8px;" />
-            </view>
-            <view style="position: absolute; left: 21px; top: 50%; transform: translateY(-50%);">
-              <text style="color: #78350F; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">金额</text>
-            </view>
-          </view>
-          <view style="width: 277.50px; height: 25px; left: 59.50px; top: 5.50px; position: absolute; display: flex; align-items: center">
-            <view wx:if="{{editMode}}" style="left: 0px; top: 0px; position: absolute; width: 100%; border-bottom: 1px solid #D1D5DB; padding: 2px 0;">
-              <input style="color: #364153; font-size: 13px; font-weight: 400; background: transparent; border: none; outline: none; width: 100%;" placeholder="待点添加" bindinput="onAmountInput" value="{{workDetail.amount}}" />
-            </view>
-            <view wx:else style="left: 0px; top: 2px; position: absolute; width: 100%;">
-              <text style="color: {{workDetail.amount === '待点添加' ? '#9CA3AF' : '#364153'}}; font-size: 13px; font-weight: 400;">{{workDetail.amount}}</text>
-            </view>
-          </view>
-        </view>
-        
-        <!-- 描述信息 -->
-        <view style="width: 337px; height: 45px; left: 0px; top: 165px; position: absolute; border-bottom: 1px #F3F4F6 solid">
-          <view style="width: 49px; height: 21px; left: 0px; top: 7px; position: absolute; background: linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%); border-radius: 16777200px; display: flex; align-items: center; justify-content: center">
-            <view data-svg-wrapper style="position: absolute; left: 7px; top: 50%; transform: translateY(-50%);">
-              <image src="/assets/images/7.svg" style="width: 8px; height: 8px;" />
-            </view>
-            <view style="position: absolute; left: 21px; top: 50%; transform: translateY(-50%);">
-              <text style="color: #5B21B6; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">描述</text>
-            </view>
-          </view>
-          <view style="width: 277.50px; height: 25px; left: 59.50px; top: 5.50px; position: absolute; display: flex; align-items: center">
-            <view wx:if="{{editMode}}" style="left: 0px; top: 0px; position: absolute; width: 100%; border-bottom: 1px solid #D1D5DB; padding: 2px 0;">
-              <input style="color: #364153; font-size: 13px; font-weight: 400; background: transparent; border: none; outline: none; width: 100%;" placeholder="待点添加" bindinput="onDescriptionInput" value="{{workDetail.description}}" />
-            </view>
-            <view wx:else style="left: 0px; top: 2px; position: absolute; width: 100%;">
-              <text style="color: {{workDetail.description === '待点添加' ? '#9CA3AF' : '#364153'}}; font-size: 13px; font-weight: 400;">{{workDetail.description}}</text>
-            </view>
-          </view>
-        </view>
-        
-        <!-- 备注信息 -->
-        <view style="width: 337px; height: 45px; left: 0px; top: 220px; position: absolute">
-          <view style="width: 49px; height: 21px; left: 0px; top: 7px; position: absolute; background: linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%); border-radius: 16777200px; display: flex; align-items: center; justify-content: center">
-            <view data-svg-wrapper style="position: absolute; left: 7px; top: 50%; transform: translateY(-50%);">
-              <image src="/assets/images/8.svg" style="width: 8px; height: 8px;" />
-            </view>
-            <view style="position: absolute; left: 21px; top: 50%; transform: translateY(-50%);">
-              <text style="color: #1E3A8A; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">备注</text>
-            </view>
-          </view>
-          <view style="width: 277.50px; height: 25px; left: 59.50px; top: 5.50px; position: absolute; display: flex; align-items: center">
-            <view wx:if="{{editMode}}" style="left: 0px; top: 0px; position: absolute; width: 100%; border-bottom: 1px solid #D1D5DB; padding: 2px 0;">
-              <input style="color: #364153; font-size: 13px; font-weight: 400; background: transparent; border: none; outline: none; width: 100%;" placeholder="待点添加" bindinput="onRemarkInput" value="{{workDetail.remark}}" />
-            </view>
-            <view wx:else style="left: 0px; top: 2px; position: absolute; width: 100%;">
-              <text style="color: {{workDetail.remark === '待点添加' ? '#9CA3AF' : '#364153'}}; font-size: 13px; font-weight: 400;">{{workDetail.remark}}</text>
-            </view>
-          </view>
-        </view>
-        
+        </block>
       </view>
     </view>
-    
   </view>
   
   <!-- 底部按钮区域 -->
-  <view style="width: 393px; height: 64px; left: 0px; top: 788px; position: fixed; bottom: 0px; background: white; border-top: 1px #F3F4F6 solid">
-    <!-- 保存按钮 -->
-    <view wx:if="{{workDetail.isNew}}" style="width: 175px; height: 42px; left: 14px; top: 11.50px; position: absolute; background: linear-gradient(135deg, #10B981 0%, #059669 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px" bindtap="saveWork">
-      <view style="left: 70px; top: 12.75px; position: absolute; display: flex; align-items: center">
-        <text style="color: white; font-size: 12.25px; font-weight: 500">保存作品</text>
-      </view>
+  <view style="width: 393px; height: 64px; left: 0px; position: fixed; bottom: 0px; background: white; border-top: 1px #F3F4F6 solid; display: flex; align-items: center; justify-content: center; padding: 11.50px 14px; box-sizing: border-box; gap: 12px;">
+    <view wx:if="{{workDetail.isNew || editMode}}" style="flex: 1; height: 42px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px; display: flex; align-items: center; justify-content: center;" bindtap="saveWork">
+      <text style="color: white; font-size: 12.25px; font-weight: 500">保存作品</text>
     </view>
-    
-    <!-- 分享按钮 -->
-    <view wx:if="{{!workDetail.isNew}}" style="width: 175px; height: 42px; left: 109px; top: 11.50px; position: absolute; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px" bindtap="shareWork">
-      <view data-svg-wrapper style="left: 70px; top: 14px; position: absolute">
-        <image src="/assets/images/9.svg" />
-      </view>
-      <view style="left: 98px; top: 12.75px; position: absolute; display: flex; align-items: center">
-        <text style="color: white; font-size: 12.25px; font-weight: 500">分享作品</text>
-      </view>
+    <view wx:if="{{!workDetail.isNew && !editMode}}" style="flex: 1; height: 42px; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px; display: flex; align-items: center; justify-content: center;" bindtap="shareWork">
+      <image src="/assets/images/9.svg" style="width: 14px; height: 14px; margin-right: 6px;" />
+      <text style="color: white; font-size: 12.25px; font-weight: 500">分享作品</text>
     </view>
   </view>
-  
 </view>

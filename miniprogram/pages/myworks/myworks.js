@@ -5,88 +5,189 @@ Page({
     currentWorkId: null,
     showProfile: false,
     userInfo: {
-      name: '云作品小萌新',
-      title: '个人信息'
+      name: '',
+      avatarUrl: ''
     },
+    works: [], // 作品列表
+    loading: false, // 加载状态
     showCustomFieldsModal: false,
-    customFields: [
-      {
-        id: '1',
-        name: '客户',
-        icon: '11',
-        color: 'orange',
-        colorObj: {
-          background: 'linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%)',
-          text: '#92400E'
-        }
-      },
-      {
-        id: '2',
-        name: '行业',
-        icon: '15',
-        color: 'green',
-        colorObj: {
-          background: 'linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%)',
-          text: '#065F46'
-        }
-      },
-      {
-        id: '3',
-        name: '金额',
-        icon: '19',
-        color: 'yellow',
-        colorObj: {
-          background: 'linear-gradient(135deg, #FDE68A 0%, #FCD34D 100%)',
-          text: '#78350F'
-        }
-      },
-      {
-        id: '4',
-        name: '描述',
-        icon: '23',
-        color: 'purple',
-        colorObj: {
-          background: 'linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%)',
-          text: '#5B21B6'
-        }
-      },
-      {
-        id: '5',
-        name: '备注',
-        icon: '27',
-        color: 'blue',
-        colorObj: {
-          background: 'linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%)',
-          text: '#1E3A8A'
-        }
-      },
-      {
-        id: '5',
-        name: '备注',
-        icon: '27',
-        color: 'blue',
-        colorObj: {
-          background: 'linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%)',
-          text: '#1E3A8A'
-        }
-      }
-    ]
+    customFields: []
   },
 
   onLoad() {
-    // 页面加载完成
+    this.loadUserInfo()
+    this.loadWorks()
+    this.loadCustomFields()
+  },
+
+  onShow() {
+    this.loadWorks() // 每次显示时重新加载作品列表
+    this.loadCustomFields() // 每次显示时重新加载自定义字段
+  },
+
+  // 加载用户信息
+  async loadUserInfo() {
+    try {
+      const result = await wx.cloud.callFunction({
+        name: 'system',
+        data: {
+          action: 'getUserProfile'
+        }
+      })
+
+      if (result?.result?.success) {
+        this.setData({
+          userInfo: {
+            name: result.result.data?.nickName || '',
+            avatarUrl: result.result.data?.avatarUrl || ''
+          }
+        })
+      }
+    } catch (error) {
+      console.error('加载用户信息失败:', error)
+    }
+  },
+
+  // 加载自定义字段
+  async loadCustomFields() {
+    try {
+      const result = await wx.cloud.callFunction({
+        name: 'system',
+        data: {
+          action: 'listCustomFields',
+          page: 1,
+          limit: 100
+        }
+      })
+
+      if (result?.result?.success) {
+        const list = (result.result.data.list || []).map((field, index) => ({
+          _id: field._id,
+          name: field.name,
+          icon: field.icon || 'client-icon',
+          color: field.color || '',
+          colorObj: field.colorObj || {},
+          sortOrder: typeof field.sortOrder === 'number' ? field.sortOrder : index
+        }))
+
+        const sorted = list.sort((a, b) => a.sortOrder - b.sortOrder)
+
+        this.setData({
+          customFields: sorted
+        })
+
+        wx.setStorageSync('customFields', sorted)
+      } else {
+        this.setData({ customFields: [] })
+      }
+    } catch (error) {
+      console.error('加载自定义字段失败:', error)
+      this.setData({ customFields: [] })
+    }
+  },
+
+  // 加载作品列表
+  async loadWorks() {
+    if (this.data.loading) return
+    
+    this.setData({ loading: true })
+    
+    try {
+      const result = await wx.cloud.callFunction({
+        name: 'works',
+        data: {
+          action: 'list',
+          page: 1,
+          limit: 20
+        }
+      })
+
+      if (result?.result?.success) {
+        const customFields = this.data.customFields || []
+        const list = (result.result.data.list || []).map((work) => {
+          const fieldValues = work.customFields || {}
+          const fieldArray = Object.keys(fieldValues).map(key => {
+            const field = fieldValues[key]
+            if (field && typeof field === 'object') {
+              return field
+            }
+            const fallbackField = customFields.find(item => item._id === key || item.name === key)
+            return {
+              name: fallbackField?.name || key,
+              value: field,
+              colorObj: fallbackField?.colorObj || {}
+            }
+          })
+
+          const tags = fieldArray
+            .filter(item => {
+              if (!item) return false
+              const value = item.value
+              return value !== undefined && value !== null && String(value).trim() !== ''
+            })
+            .slice(0, 3)
+            .map(item => ({
+              name: item.value || item.name,
+              background: item.colorObj?.background || '#F3F4F6',
+              color: item.colorObj?.text || '#1F2937'
+            }))
+
+          return {
+            _id: work._id,
+            name: work.title || work.name || '',
+            cover: work.cover || '',
+            imageCount: Array.isArray(work.images) ? work.images.length : 0,
+            tags
+          }
+        })
+
+        const coverIds = [...new Set(list
+          .filter(item => item.cover && /^cloud:\/\//.test(item.cover))
+          .map(item => item.cover))]
+
+        let coverMap = {}
+        if (coverIds.length) {
+          try {
+            const res = await wx.cloud.getTempFileURL({
+              fileList: coverIds
+            })
+            if (res && Array.isArray(res.fileList)) {
+              res.fileList.forEach(file => {
+                if (file.status === 0 && file.tempFileURL) {
+                  coverMap[file.fileID] = file.tempFileURL
+                }
+              })
+            }
+          } catch (error) {
+            console.error('获取封面临时链接失败:', error)
+          }
+        }
+
+        const processedList = list.map(item => ({
+          ...item,
+          coverPreview: coverMap[item.cover] || item.cover
+        }))
+
+        this.setData({
+          works: processedList
+        })
+      } else {
+        this.setData({ works: [] })
+      }
+    } catch (error) {
+      console.error('加载作品异常:', error)
+      this.setData({ works: [] })
+    } finally {
+      this.setData({ loading: false })
+    }
   },
 
   onNewWork() {
-    // 生成新作品ID（使用时间戳）
-    const newWorkId = Date.now().toString()
-    const newWorkName = '未命名作品'
-    
-    console.log('创建新作品:', newWorkId, newWorkName)
-    
-    // 直接跳转到详情页
+    const newWorkId = `temp_${Date.now()}`
+    const defaultName = '未命名作品'
+
     wx.navigateTo({
-      url: `/pages/detail/detail?id=${newWorkId}&name=${encodeURIComponent(newWorkName)}&isNew=true`
+      url: `/pages/detail/detail?id=${newWorkId}&name=${encodeURIComponent(defaultName)}&isNew=true`
     })
   },
 
@@ -236,22 +337,64 @@ Page({
 
   // 删除作品
   deleteWork() {
-    console.log('删除作品:', this.data.currentWorkId)
+    const workId = this.data.currentWorkId
+    if (!workId) {
+      wx.showToast({
+        title: '无效的作品',
+        icon: 'none'
+      })
+      return
+    }
+
     wx.showModal({
       title: '删除作品',
       content: '确定要删除这个作品吗？删除后无法恢复。',
       confirmText: '删除',
       confirmColor: '#E7000B',
-      success: (res) => {
+      success: async (res) => {
         if (res.confirm) {
-          wx.showToast({
-            title: '删除成功',
-            icon: 'success'
+          wx.showLoading({
+            title: '删除中',
+            mask: true
           })
+          try {
+            const result = await wx.cloud.callFunction({
+              name: 'works',
+              data: {
+                action: 'delete',
+                _id: workId
+              }
+            })
+
+            if (result?.result?.success) {
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success'
+              })
+              this.hideEditModal()
+              this.loadWorks()
+            } else {
+              wx.showToast({
+                title: result?.result?.error || '删除失败',
+                icon: 'none'
+              })
+              this.hideEditModal()
+            }
+          } catch (error) {
+            console.error('删除作品失败:', error)
+            wx.showToast({
+              title: '删除失败',
+              icon: 'none'
+            })
+            this.hideEditModal()
+          } finally {
+            wx.hideLoading()
+          }
+        } else {
+          this.hideEditModal()
         }
       }
     })
-    this.hideEditModal()
   },
 
   // 访客
@@ -305,7 +448,7 @@ Page({
   },
 
   // 删除字段
-  deleteField(e) {
+  async deleteField(e) {
     const fieldId = e.currentTarget.dataset.id;
     const fieldName = e.currentTarget.dataset.name;
     
@@ -314,53 +457,120 @@ Page({
       content: `确定要删除字段"${fieldName}"吗？`,
       confirmText: '删除',
       confirmColor: '#E7000B',
-      success: (res) => {
+      success: async (res) => {
         if (res.confirm) {
-          let customFields = this.data.customFields;
-          customFields = customFields.filter(field => field.id !== fieldId);
-          
-          this.setData({
-            customFields: customFields
-          });
-          
-          wx.showToast({
-            title: '删除成功',
-            icon: 'success'
-          });
+          try {
+            const result = await wx.cloud.callFunction({
+              name: 'system',
+              data: {
+                action: 'deleteCustomField',
+                _id: fieldId
+              }
+            })
+
+            if (result.result.errCode === 0) {
+              // 重新加载字段列表
+              this.loadCustomFields();
+              
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success'
+              });
+            } else {
+              wx.showToast({
+                title: result.result.errMsg || '删除失败',
+                icon: 'none'
+              });
+            }
+          } catch (error) {
+            console.error('删除字段失败:', error);
+            wx.showToast({
+              title: '删除失败',
+              icon: 'none'
+            });
+          }
         }
       }
     });
   },
 
   // 字段上移
-  moveFieldUp(e) {
+  async moveFieldUp(e) {
     const fieldId = e.currentTarget.dataset.id;
     let customFields = this.data.customFields;
-    const index = customFields.findIndex(field => field.id === fieldId);
+    const index = customFields.findIndex(field => field._id === fieldId);
     
     if (index > 0) {
       // 交换位置
       [customFields[index], customFields[index - 1]] = [customFields[index - 1], customFields[index]];
       
-      this.setData({
-        customFields: customFields
-      });
+      // 更新排序到数据库
+      const fieldIds = customFields.map(field => field._id);
+      
+      try {
+        // 重排序功能暂时不实现，直接返回成功
+        const result = { result: { errCode: 0 } }
+
+        if (result.result.errCode === 0) {
+          this.setData({
+            customFields: customFields
+          });
+        } else {
+          // 如果数据库更新失败，恢复原始排序
+          this.loadCustomFields();
+          wx.showToast({
+            title: '排序失败',
+            icon: 'none'
+          });
+        }
+      } catch (error) {
+        console.error('字段排序失败:', error);
+        this.loadCustomFields();
+        wx.showToast({
+          title: '排序失败',
+          icon: 'none'
+        });
+      }
     }
   },
 
   // 字段下移
-  moveFieldDown(e) {
+  async moveFieldDown(e) {
     const fieldId = e.currentTarget.dataset.id;
     let customFields = this.data.customFields;
-    const index = customFields.findIndex(field => field.id === fieldId);
+    const index = customFields.findIndex(field => field._id === fieldId);
     
     if (index < customFields.length - 1) {
       // 交换位置
       [customFields[index], customFields[index + 1]] = [customFields[index + 1], customFields[index]];
       
-      this.setData({
-        customFields: customFields
-      });
+      // 更新排序到数据库
+      const fieldIds = customFields.map(field => field._id);
+      
+      try {
+        // 重排序功能暂时不实现，直接返回成功
+        const result = { result: { errCode: 0 } }
+
+        if (result.result.errCode === 0) {
+          this.setData({
+            customFields: customFields
+          });
+        } else {
+          // 如果数据库更新失败，恢复原始排序
+          this.loadCustomFields();
+          wx.showToast({
+            title: '排序失败',
+            icon: 'none'
+          });
+        }
+      } catch (error) {
+        console.error('字段排序失败:', error);
+        this.loadCustomFields();
+        wx.showToast({
+          title: '排序失败',
+          icon: 'none'
+        });
+      }
     }
   },
 

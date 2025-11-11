@@ -1,0 +1,26 @@
+{
+  "name": "cloud-works-sharing",
+  "version": "1.0.0",
+  "description": "云作品分享小程序",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js",
+    "test:cloud": "node -e \"require('./test.js').testCloudFunctions()\"",
+    "test:pages": "node -e \"require('./test.js').testPages()\"",
+    "deploy:cloud": "echo '请在微信开发者工具中右键点击cloud文件夹，选择上传并部署'",
+    "clean:cloud": "echo '请手动删除失败的云函数后重新部署'",
+    "lint": "echo '代码检查功能开发中'"
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "cloud",
+    "works-sharing"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {},
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}

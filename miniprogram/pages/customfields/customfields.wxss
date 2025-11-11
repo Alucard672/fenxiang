@@ -4,6 +4,20 @@ view {
   box-sizing: border-box;
 }
 
+/* 滚动容器样式 */
+scroll-view {
+  height: 100vh;
+}
+
+/* 字段项样式 */
+.field-item {
+  transition: all 0.2s ease;
+}
+
+.field-item:active {
+  background-color: #f9fafb;
+}
+
 /* 按钮点击效果 */
 .action-button {
   transition: all 0.2s ease;

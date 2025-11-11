@@ -79,17 +79,40 @@ Page({
   },
 
   // 加载字段数据（编辑模式）
-  loadFieldData(fieldId) {
+  async loadFieldData(fieldId) {
     const customFields = wx.getStorageSync('customFields') || [];
-    const field = customFields.find(f => f.id === fieldId);
-    
+    let field = customFields.find(f => f._id === fieldId || f.id === fieldId);
+
+    if (!field) {
+      try {
+        const result = await wx.cloud.callFunction({
+          name: 'system',
+          data: {
+            action: 'listCustomFields',
+            page: 1,
+            limit: 100
+          }
+        })
+        if (result?.result?.success) {
+          field = (result.result.data.list || []).find(item => item._id === fieldId)
+        }
+      } catch (error) {
+        console.error('加载字段详情失败:', error)
+      }
+    }
+
     if (field) {
+      const colorObj = this.data.colorList.find(c => c.name === field.color) || field.colorObj || this.data.colorList[0]
+      const normalizedColorObj = {
+        ...colorObj,
+        name: colorObj.name || field.color || this.data.colorList[0].name
+      }
       this.setData({
         fieldName: field.name,
-        selectedIcon: field.icon,
-        selectedColor: field.color,
-        selectedColorObj: this.data.colorList.find(c => c.name === field.color)
-      });
+        selectedIcon: field.icon || this.data.iconList[0],
+        selectedColor: normalizedColorObj.name,
+        selectedColorObj: normalizedColorObj
+      })
     }
   },
 
@@ -118,7 +141,7 @@ Page({
   },
 
   // 保存字段
-  saveField() {
+  async saveField() {
     if (!this.data.fieldName) {
       wx.showToast({
         title: '请输入字段名称',
@@ -143,40 +166,74 @@ Page({
       return;
     }
 
-    const fieldData = {
-      id: this.data.isEditMode ? this.data.editFieldId : Date.now().toString(),
-      name: this.data.fieldName,
-      icon: this.data.selectedIcon,
-      color: this.data.selectedColor,
-      colorObj: this.data.selectedColorObj,
-      createTime: this.data.isEditMode ? '' : new Date().toISOString()
-    };
-
-    // 获取现有字段
-    let customFields = wx.getStorageSync('customFields') || [];
-
-    if (this.data.isEditMode) {
-      // 编辑模式：更新现有字段
-      const index = customFields.findIndex(f => f.id === this.data.editFieldId);
-      if (index !== -1) {
-        customFields[index] = fieldData;
-      }
-    } else {
-      // 新增模式：添加新字段
-      customFields.push(fieldData);
+    const colorObj = {
+      ...this.data.selectedColorObj,
+      name: this.data.selectedColor
     }
 
-    // 保存到本地存储
-    wx.setStorageSync('customFields', customFields);
+    const payload = {
+      name: this.data.fieldName,
+      type: 'text',
+      options: [],
+      required: false,
+      description: '',
+      icon: this.data.selectedIcon,
+      color: this.data.selectedColor,
+      colorObj
+    }
 
-    wx.showToast({
-      title: this.data.isEditMode ? '修改成功' : '添加成功',
-      icon: 'success'
-    });
+    wx.showLoading({
+      title: this.data.isEditMode ? '保存中' : '创建中',
+      mask: true
+    })
 
-    // 延迟返回
-    setTimeout(() => {
-      wx.navigateBack();
-    }, 1500);
+    try {
+      let result
+      if (this.data.isEditMode) {
+        result = await wx.cloud.callFunction({
+          name: 'system',
+          data: {
+            action: 'updateCustomField',
+            _id: this.data.editFieldId,
+            ...payload
+          }
+        })
+      } else {
+        const currentFields = wx.getStorageSync('customFields') || []
+        payload.sortOrder = currentFields.length
+        result = await wx.cloud.callFunction({
+          name: 'system',
+          data: {
+            action: 'createCustomField',
+            ...payload,
+            sortOrder: payload.sortOrder
+          }
+        })
+      }
+
+      if (result?.result?.success) {
+        wx.showToast({
+          title: this.data.isEditMode ? '修改成功' : '添加成功',
+          icon: 'success'
+        })
+
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 800)
+      } else {
+        wx.showToast({
+          title: result?.result?.error || '操作失败',
+          icon: 'none'
+        })
+      }
+    } catch (error) {
+      console.error('保存字段失败:', error)
+      wx.showToast({
+        title: '操作失败',
+        icon: 'none'
+      })
+    } finally {
+      wx.hideLoading()
+    }
   }
 });
