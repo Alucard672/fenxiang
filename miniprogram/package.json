@@ -1,0 +1,15 @@
+{
+  "name": "cloud-works-sharing-miniprogram",
+  "version": "1.0.0",
+  "description": "云作品分享小程序前端",
+  "main": "app.js",
+  "scripts": {
+    "build": "echo 'Build script placeholder'"
+  },
+  "dependencies": {
+    "tdesign-miniprogram": "^1.11.1"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}
