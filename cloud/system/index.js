@@ -8,6 +8,51 @@ cloud.init({
 const db = cloud.database()
 const _ = db.command
 
+const DEFAULT_TAGS = [
+  {
+    _id: 'default_brand',
+    name: '品牌设计',
+    color: '#2563EB',
+    background: 'linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%)',
+    sortOrder: 0
+  },
+  {
+    _id: 'default_ui',
+    name: 'UI设计',
+    color: '#7C3AED',
+    background: 'linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%)',
+    sortOrder: 1
+  },
+  {
+    _id: 'default_web',
+    name: '网页设计',
+    color: '#059669',
+    background: 'linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%)',
+    sortOrder: 2
+  },
+  {
+    _id: 'default_ecommerce',
+    name: '电商运营',
+    color: '#EA580C',
+    background: 'linear-gradient(135deg, #FFEDD5 0%, #FED7AA 100%)',
+    sortOrder: 3
+  },
+  {
+    _id: 'default_visual',
+    name: '视觉创意',
+    color: '#DB2777',
+    background: 'linear-gradient(135deg, #FCE7F3 0%, #FBCFE8 100%)',
+    sortOrder: 4
+  },
+  {
+    _id: 'default_other',
+    name: '其它',
+    color: '#1F2937',
+    background: 'linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%)',
+    sortOrder: 5
+  }
+]
+
 // 云函数入口函数
 exports.main = async (event, context) => {
   const { action, ...params } = event
@@ -26,6 +71,8 @@ exports.main = async (event, context) => {
         return await reorderCustomFields(params, openid)
       case 'deleteCustomField':
         return await deleteCustomField(params, openid)
+      case 'listTags':
+        return await listTags(params, openid)
       case 'getUserProfile':
         return await getUserProfile(params, openid)
       case 'updateUserProfile':
@@ -272,6 +319,61 @@ async function deleteCustomField({ _id }, openid) {
     success: true,
     data: {
       deleted: result.stats.removed
+    }
+  }
+}
+
+async function listTags({ page = 1, limit = 100 } = {}, openid) {
+  const skip = (page - 1) * limit
+
+  const tagsCollection = db.collection('tags').where({
+    _openid: openid
+  })
+
+  let countResult
+  try {
+    countResult = await tagsCollection.count()
+  } catch (error) {
+    countResult = { total: 0 }
+  }
+
+  let list = []
+
+  if (countResult.total > 0) {
+    try {
+      const listResult = await tagsCollection
+        .orderBy('sortOrder', 'asc')
+        .orderBy('createTime', 'desc')
+        .skip(skip)
+        .limit(limit)
+        .get()
+
+      list = (listResult.data || []).map((item, index) => ({
+        _id: item._id,
+        name: item.name || '',
+        color: item.color || '#1F2937',
+        background: item.background || '#F3F4F6',
+        sortOrder: typeof item.sortOrder === 'number' ? item.sortOrder : index
+      })).filter(tag => tag.name)
+    } catch (error) {
+      console.warn('加载用户标签失败，使用默认标签:', error)
+    }
+  }
+
+  if (!list.length) {
+    list = DEFAULT_TAGS.map((tag, index) => ({
+      ...tag,
+      sortOrder: typeof tag.sortOrder === 'number' ? tag.sortOrder : index
+    }))
+  }
+
+  return {
+    success: true,
+    data: {
+      list,
+      total: countResult.total || list.length,
+      page,
+      limit
     }
   }
 }

@@ -90,6 +90,8 @@ view, text, image {
   justify-content: center;
   box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
   margin-right: 8px;
+  max-width: 80px;
+  overflow: hidden;
 }
 
 .card-tag text {
@@ -97,6 +99,9 @@ view, text, image {
   font-family: Inter;
   font-weight: 500;
   letter-spacing: 0.12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-tag--more {
@@ -266,4 +271,171 @@ view, text, image {
   to {
     transform: translateX(0);
   }
+}
+
+.tag-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+}
+
+.tag-sheet__mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+}
+
+.tag-sheet__panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  padding: 18px 20px 24px;
+  box-shadow: 0px -12px 32px rgba(15, 23, 42, 0.12);
+  box-sizing: border-box;
+}
+
+.tag-sheet__handle {
+  width: 60px;
+  height: 5px;
+  border-radius: 3px;
+  background: #e5e7eb;
+  margin: 0 auto 16px;
+}
+
+.tag-sheet__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.tag-sheet__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1d2e;
+}
+
+.tag-sheet__subtitle {
+  font-size: 12px;
+  color: #6a7282;
+}
+
+.tag-sheet__loading {
+  text-align: center;
+  padding: 32px 0;
+  font-size: 12px;
+  color: #6a7282;
+}
+
+.tag-sheet__scroll {
+  max-height: 280px;
+}
+
+.tag-sheet__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tag-sheet__option {
+  position: relative;
+  flex: 0 0 calc(50% - 6px);
+  border-radius: 14px;
+  background: #f3f4f6;
+  padding: 14px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.tag-sheet__option.selected {
+  box-shadow: 0px 12px 28px rgba(43, 127, 255, 0.22);
+  transform: translateY(-1px);
+  background: rgba(37, 99, 235, 0.08);
+  border: 1.5px solid rgba(37, 99, 235, 0.55);
+}
+
+.tag-sheet__pill {
+  min-width: 88px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tag-sheet__pill text {
+  font-size: 12px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.tag-sheet__option:not(.selected) .tag-sheet__pill {
+  opacity: 0.65;
+}
+
+.tag-sheet__option.selected .tag-sheet__pill {
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.7), 0px 0px 0px 4px rgba(37, 99, 235, 0.35);
+}
+
+.tag-sheet__option.selected .tag-sheet__pill text {
+  color: #1d4ed8;
+}
+
+.tag-sheet__check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 6px 16px rgba(29, 78, 216, 0.35);
+}
+
+.tag-sheet__checkmark {
+  width: 9px;
+  height: 5px;
+  border-left: 2.2px solid #ffffff;
+  border-bottom: 2.2px solid #ffffff;
+  transform: rotate(-45deg);
+}
+
+.tag-sheet__empty {
+  text-align: center;
+  color: #99a1af;
+  font-size: 12px;
+  padding: 24px 0;
+}
+
+.tag-sheet__confirm {
+  margin-top: 20px;
+  height: 44px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff5757 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag-sheet__confirm::after {
+  display: none;
 }

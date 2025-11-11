@@ -11,7 +11,15 @@ Page({
     works: [], // 作品列表
     loading: false, // 加载状态
     showCustomFieldsModal: false,
-    customFields: []
+    customFields: [],
+    tagSheetVisible: false,
+    tagSheetLoading: false,
+    tagSheetSaving: false,
+    tagSheetTargetId: null,
+    tagSheetTargetName: '未命名作品',
+    tagList: [],
+    tagSelection: [],
+    maxTagCount: 5
   },
 
   onLoad() {
@@ -46,6 +54,299 @@ Page({
     } catch (error) {
       console.error('加载用户信息失败:', error)
     }
+  },
+
+  normalizeTags(tags) {
+    if (!Array.isArray(tags)) return []
+    const seen = new Set()
+    return tags
+      .map((tag, index) => {
+        if (!tag) return null
+        if (typeof tag === 'string') {
+          const name = tag.trim()
+          if (!name) return null
+          const id = name
+          if (seen.has(id)) return null
+          seen.add(id)
+          return {
+            _id: id,
+            name,
+            background: '#F3F4F6',
+            color: '#1F2937'
+          }
+        }
+        if (typeof tag === 'object') {
+          const name = String(tag.name || tag.label || tag.text || tag.value || '').trim()
+          if (!name) return null
+          const id = tag._id || tag.id || name || `tag_${index}`
+          if (seen.has(id)) return null
+          seen.add(id)
+          const background = tag.background || tag.bgColor || tag.color?.background || (tag.colorObj && tag.colorObj.background) || '#F3F4F6'
+          const color = tag.color || tag.textColor || tag.color?.text || (tag.colorObj && tag.colorObj.text) || '#1F2937'
+          return {
+            _id: id,
+            name,
+            background,
+            color
+          }
+        }
+        return null
+      })
+      .filter(Boolean)
+  },
+
+  async loadTagCollection(workId) {
+    try {
+      const [tagResult, workResult] = await Promise.all([
+        wx.cloud.callFunction({
+          name: 'system',
+          data: {
+            action: 'listTags',
+            page: 1,
+            limit: 200
+          }
+        }),
+        wx.cloud.callFunction({
+          name: 'works',
+          data: {
+            action: 'get',
+            _id: workId
+          }
+        })
+      ])
+
+      let tagList = []
+      if (tagResult?.result?.success) {
+        tagList = this.normalizeTagCollection(tagResult.result.data?.list || [])
+      }
+
+      const workData = workResult?.result?.success ? workResult.result.data : null
+      const currentTags = this.normalizeTagCollection(workData?.tags || [])
+      const selection = currentTags.map(tag => String(tag._id))
+      const mergedList = [...tagList]
+      currentTags.forEach(tag => {
+        if (!mergedList.find(item => item._id === tag._id)) {
+          mergedList.push(tag)
+        }
+      })
+
+      this.setData({
+        tagList: mergedList,
+        tagSelection: selection,
+        tagSheetLoading: false,
+        tagSheetSaving: false
+      })
+    } catch (error) {
+      console.error('加载标签失败:', error)
+      this.setData({
+        tagList: [],
+        tagSelection: [],
+        tagSheetLoading: false,
+        tagSheetSaving: false
+      })
+      wx.showToast({
+        title: '加载标签失败',
+        icon: 'none'
+      })
+    }
+  },
+
+  openTagSheet() {
+    const workId = this.data.currentWorkId
+    const workName = this.data.currentWorkName || '未命名作品'
+
+    if (!workId) {
+      wx.showToast({
+        title: '请选择作品',
+        icon: 'none'
+      })
+      return
+    }
+
+    this.setData({
+      tagSheetVisible: true,
+      tagSheetLoading: true,
+       tagSheetSaving: false,
+      tagSheetTargetId: workId,
+      tagSheetTargetName: workName
+    })
+    this.loadTagCollection(workId)
+  },
+
+  closeTagSheet() {
+    if (this.data.tagSheetSaving) return
+    this.setData({
+      tagSheetVisible: false,
+      tagSheetTargetId: null,
+      tagSheetTargetName: '未命名作品',
+      tagSelection: [],
+      tagSheetSaving: false
+    })
+  },
+
+  toggleTagSelection(e) {
+    if (this.data.tagSheetSaving) return
+    const { id } = e.currentTarget.dataset
+    if (!id) return
+
+    const selection = [...this.data.tagSelection]
+    const index = selection.indexOf(id)
+
+    if (index >= 0) {
+      selection.splice(index, 1)
+    } else {
+        if (selection.length >= this.data.maxTagCount) {
+        wx.showToast({
+          title: `最多选择${this.data.maxTagCount}个标签`,
+          icon: 'none'
+        })
+        return
+      }
+      selection.push(String(id))
+    }
+
+    this.setData({ tagSelection: selection })
+  },
+
+  buildSelectedTagObjects(ids = [], fallback = []) {
+    if (!Array.isArray(ids) || !ids.length) return []
+    const optionMap = new Map((this.data.tagList || []).map(tag => [String(tag._id), tag]))
+    const fallbackMap = new Map((fallback || []).map(tag => [String(tag._id || tag.name), tag]))
+
+    return ids
+      .map(id => {
+        const option = optionMap.get(String(id))
+        if (option) {
+          return {
+            _id: option._id,
+            name: option.name,
+            color: option.color,
+            background: option.background
+          }
+        }
+        const existing = fallbackMap.get(String(id))
+        if (existing) {
+          return {
+            _id: existing._id || id,
+            name: existing.name,
+            color: existing.color || '#2b7fff',
+            background: existing.background || 'rgba(43, 127, 255, 0.12)'
+          }
+        }
+        return null
+      })
+      .filter(Boolean)
+  },
+
+  async applyTagSheet() {
+    if (this.data.tagSheetSaving) return
+    const targetId = this.data.tagSheetTargetId
+    if (!targetId) {
+      this.closeTagSheet()
+      return
+    }
+    const selectedIds = this.data.tagSelection
+    const targetWork = (this.data.works || []).find(item => item._id === targetId)
+    const fallbackTags = targetWork?.rawTags || []
+    const selectedTags = this.buildSelectedTagObjects(selectedIds, fallbackTags)
+
+    this.setData({ tagSheetSaving: true })
+    wx.showLoading({
+      title: '保存中',
+      mask: true
+    })
+
+    try {
+      const result = await wx.cloud.callFunction({
+        name: 'works',
+        data: {
+          action: 'update',
+          _id: targetId,
+          tags: selectedTags
+        }
+      })
+
+      if (result?.result?.success) {
+        const normalizedAll = this.normalizeTagCollection(selectedTags)
+        const displayTags = normalizedAll.slice(0, 3)
+        const updatedWorks = (this.data.works || []).map(item => {
+          if (item._id !== targetId) return item
+          return {
+            ...item,
+            tags: displayTags,
+            rawTags: normalizedAll
+          }
+        })
+
+        this.setData({
+          works: updatedWorks,
+          tagSheetVisible: false,
+          tagSheetSaving: false,
+          tagSelection: [],
+          tagSheetTargetId: null,
+          tagSheetTargetName: '未命名作品'
+        })
+
+        wx.showToast({
+          title: '标签已更新',
+          icon: 'success'
+        })
+      } else {
+        wx.showToast({
+          title: result?.result?.error || '保存失败',
+          icon: 'none'
+        })
+        this.setData({ tagSheetSaving: false })
+      }
+    } catch (error) {
+      console.error('更新标签失败:', error)
+      wx.showToast({
+        title: '保存失败',
+        icon: 'none'
+      })
+      this.setData({ tagSheetSaving: false })
+    } finally {
+      wx.hideLoading()
+    }
+  },
+
+  normalizeTagCollection(tags) {
+    if (!Array.isArray(tags)) return []
+    const seen = new Set()
+    return tags
+      .map((tag, index) => {
+        if (!tag) return null
+        if (typeof tag === 'string') {
+          const name = tag.trim()
+          if (!name) return null
+          const id = name
+          if (seen.has(id)) return null
+          seen.add(id)
+          return {
+            _id: id,
+            name,
+            color: '#2b7fff',
+            background: 'rgba(43, 127, 255, 0.12)'
+          }
+        }
+        if (typeof tag === 'object') {
+          const name = String(tag.name || tag.label || tag.text || tag.value || '').trim()
+          if (!name) return null
+          const id = tag._id || tag.id || name || `tag_${index}`
+          if (seen.has(id)) return null
+          seen.add(id)
+          const color = tag.color || tag.textColor || (tag.colorObj && tag.colorObj.text) || '#2b7fff'
+          const background = tag.background || tag.bgColor || (tag.colorObj && tag.colorObj.background) || 'rgba(43, 127, 255, 0.12)'
+          return {
+            _id: id,
+            name,
+            color,
+            background
+          }
+        }
+        return null
+      })
+      .filter(Boolean)
   },
 
   // 加载自定义字段
@@ -119,25 +420,16 @@ Page({
             }
           })
 
-          const tags = fieldArray
-            .filter(item => {
-              if (!item) return false
-              const value = item.value
-              return value !== undefined && value !== null && String(value).trim() !== ''
-            })
-            .slice(0, 3)
-            .map(item => ({
-              name: item.value || item.name,
-              background: item.colorObj?.background || '#F3F4F6',
-              color: item.colorObj?.text || '#1F2937'
-            }))
+          const normalizedTags = this.normalizeTags(work.tags || [])
+          const tags = normalizedTags.slice(0, 3)
 
           return {
             _id: work._id,
             name: work.title || work.name || '',
             cover: work.cover || '',
             imageCount: Array.isArray(work.images) ? work.images.length : 0,
-            tags
+            tags,
+            rawTags: normalizedTags
           }
         })
 
@@ -253,22 +545,64 @@ Page({
 
   // 重命名
   renameWork() {
-    console.log('重命名作品:', this.data.currentWorkId)
+    const workId = this.data.currentWorkId
+    if (!workId) {
+      wx.showToast({
+        title: '无效的作品',
+        icon: 'none'
+      })
+      return
+    }
+
+    this.hideEditModal()
+
     wx.showModal({
       title: '重命名作品',
       editable: true,
       placeholderText: '请输入新名称',
-      success: (res) => {
-        if (res.confirm && res.content) {
-          console.log('新名称:', res.content)
-          wx.showToast({
-            title: '重命名成功',
-            icon: 'success'
+      confirmText: '保存',
+      success: async (res) => {
+        if (res.confirm && res.content && res.content.trim()) {
+          const newName = res.content.trim()
+          wx.showLoading({
+            title: '重命名中',
+            mask: true
           })
+          try {
+            const result = await wx.cloud.callFunction({
+              name: 'works',
+              data: {
+                action: 'update',
+                _id: workId,
+                title: newName
+              }
+            })
+
+            if (result?.result?.success) {
+              wx.showToast({
+                title: '重命名成功',
+                icon: 'success'
+              })
+              this.setData({ showEditModal: false })
+              this.loadWorks()
+            } else {
+              wx.showToast({
+                title: result?.result?.error || '重命名失败',
+                icon: 'none'
+              })
+            }
+          } catch (error) {
+            console.error('重命名失败:', error)
+            wx.showToast({
+              title: '重命名失败',
+              icon: 'none'
+            })
+          } finally {
+            wx.hideLoading()
+          }
         }
       }
     })
-    this.hideEditModal()
   },
 
   // 设置封面
@@ -283,12 +617,19 @@ Page({
 
   // 管理标签
   manageTags() {
-    console.log('管理标签:', this.data.currentWorkId)
-    wx.showToast({
-      title: '标签管理功能开发中',
-      icon: 'none'
-    })
+    const workId = this.data.currentWorkId
+    const workName = this.data.currentWorkName || '未命名作品'
+
+    if (!workId) {
+      wx.showToast({
+        title: '请选择作品',
+        icon: 'none'
+      })
+      return
+    }
+
     this.hideEditModal()
+    this.openTagSheet()
   },
 
   // 卡片装饰
@@ -619,5 +960,7 @@ Page({
       title: '个人资料功能开发中',
       icon: 'none'
     })
-  }
+  },
+
+  noop() {}
 })

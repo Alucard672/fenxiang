@@ -1,0 +1,99 @@
+<view class="share-page">
+  <view class="share-header">
+    <view class="header-back" bindtap="goHome">
+      <text class="back-icon">‹</text>
+      <text class="back-text">返回主页</text>
+    </view>
+    <text class="header-hint">这是微信好友接收分享内容的演示界面</text>
+  </view>
+
+  <view class="share-content">
+    <view class="share-card">
+      <view class="author-card">
+        <image class="author-avatar" src="{{creator.avatar || defaultAvatar}}" mode="aspectFill" />
+        <view class="author-info">
+          <text class="author-name">{{creator.name}}</text>
+          <text class="author-time">{{shareTime || '分享于刚刚'}}</text>
+        </view>
+      </view>
+
+      <text class="work-title">{{workDetail.title}}</text>
+      <text class="work-subtitle">{{workDetail.subtitle}}</text>
+
+      <view class="tag-row" wx:if="{{tags.length}}">
+        <view class="tag-chip" wx:for="{{tags}}" wx:key="_id" style="background: {{item.background}}">
+          <text style="color: {{item.color}};">{{item.name}}</text>
+        </view>
+      </view>
+
+      <view class="image-grid" wx:if="{{imageList.length}}">
+        <block wx:for="{{imageList}}" wx:key="url">
+          <view class="image-item">
+            <image src="{{item.url}}" mode="aspectFill" bindtap="previewImage" data-index="{{index}}" />
+            <view class="image-caption" wx:if="{{item.caption}}">
+              <text>{{item.caption}}</text>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="image-empty" wx:if="{{!imageList.length}}">
+        <text>暂未上传项目图片</text>
+      </view>
+
+      <view class="divider"></view>
+
+      <view class="meta-actions">
+        <view class="meta-item">
+          <image src="/assets/images/heart-icon.svg" mode="widthFix" />
+          <text>获赞 {{meta.likes || '0'}}</text>
+        </view>
+        <view class="meta-item">
+          <image src="/assets/images/share_769.svg" mode="widthFix" />
+          <text>分享 {{meta.shares || '0'}}</text>
+        </view>
+        <view class="meta-item">
+          <image src="/assets/images/tags.svg" mode="widthFix" />
+          <text>收藏 {{meta.favorites || '0'}}</text>
+        </view>
+      </view>
+
+      <view class="section" wx:if="{{highlights.length}}">
+        <text class="section-title">核心设计理念</text>
+        <view class="bullet-list">
+          <view class="bullet-item" wx:for="{{highlights}}" wx:key="*this">
+            <view class="bullet-dot"></view>
+            <text class="bullet-text">{{item}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="section" wx:if="{{descriptionParagraphs.length}}">
+        <text class="section-title">项目概述</text>
+        <view class="desc-paragraphs">
+          <text wx:for="{{descriptionParagraphs}}" wx:key="index" class="desc-item">{{item}}</text>
+        </view>
+      </view>
+
+      <view class="section" wx:if="{{fields.length}}">
+        <text class="section-title">项目信息</text>
+        <view class="field-list">
+          <view class="field-item" wx:for="{{fields}}" wx:key="id">
+            <text class="field-name">{{item.name}}</text>
+          <text class="field-value">{{item.value || '暂无信息'}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="share-toolbar">
+    <button class="toolbar-btn toolbar-btn--secondary" bindtap="toggleLike">
+      <image class="toolbar-icon" src="/assets/images/heart-icon.svg" mode="widthFix" />
+      <text>{{liked ? '已收藏' : '收藏'}}</text>
+    </button>
+    <button class="toolbar-btn" open-type="share">
+      <image class="toolbar-icon" src="/assets/images/share_769.svg" mode="widthFix" />
+      <text>分享给好友</text>
+    </button>
+  </view>
+</view>

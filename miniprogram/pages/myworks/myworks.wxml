@@ -94,9 +94,9 @@
           <image src="/assets/images/12.svg" class="edit-modal__icon" />
           <text class="edit-modal__text">设置封面</text>
         </view>
-        <view class="edit-modal__item" bindtap="manageTags">
+        <view class="edit-modal__item" bindtap="openTagSheet">
           <image src="/assets/images/13.svg" class="edit-modal__icon" />
-          <text class="edit-modal__text">管理标签</text>
+          <text class="edit-modal__text">作品标签</text>
         </view>
         <view class="edit-modal__item" bindtap="cardDecoration">
           <image src="/assets/images/14.svg" class="edit-modal__icon" />
@@ -122,6 +122,48 @@
       <view class="edit-modal__cancel" bindtap="hideEditModal">
         <text>取消</text>
       </view>
+    </view>
+  </view>
+
+  <!-- 标签选择弹层 -->
+  <view wx:if="{{tagSheetVisible}}" class="tag-sheet" catchtouchmove="true">
+    <view class="tag-sheet__mask" bindtap="closeTagSheet"></view>
+    <view class="tag-sheet__panel" catchtap="noop">
+      <view class="tag-sheet__handle"></view>
+      <view class="tag-sheet__header">
+        <text class="tag-sheet__title">作品标签</text>
+        <text class="tag-sheet__subtitle">为 "{{tagSheetTargetName}}" 选择标签，最多 {{maxTagCount}} 个</text>
+      </view>
+      <view wx:if="{{tagSheetLoading}}" class="tag-sheet__loading">标签加载中...</view>
+      <view wx:else>
+        <scroll-view scroll-y="true" class="tag-sheet__scroll">
+          <view class="tag-sheet__grid">
+            <view
+              wx:for="{{tagList}}"
+              wx:key="_id"
+              class="tag-sheet__option {{tagSelection.indexOf(item._id) >= 0 ? 'selected' : ''}}"
+              data-id="{{item._id}}"
+              bindtap="toggleTagSelection"
+            >
+              <view class="tag-sheet__pill" style="background: {{item.background}}">
+                <text style="color: {{item.color}};">{{item.name}}</text>
+              </view>
+              <view wx:if="{{tagSelection.indexOf(item._id) >= 0}}" class="tag-sheet__check">
+                <view class="tag-sheet__checkmark"></view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+        <view wx:if="{{!tagList.length}}" class="tag-sheet__empty">暂无可用标签，请先在标签管理中创建。</view>
+      </view>
+      <button
+        class="tag-sheet__confirm"
+        bindtap="applyTagSheet"
+        loading="{{tagSheetSaving}}"
+        disabled="{{tagSheetSaving || tagSheetLoading}}"
+      >
+        保存
+      </button>
     </view>
   </view>
 

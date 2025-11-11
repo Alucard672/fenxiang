@@ -1,0 +1,141 @@
+<view class="detail-page">
+  <scroll-view class="detail-scroll" scroll-y="true" show-scrollbar="false">
+    <view class="detail-content">
+      <text class="page-title">作品详情</text>
+      <view class="author-card">
+        <view class="author-avatar">
+          <image src="{{userInfo.avatarUrl || '/assets/images/8.svg'}}" mode="aspectFill" />
+        </view>
+        <view class="author-info">
+          <text class="author-name">{{userInfo.name || '云作品小萌新'}}</text>
+          <text class="author-role">创作者</text>
+        </view>
+      </view>
+
+      <view class="cover-card" bindtap="openAssetSheet">
+        <block wx:if="{{workDetail.imagePreviews && workDetail.imagePreviews.length}}">
+          <image class="cover-image" src="{{workDetail.imagePreviews[0]}}" mode="aspectFill" />
+        </block>
+        <block wx:else>
+          <view class="cover-placeholder">
+            <text class="cover-plus">+</text>
+            <text class="cover-label">添加图片</text>
+          </view>
+        </block>
+      </view>
+
+      <view class="intro-card">
+        <view class="intro-header">
+          <text class="intro-title">作品简介</text>
+          <view class="intro-actions">
+            <text class="intro-edit" bindtap="openAssetSheet">编辑</text>
+            <view class="intro-manage" bindtap="openFieldManager">
+              <view class="intro-manage__icon">
+                <view></view>
+                <view></view>
+                <view></view>
+              </view>
+              <text>管理字段</text>
+            </view>
+          </view>
+        </view>
+        <view class="intro-fields">
+          <block wx:for="{{displayFields}}" wx:key="_id">
+            <view class="intro-field">
+              <view class="field-info">
+                <view class="field-badge" style="background: {{item.colorObj.background || '#F3F4F6'}}">
+                  <image src="/assets/images/{{item.icon || 'client-icon'}}.svg" mode="aspectFit" />
+                  <text style="color: {{item.colorObj.text || '#1F2937'}}">{{item.name}}</text>
+                </view>
+              </view>
+              <text class="{{item.value ? 'field-value' : 'field-placeholder'}}">{{item.value || '待点添加'}}</text>
+            </view>
+          </block>
+          <view wx:if="{{!displayFields.length}}" class="intro-empty">
+            <text>尚未选择需要展示的字段，可点击右上角“管理字段”进行配置。</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="detail-footer">
+    <button class="footer-gear" bindtap="openAssetSheet" hover-class="none">
+      <image src="/assets/images/settings.svg" mode="aspectFit" />
+    </button>
+    <button class="footer-share" bindtap="shareWork">分享作品</button>
+  </view>
+
+  <view wx:if="{{showAssetSheet}}" class="sheet-mask" bindtap="closeAssetSheet">
+    <view class="sheet-panel" catchtap="noop">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">添加图片</view>
+      <view class="sheet-section">
+        <view class="sheet-item primary" bindtap="addImageFromSheet">
+          <image class="sheet-icon" src="/assets/images/add-icon.svg" mode="aspectFit" />
+          <text class="sheet-text">添加图片</text>
+        </view>
+      </view>
+      <text class="sheet-subtitle">设置作品</text>
+      <view class="sheet-section">
+        <view class="sheet-item" bindtap="editWorkName">
+          <image class="sheet-icon" src="/assets/images/edit-icon.svg" mode="aspectFit" />
+          <text class="sheet-text">名称</text>
+        </view>
+        <view class="sheet-item" bindtap="editWorkDescription">
+          <image class="sheet-icon" src="/assets/images/description-icon.svg" mode="aspectFit" />
+          <text class="sheet-text">简介</text>
+        </view>
+        <view class="sheet-item" bindtap="manageTags">
+          <image class="sheet-icon" src="/assets/images/tag-icon.svg" mode="aspectFit" />
+          <text class="sheet-text">标签</text>
+        </view>
+        <view class="sheet-item" bindtap="editRating">
+          <image class="sheet-icon" src="/assets/images/star-icon.svg" mode="aspectFit" />
+          <text class="sheet-text">评分</text>
+        </view>
+        <view class="sheet-item" bindtap="decorCard">
+          <image class="sheet-icon" src="/assets/images/heart-icon.svg" mode="aspectFit" />
+          <text class="sheet-text">卡片装饰</text>
+        </view>
+        <view class="sheet-item" bindtap="sortWorks">
+          <image class="sheet-icon" src="/assets/images/drag-handle.svg" mode="aspectFit" />
+          <text class="sheet-text">排序</text>
+        </view>
+        <view class="sheet-item" bindtap="toggleLayout">
+          <view class="sheet-icon sheet-icon-layout"></view>
+          <text class="sheet-text">单列</text>
+        </view>
+        <view class="sheet-item" bindtap="toggleImmersive">
+          <view class="sheet-icon sheet-icon-immersive"></view>
+          <text class="sheet-text">沉浸浏览</text>
+        </view>
+      </view>
+      <view class="sheet-item danger" bindtap="deactivateWork">
+        <image class="sheet-icon" src="/assets/images/delete-icon.svg" mode="aspectFit" />
+        <text class="sheet-text">停用作品</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showFieldManager}}" class="sheet-mask" bindtap="closeFieldManager">
+    <view class="sheet-panel field-panel" catchtap="noop">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">管理显示字段</view>
+      <view class="field-grid">
+        <view wx:for="{{availableFields}}" wx:key="_id" class="field-option {{item.selected ? 'selected' : ''}}" bindtap="toggleFieldDisplay" data-id="{{item._id}}">
+          <view class="field-option-badge" style="background: {{item.colorObj.background || '#F3F4F6'}}">
+            <text style="color: {{item.colorObj.text || '#1F2937'}}">{{item.name}}</text>
+          </view>
+          <text class="field-option-status">{{item.value ? '已填写' : '未填写'}}</text>
+        </view>
+      </view>
+      <view class="field-tip">
+        <text>提示：选中的字段将显示在作品简介中，未选中的字段将被隐藏。</text>
+      </view>
+      <button class="field-confirm" bindtap="applyFieldSelection">完成</button>
+    </view>
+  </view>
+</view>
+
+<canvas canvas-id="compress-canvas" style="position: fixed; top: -9999px; left: -9999px; width: 1px; height: 1px;"></canvas>

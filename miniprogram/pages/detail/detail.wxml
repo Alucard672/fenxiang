@@ -1,88 +1,199 @@
-<!-- 1:1像素级还原Figma设计 -->
-<view style="width: 393px; height: 1443rpx; left: 0rpx; top: 0rpx; position: absolute; background: #F8F9FD; display: block; box-sizing: border-box">
-  
-  <!-- 主要内容区域 -->
-  <view style="width: 393px; height: 1312rpx; left: 0rpx; top: 0rpx; position: absolute; background: #F9FAFB; display: block; box-sizing: border-box">
-    
-    <!-- 添加图片区域 -->
-    <view style="width: 177.25px; height: 177.25px; left: 14px; top: 14px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 14px; outline: 2px #D1D5DC solid; outline-offset: -2px; overflow: hidden;" bindtap="addImage">
-      <block wx:if="{{workDetail.imagePreviews && workDetail.imagePreviews.length}}">
-        <image src="{{workDetail.imagePreviews[0]}}" style="width: 100%; height: 100%; object-fit: cover;" mode="aspectFill" />
-      </block>
-      <block wx:else>
-        <view style="width: 42px; height: 49px; left: 67.63px; top: 64.13px; position: absolute">
-          <view style="width: 42px; height: 31.50px; left: 0px; top: 0px; position: absolute">
-            <view style="width: 42px; left: 0px; top: 0px; position: absolute; text-align: center">
-              <text style="color: #99A1AF; font-size: 26.25px; font-weight: 400; letter-spacing: 0.24px">+</text>
-            </view>
+<!-- 根据新版Figma设计重构 -->
+<view style="width: 393px; height: 852px; left: 0px; top: 0px; position: absolute; background: #F8F9FD; overflow: hidden;">
+  <view style="width: 100%; background: #F9FAFB; padding: 14px 14px 140px; box-sizing: border-box; overflow-y: hidden;">
+    <view style="display: flex; flex-wrap: wrap; gap: 12px;">
+      <block wx:for="{{workDetail.imagePreviews}}" wx:key="*this">
+        <view style="width: 110px; height: 110px; border-radius: 12px; overflow: hidden; background: #ffffff; box-shadow: 0px 1px 3px rgba(15,23,42,0.15); position: relative;">
+          <image src="{{item}}" mode="aspectFill" style="width: 100%; height: 100%;" binderror="handleImageError" bindtap="previewImage" data-index="{{index}}" />
+          <view wx:if="{{uploadingImages[index] !== undefined}}" style="position: absolute; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px;">
+            {{uploadingImages[index]}}%
           </view>
-          <view style="width: 42px; height: 14px; left: 0px; top: 35px; position: absolute">
-            <view style="left: 0px; top: 0px; position: absolute; text-align: center">
-              <text style="color: #6A7282; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">添加图片</text>
-            </view>
+          <view wx:if="{{editMode}}" style="position: absolute; top: 6px; right: 6px; width: 20px; height: 20px; border-radius: 10px; background: rgba(0,0,0,0.6); color: white; font-size: 12px; display: flex; align-items: center; justify-content: center;" catchtap="removeImage" data-index="{{index}}">
+            ×
           </view>
         </view>
       </block>
-    </view>
-    
-    <!-- 创作者信息 -->
-    <view style="width: 365px; min-height: 63px; left: 14px; top: 205.25px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 14px">
-      <view style="width: 337px; height: 35px; left: 14px; top: 14px; position: absolute">
-        <view style="width: 291.50px; height: 31.50px; left: 60.50px; top: 1.75px; position: absolute">
-          <view style="width: 291.50px; height: 17.50px; left: 0px; top: 0px; position: absolute; display: flex; align-items: center">
-            <view style="left: 0px; top: 0.50px; position: absolute">
-              <text style="color: #1A1D2E; font-size: 12.25px; font-weight: 500">云作品小萌新</text>
-            </view>
-          </view>
-          <view style="width: 291.50px; height: 14px; left: 0px; top: 17.50px; position: absolute; display: flex; align-items: center">
-            <view style="left: 0px; top: 0px; position: absolute">
-              <text style="color: #6A7282; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px">创作者</text>
-            </view>
-          </view>
-        </view>
-        <view style="width: 50px; height: 50px; left: 0px; top: -7.50px; position: absolute; overflow: hidden; border-radius: 16777200px">
-          <image src="/assets/images/3.svg" style="width: 100%; height: 100%; object-fit: cover;" />
-        </view>
+      <view wx:if="{{editMode && workDetail.imagePreviews.length < 50}}" style="width: 110px; height: 110px; border-radius: 12px; background: #FFFFFF; box-shadow: 0px 1px 3px rgba(15,23,42,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #6A7282;" bindtap="addImage">
+        <text style="font-size: 28px; line-height: 1;">+</text>
+        <text style="font-size: 12px; margin-top: 4px;">添加图片</text>
+      </view>
+      <view wx:if="{{!workDetail.imagePreviews.length && !editMode}}" style="width: 110px; height: 110px; border-radius: 12px; background: #FFFFFF; box-shadow: 0px 1px 3px rgba(15,23,42,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #6A7282;" bindtap="addImage">
+        <text style="font-size: 28px; line-height: 1;">+</text>
+        <text style="font-size: 12px; margin-top: 4px;">添加图片</text>
       </view>
     </view>
-    
-    <!-- 作品简介 -->
-    <view style="width: 365px; min-height: 320px; left: 14px; top: 274px; position: absolute; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; box-sizing: border-box">
-      <view style="display: flex; align-items: center; justify-content: space-between;">
-        <text style="color: #1A1D2E; font-size: 12.25px; font-weight: 500;">作品简介</text>
-        <view wx:if="{{!editMode && !workDetail.isNew}}" style="padding: 0 6px; height: 20px; border-radius: 10px; background: #F3F4F6; display: flex; align-items: center;" bindtap="editIntro">
-          <text style="color: #6A7282; font-size: 10.50px; font-weight: 400;">编辑 ></text>
+
+    <view style="margin-top: 24px; background: white; border-radius: 14px; padding: 14px; box-sizing: border-box;">
+      <view style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+        <text style="color: #1A1D2E; font-size: 12.25px; font-weight: 500;">作品详情</text>
+        <view style="display: flex; align-items: center; gap: 10px;">
+          <view wx:if="{{!editMode}}" class="intro-edit-btn" bindtap="startEdit">编辑</view>
+          <view wx:else class="intro-edit-btn intro-edit-btn--disabled">编辑中</view>
+          <view wx:if="{{editMode}}" style="display: flex; align-items: center; gap: 4px; color: #2B7FFF; font-size: 12px;" bindtap="openFieldManager">
+            <view style="width: 12px; height: 10px; display: flex; flex-direction: column; justify-content: space-between;">
+              <view style="height: 2px; background: #2B7FFF; border-radius: 1px;"></view>
+              <view style="height: 2px; background: #2B7FFF; border-radius: 1px;"></view>
+              <view style="height: 2px; background: #2B7FFF; border-radius: 1px;"></view>
+            </view>
+            <text>管理字段</text>
+          </view>
         </view>
       </view>
-      <view style="margin-top: 18px; display: flex; flex-direction: column; gap: 18px; max-height: 480px; overflow-y: auto;">
-        <block wx:for="{{customFields}}" wx:key="_id">
-          <view wx:if="{{editMode || workDetail.isNew || fieldValues[item._id] || fieldValues[item.name]}}" style="display: flex; align-items: flex-start;">
-            <view style="min-width: 60px; height: 21px; padding: 0 12px; background: {{item.colorObj.background || '#F3F4F6'}}; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 4px;">
-              <image src="/assets/images/{{item.icon || 'client-icon'}}.svg" style="width: 10.50px; height: 10.50px;"></image>
-              <text style="color: {{item.colorObj.text || '#1F2937'}}; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px;">{{item.name}}</text>
+
+      <view wx:if="{{tagDisplayList.length}}" class="detail-tags">
+        <view wx:for="{{tagDisplayList}}" wx:key="index" class="detail-tag" style="background: {{item.background}}">
+          <text style="color: {{item.color}};">{{item.name}}</text>
+        </view>
+      </view>
+
+      <view style="display: flex; flex-direction: column; gap: 12px;">
+        <block wx:for="{{displayFields}}" wx:key="_id">
+          <view style="display: flex; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid #F3F4F6;">
+            <view style="min-width: 60px; height: 22px; padding: 0 10px; background: {{item.colorObj.background || '#F3F4F6'}}; border-radius: 11px; display: flex; align-items: center; justify-content: center; gap: 4px; margin-right: 12px;">
+              <image src="/assets/images/{{item.icon || 'tag-icon'}}.svg" style="width: 10px; height: 10px;" />
+              <text style="color: {{item.colorObj.text || '#1F2937'}}; font-size: 10px; font-weight: 500;">
+                {{item.name}}
+              </text>
             </view>
-            <view style="flex: 1; margin-left: 14px;">
-              <view wx:if="{{editMode}}" style="border-bottom: 1px solid #D1D5DB; padding: 4px 0;">
-                <input style="color: #364153; font-size: 13px; font-weight: 400; background: transparent; border: none; outline: none; width: 100%;" placeholder="待点添加" data-id="{{item._id}}" data-name="{{item.name}}" bindinput="onFieldInput" value="{{fieldValues[item._id] || fieldValues[item.name]}}" />
-              </view>
-              <view wx:else>
-                <text style="color: #364153; font-size: 13px; font-weight: 400;">{{fieldValues[item._id] || fieldValues[item.name]}}</text>
-              </view>
+            <view style="flex: 1;">
+              <text wx:if="{{!editMode}}" style="color: {{item.value ? '#374151' : '#9CA3AF'}}; font-size: 12px; font-weight: 400; line-height: 1.4;">{{item.value || '暂无信息'}}</text>
+              <input
+                wx:else
+                class="field-input"
+                value="{{fieldValues[item._id] || fieldValues[item.name] || ''}}"
+                placeholder="请输入{{item.name}}"
+                placeholder-style="color:#9CA3AF"
+                data-id="{{item._id}}"
+                data-name="{{item.name}}"
+                bindinput="onFieldInput"
+                confirm-type="done"
+              />
             </view>
           </view>
         </block>
       </view>
+
+      <view wx:if="{{!displayFields.length}}" style="display: flex; align-items: center; justify-content: center; padding: 32px 0;">
+        <text style="color: #9CA3AF; font-size: 12px;">暂无详细信息</text>
+      </view>
     </view>
   </view>
-  
-  <!-- 底部按钮区域 -->
-  <view style="width: 393px; height: 64px; left: 0px; position: fixed; bottom: 0px; background: white; border-top: 1px #F3F4F6 solid; display: flex; align-items: center; justify-content: center; padding: 11.50px 14px; box-sizing: border-box; gap: 12px;">
-    <view wx:if="{{workDetail.isNew || editMode}}" style="flex: 1; height: 42px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px; display: flex; align-items: center; justify-content: center;" bindtap="saveWork">
-      <text style="color: white; font-size: 12.25px; font-weight: 500">保存作品</text>
+
+  <view style="position: fixed; left: 14px; right: 14px; bottom: calc(12px + constant(safe-area-inset-bottom)); bottom: calc(12px + env(safe-area-inset-bottom)); background: rgba(255, 255, 255, 0.96); border-radius: 20px; box-shadow: 0px 12px 32px rgba(15, 23, 42, 0.15); display: flex; align-items: center; padding: 12px 14px; gap: 14px; box-sizing: border-box; z-index: 50;">
+    <view style="width: 57.75px; height: 40px; background: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0px 4px 12px rgba(15, 23, 42, 0.12);" bindtap="openAssetSheet">
+      <image src="/assets/images/5.svg" style="width: 20px; height: 20px;" />
     </view>
-    <view wx:if="{{!workDetail.isNew && !editMode}}" style="flex: 1; height: 42px; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px; display: flex; align-items: center; justify-content: center;" bindtap="shareWork">
-      <image src="/assets/images/9.svg" style="width: 14px; height: 14px; margin-right: 6px;" />
-      <text style="color: white; font-size: 12.25px; font-weight: 500">分享作品</text>
+    <button wx:if="{{editMode}}" class="footer-share footer-share--save" bindtap="handlePrimaryAction">
+      <text>保存作品</text>
+    </button>
+    <button wx:else class="footer-share" open-type="share" bindtap="shareWork">
+      <image src="/assets/images/6.svg" style="width: 16px; height: 16px; margin-right: 8px;" />
+      <text>分享作品</text>
+    </button>
+  </view>
+</view>
+
+<!-- 底部弹窗 -->
+<view wx:if="{{showAssetSheet}}" class="sheet-mask" bindtap="closeAssetSheet">
+  <view class="sheet-panel" catchtap="noop">
+    <view class="sheet-handle"></view>
+    <view class="sheet-title">添加图片</view>
+    <view class="sheet-section">
+      <view class="sheet-item primary" bindtap="addImageFromSheet">
+        <image class="sheet-icon" src="/assets/images/7.svg" mode="aspectFit" />
+        <text class="sheet-text">添加图片</text>
+      </view>
+    </view>
+    <text class="sheet-subtitle">设置作品</text>
+    <view class="sheet-section">
+      <view class="sheet-item" bindtap="editWorkName">
+        <image class="sheet-icon" src="/assets/images/8.svg" mode="aspectFit" />
+        <text class="sheet-text">名称</text>
+      </view>
+      <view class="sheet-item" bindtap="editWorkDescription">
+        <image class="sheet-icon" src="/assets/images/9.svg" mode="aspectFit" />
+        <text class="sheet-text">简介</text>
+      </view>
+      <view class="sheet-item" bindtap="manageTags">
+        <image class="sheet-icon" src="/assets/images/10.svg" mode="aspectFit" />
+        <text class="sheet-text">标签</text>
+      </view>
+      <view class="sheet-item" bindtap="editRating">
+        <image class="sheet-icon" src="/assets/images/11.svg" mode="aspectFit" />
+        <text class="sheet-text">评分</text>
+      </view>
+      <view class="sheet-item" bindtap="decorCard">
+        <image class="sheet-icon" src="/assets/images/12.svg" mode="aspectFit" />
+        <text class="sheet-text">卡片装饰</text>
+      </view>
+      <view class="sheet-item" bindtap="sortWorks">
+        <image class="sheet-icon" src="/assets/images/13.svg" mode="aspectFit" />
+        <text class="sheet-text">排序</text>
+      </view>
+      <view class="sheet-item" bindtap="toggleLayout">
+        <view class="sheet-icon sheet-icon-layout"></view>
+        <text class="sheet-text">单列</text>
+      </view>
+      <view class="sheet-item" bindtap="toggleImmersive">
+        <view class="sheet-icon sheet-icon-immersive"></view>
+        <text class="sheet-text">沉浸浏览</text>
+      </view>
+    </view>
+    <view class="sheet-item danger" bindtap="deactivateWork">
+      <image class="sheet-icon" src="/assets/images/14.svg" mode="aspectFit" />
+      <text class="sheet-text">停用作品</text>
     </view>
   </view>
 </view>
+
+<!-- 字段管理弹窗 -->
+<view wx:if="{{showFieldManager}}" class="sheet-mask" bindtap="closeFieldManager">
+  <view class="sheet-panel field-panel" catchtap="noop">
+    <view class="sheet-handle"></view>
+    <view class="sheet-title">管理显示字段</view>
+    <view class="field-grid">
+      <view wx:for="{{availableFields}}" wx:key="_id" class="field-option {{item.selected ? 'selected' : ''}}" bindtap="toggleFieldDisplay" data-id="{{item._id}}">
+        <view class="field-option-badge" style="background: {{item.colorObj.background || '#F3F4F6'}}">
+          <text style="color: {{item.colorObj.text || '#1F2937'}}">{{item.name}}</text>
+        </view>
+        <text class="field-option-status">{{item.value ? '已填写' : '未填写'}}</text>
+      </view>
+    </view>
+    <view class="field-tip">
+      <text>提示：选中的字段将显示在作品简介中，未选中的字段将被隐藏。</text>
+    </view>
+    <button class="field-confirm" bindtap="applyFieldSelection">完成</button>
+  </view>
+</view>
+
+<!-- 标签管理弹窗 -->
+<view wx:if="{{showTagManager}}" class="sheet-mask" bindtap="closeTagManager">
+  <view class="sheet-panel tag-panel" catchtap="noop">
+    <view class="sheet-handle"></view>
+    <view class="sheet-title">选择作品标签</view>
+    <view class="tag-subtitle">最多可选择 {{maxTagCount}} 个，当前已选 {{tagSelection.length}}</view>
+    <view class="tag-grid">
+      <view
+        wx:for="{{allTags}}"
+        wx:key="_id"
+        class="tag-option {{tagSelection.indexOf(item._id) >= 0 ? 'selected' : ''}}"
+        data-id="{{item._id}}"
+        bindtap="toggleTagSelection"
+      >
+        <view class="tag-option-pill" style="background: {{item.background}}">
+          <text style="color: {{item.color}};">{{item.name}}</text>
+        </view>
+        <view wx:if="{{tagSelection.indexOf(item._id) >= 0}}" class="tag-option-check">
+          <view class="tag-option-checkmark"></view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{!allTags.length}}" class="tag-empty">
+      <text>暂无可用标签，请先在“标签管理”中创建</text>
+    </view>
+    <button class="tag-confirm" bindtap="applyTagSelection">完成</button>
+  </view>
+</view>
+
+<!-- 图片压缩用画布 - 隐藏 -->
+<canvas canvas-id="compress-canvas" style="position: fixed; top: -9999px; left: -9999px; width: 1px; height: 1px;"></canvas>

@@ -2,6 +2,7 @@
   "pages": [
     "pages/myworks/myworks",
     "pages/detail/detail",
+    "pages/share/share",
     "pages/settings/settings",
     "pages/addfield/addfield",
     "pages/customfields/customfields",
@@ -15,19 +16,5 @@
   },
   "cloud": true,
   "style": "v2",
-  "sitemapLocation": "sitemap.json",
-  "permission": {
-    "scope.writePhotosAlbum": {
-      "desc": "用于保存图片到相册"
-    },
-    "scope.camera": {
-      "desc": "用于拍摄照片"
-    },
-    "scope.album": {
-      "desc": "用于从相册选择图片"
-    }
-  },
-  "requiredPrivateInfos": [
-    "chooseLocation"
-  ]
+  "sitemapLocation": "sitemap.json"
 }

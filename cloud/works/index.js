@@ -112,10 +112,11 @@ async function listWorks({ page = 1, limit = 20, tag, sortBy = 'createTime', sor
 
 // 创建作品
 async function createWork({ title, description, tags = [], images = [], cover = '', customFields = {} }, openid) {
+  const sanitizedTags = sanitizeTags(tags)
   const workData = {
     title: title.trim(),
     description: description.trim(),
-    tags,
+    tags: sanitizedTags,
     images,
     cover,
     customFields,
@@ -145,7 +146,7 @@ async function updateWork({ _id, title, description, tags, images, cover, custom
 
   if (title !== undefined) updateData.title = title.trim()
   if (description !== undefined) updateData.description = description.trim()
-  if (tags !== undefined) updateData.tags = tags
+  if (tags !== undefined) updateData.tags = sanitizeTags(tags)
   if (images !== undefined) updateData.images = images
   if (cover !== undefined) updateData.cover = cover
   if (customFields !== undefined) updateData.customFields = customFields
@@ -241,4 +242,45 @@ async function searchWorks({ keyword, page = 1, limit = 20 }, openid) {
       keyword
     }
   }
+}
+
+function sanitizeTags(tags = []) {
+  if (!Array.isArray(tags)) return []
+  const seen = new Set()
+
+  return tags
+    .map((tag, index) => {
+      if (!tag) return null
+
+      if (typeof tag === 'string') {
+        const name = tag.trim()
+        if (!name) return null
+        return {
+          _id: `tag_${index}_${name}`,
+          name,
+          color: '#1F2937',
+          background: '#F3F4F6'
+        }
+      }
+
+      if (typeof tag === 'object') {
+        const name = String(tag.name || tag.label || tag.text || tag.value || '').trim()
+        if (!name) return null
+        const id = tag._id || tag.id || `tag_${index}_${name}`
+        return {
+          _id: id,
+          name,
+          color: tag.color || '#1F2937',
+          background: tag.background || '#F3F4F6'
+        }
+      }
+
+      return null
+    })
+    .filter(tag => {
+      if (!tag) return false
+      if (seen.has(tag._id)) return false
+      seen.add(tag._id)
+      return true
+    })
 }
