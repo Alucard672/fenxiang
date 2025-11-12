@@ -1,4 +1,4 @@
-// 偏好设置页面逻辑
+// 偏好设置页面逻辑（移除旧图标映射，统一使用 TDesign 图标名称）
 Page({
   data: {
     // 设置数据
@@ -172,7 +172,7 @@ Page({
       {
         id: 'client',
         name: '客户',
-        icon: 'client-icon',
+        icon: 'user-1',
         color: 'orange',
         colorObj: {
           background: 'linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%)',
@@ -183,7 +183,7 @@ Page({
       {
         id: 'industry',
         name: '行业',
-        icon: 'industry-icon',
+        icon: 'building-1',
         color: 'green',
         colorObj: {
           background: 'linear-gradient(135deg, #A7F3D0 0%, #6EE7B7 100%)',
@@ -194,7 +194,7 @@ Page({
       {
         id: 'amount',
         name: '金额',
-        icon: 'amount-icon',
+        icon: 'money-circle',
         color: 'yellow',
         colorObj: {
           background: 'linear-gradient(135deg, #FDE68A 0%, #FCD34D 100%)',
@@ -205,7 +205,7 @@ Page({
       {
         id: 'description',
         name: '描述',
-        icon: 'description-icon',
+        icon: 'file-1',
         color: 'purple',
         colorObj: {
           background: 'linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%)',
@@ -216,7 +216,7 @@ Page({
       {
         id: 'remark',
         name: '备注',
-        icon: 'remark-icon',
+        icon: 'chat',
         color: 'blue',
         colorObj: {
           background: 'linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%)',
@@ -230,7 +230,14 @@ Page({
     const customFields = wx.getStorageSync('customFields') || [];
     
     // 合并默认字段和自定义字段
+    // 合并默认字段和自定义字段
     let allFields = [...defaultFields, ...customFields];
+
+    // 直接使用 TDesign 图标名称（无映射），并设置默认值
+    allFields = allFields.map(f => ({
+      ...f,
+      icon: f.icon || 'user-1'
+    }))
     
     // 根据保存的顺序重新排列
     if (fieldOrder.length > 0) {

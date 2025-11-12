@@ -1,3 +1,4 @@
+// 移除旧图标映射，直接使用 TDesign 图标名称
 Page({
   data: {
     customFields: [],
@@ -32,7 +33,7 @@ Page({
         const list = (result.result.data.list || []).map((field, index) => ({
           _id: field._id,
           name: field.name,
-          icon: field.icon || 'client-icon',
+          icon: field.icon || 'user-1',
           color: field.color || '',
           colorObj: field.colorObj || {},
           type: field.type || 'text',

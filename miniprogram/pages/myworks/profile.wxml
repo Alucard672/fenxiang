@@ -16,13 +16,13 @@
           <view class="user-title" style="width: 63px; height: 17.50px; left: 0px; top: 28px; position: absolute" bindtap="handleProfile">
             <text style="left: 0px; top: 0.50px; position: absolute; color: #1A1D2E; font-size: 12.25px; font-family: Inter; font-weight: 500">个人信息</text>
             <view class="arrow-icon" style="left: 52.50px; top: 3.50px; position: absolute">
-              <image src="/assets/images/10.svg" style="width: 14px; height: 14px" />
+              <t-icon name="chevron-right" size="14px"></t-icon>
             </view>
           </view>
         </view>
         <!-- 用户头像: 49px × 49px -->
         <view class="avatar" style="width: 49px; height: 49px; left: 208px; top: 0px; position: absolute; overflow: hidden; border-radius: 16777200px">
-          <image src="/assets/images/11.svg" style="width: 49px; height: 49px" />
+          <t-icon name="user-avatar" size="49px"></t-icon>
         </view>
       </view>
     </view>
@@ -32,7 +32,7 @@
       <!-- 访客 -->
       <view class="menu-item visitors" style="width: 285px; height: 45.50px; left: 7px; top: 7px; position: absolute; border-radius: 10.50px" bindtap="handleVisitors">
         <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
-          <image src="/assets/images/12.svg" style="width: 14px; height: 14px" />
+          <t-icon name="user-list" size="14px"></t-icon>
         </view>
         <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
           <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">访客</text>
@@ -42,7 +42,7 @@
       <!-- 作品标签 -->
       <view class="menu-item tags" style="width: 285px; height: 45.50px; left: 7px; top: 52.50px; position: absolute; border-radius: 10.50px" bindtap="handleTags">
         <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
-          <image src="/assets/images/13.svg" style="width: 14px; height: 14px" />
+          <t-icon name="tag" size="14px"></t-icon>
         </view>
         <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
           <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">作品标签</text>
@@ -52,7 +52,7 @@
       <!-- 作品评分 -->
       <view class="menu-item rating" style="width: 285px; height: 45.50px; left: 7px; top: 98px; position: absolute; border-radius: 10.50px" bindtap="handleRating">
         <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
-          <image src="/assets/images/14.svg" style="width: 14px; height: 14px" />
+          <t-icon name="star" size="14px"></t-icon>
         </view>
         <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
           <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">作品评分</text>
@@ -62,20 +62,20 @@
       <!-- 自定义字段 -->
       <view class="menu-item custom-fields" style="width: 285px; height: 45.50px; left: 7px; top: 143.50px; position: absolute; border-radius: 10.50px" bindtap="handleCustomFields">
         <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
-          <image src="/assets/images/15.svg" style="width: 14px; height: 14px" />
+          <t-icon name="view-list" size="14px"></t-icon>
         </view>
         <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
           <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">自定义字段</text>
         </view>
         <view class="arrow-icon" style="left: 257px; top: 15.75px; position: absolute">
-          <image src="/assets/images/16.svg" style="width: 14px; height: 14px" />
+          <t-icon name="chevron-right" size="14px"></t-icon>
         </view>
       </view>
 
       <!-- 团队管理 -->
       <view class="menu-item team" style="width: 285px; height: 45.50px; left: 7px; top: 189px; position: absolute; border-radius: 10.50px" bindtap="handleTeam">
         <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
-          <image src="/assets/images/17.svg" style="width: 14px; height: 14px" />
+          <t-icon name="usergroup" size="14px"></t-icon>
         </view>
         <view class="menu-text" style="width: 134.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
           <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">团队管理</text>
@@ -83,7 +83,7 @@
         <view class="upgrade-btn" style="width: 77px; height: 21px; left: 194px; top: 12.25px; position: absolute; background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%); border-radius: 16777200px" catchtap="handleUpgrade">
           <text style="left: 7px; top: 2.25px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 400">立即开通</text>
           <view class="btn-icon" style="left: 59.50px; top: 5.25px; position: absolute">
-            <image src="/assets/images/18.svg" style="width: 14px; height: 14px" />
+            <t-icon name="arrow-right" size="14px" style="color: white"></t-icon>
           </view>
         </view>
       </view>
@@ -95,7 +95,7 @@
     <!-- 系统设置: 285px × 45.50px -->
     <view class="settings" style="width: 285px; height: 45.50px; left: 7px; top: 390.50px; position: absolute; border-radius: 10.50px" bindtap="handleSettings">
       <view class="menu-icon" style="left: 14px; top: 14px; position: absolute">
-        <image src="/assets/images/19.svg" style="width: 14px; height: 14px" />
+        <t-icon name="setting" size="14px"></t-icon>
       </view>
       <view class="menu-text" style="width: 225.50px; height: 21px; left: 45.50px; top: 12.25px; position: absolute">
         <text style="left: 0px; top: 0px; position: absolute; color: #1A1D2E; font-size: 14px; font-family: Inter; font-weight: 400">系统设置</text>

@@ -50,7 +50,7 @@
         <block wx:for="{{displayFields}}" wx:key="_id">
           <view style="display: flex; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid #F3F4F6;">
             <view style="min-width: 60px; height: 22px; padding: 0 10px; background: {{item.colorObj.background || '#F3F4F6'}}; border-radius: 11px; display: flex; align-items: center; justify-content: center; gap: 4px; margin-right: 12px;">
-              <image src="/assets/images/{{item.icon || 'tag-icon'}}.svg" style="width: 10px; height: 10px;" />
+              <t-icon name="{{item.icon || 'tag'}}" size="12px" />
               <text style="color: {{item.colorObj.text || '#1F2937'}}; font-size: 10px; font-weight: 500;">
                 {{item.name}}
               </text>
@@ -81,13 +81,13 @@
 
   <view style="position: fixed; left: 14px; right: 14px; bottom: calc(12px + constant(safe-area-inset-bottom)); bottom: calc(12px + env(safe-area-inset-bottom)); background: rgba(255, 255, 255, 0.96); border-radius: 20px; box-shadow: 0px 12px 32px rgba(15, 23, 42, 0.15); display: flex; align-items: center; padding: 12px 14px; gap: 14px; box-sizing: border-box; z-index: 50;">
     <view style="width: 57.75px; height: 40px; background: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0px 4px 12px rgba(15, 23, 42, 0.12);" bindtap="openAssetSheet">
-      <image src="/assets/images/5.svg" style="width: 20px; height: 20px;" />
+      <t-icon name="more" size="20px" />
     </view>
     <button wx:if="{{editMode}}" class="footer-share footer-share--save" bindtap="handlePrimaryAction">
       <text>保存作品</text>
     </button>
     <button wx:else class="footer-share" open-type="share" bindtap="shareWork">
-      <image src="/assets/images/6.svg" style="width: 16px; height: 16px; margin-right: 8px;" />
+      <t-icon name="share" size="16px" style="margin-right: 8px;" />
       <text>分享作品</text>
     </button>
   </view>
@@ -100,47 +100,47 @@
     <view class="sheet-title">添加图片</view>
     <view class="sheet-section">
       <view class="sheet-item primary" bindtap="addImageFromSheet">
-        <image class="sheet-icon" src="/assets/images/7.svg" mode="aspectFit" />
+        <t-icon class="sheet-icon" name="browse-gallery" size="16px" />
         <text class="sheet-text">添加图片</text>
       </view>
     </view>
     <text class="sheet-subtitle">设置作品</text>
     <view class="sheet-section">
       <view class="sheet-item" bindtap="editWorkName">
-        <image class="sheet-icon" src="/assets/images/8.svg" mode="aspectFit" />
+        <t-icon class="sheet-icon" name="user-1" size="16px" />
         <text class="sheet-text">名称</text>
       </view>
       <view class="sheet-item" bindtap="editWorkDescription">
-        <image class="sheet-icon" src="/assets/images/9.svg" mode="aspectFit" />
+        <t-icon class="sheet-icon" name="file-1" size="16px" />
         <text class="sheet-text">简介</text>
       </view>
       <view class="sheet-item" bindtap="manageTags">
-        <image class="sheet-icon" src="/assets/images/10.svg" mode="aspectFit" />
+        <t-icon class="sheet-icon" name="tag" size="16px" />
         <text class="sheet-text">标签</text>
       </view>
       <view class="sheet-item" bindtap="editRating">
-        <image class="sheet-icon" src="/assets/images/11.svg" mode="aspectFit" />
+        <t-icon class="sheet-icon" name="star" size="16px" />
         <text class="sheet-text">评分</text>
       </view>
       <view class="sheet-item" bindtap="decorCard">
-        <image class="sheet-icon" src="/assets/images/12.svg" mode="aspectFit" />
+        <t-icon class="sheet-icon" name="palette" size="16px" />
         <text class="sheet-text">卡片装饰</text>
       </view>
       <view class="sheet-item" bindtap="sortWorks">
-        <image class="sheet-icon" src="/assets/images/13.svg" mode="aspectFit" />
+        <t-icon class="sheet-icon" name="arrow-up-down-3" size="16px" />
         <text class="sheet-text">排序</text>
       </view>
       <view class="sheet-item" bindtap="toggleLayout">
-        <view class="sheet-icon sheet-icon-layout"></view>
+        <t-icon class="sheet-icon" name="view-list" size="16px" />
         <text class="sheet-text">单列</text>
       </view>
       <view class="sheet-item" bindtap="toggleImmersive">
-        <view class="sheet-icon sheet-icon-immersive"></view>
+        <t-icon class="sheet-icon" name="browse" size="16px" />
         <text class="sheet-text">沉浸浏览</text>
       </view>
     </view>
     <view class="sheet-item danger" bindtap="deactivateWork">
-      <image class="sheet-icon" src="/assets/images/14.svg" mode="aspectFit" />
+      <t-icon class="sheet-icon" name="poweroff" size="16px" />
       <text class="sheet-text">停用作品</text>
     </view>
   </view>

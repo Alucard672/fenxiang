@@ -58,7 +58,7 @@ Page({
     loadingTags: false,
     userInfo: {
       name: '云作品小萌新',
-      avatarUrl: '/assets/images/3.svg'
+      avatarUrl: ''
     },
     layoutSingleColumn: false,
     immersiveMode: false,
@@ -330,7 +330,7 @@ Page({
       this.setData({
         userInfo: {
           name: name || nickName || '云作品小萌新',
-          avatarUrl: avatarUrl || '/assets/images/3.svg'
+          avatarUrl: avatarUrl || ''
         }
       })
     }
@@ -394,6 +394,7 @@ Page({
   },
 
   async loadCustomFields() {
+    // 移除旧图标映射，直接使用 TDesign 图标名称
     this.setData({ loadingFields: true })
 
     try {
@@ -410,7 +411,7 @@ Page({
         const list = (result.result.data.list || []).map((field, index) => ({
           _id: field._id,
           name: field.name,
-          icon: field.icon || 'client-icon',
+          icon: field.icon || 'user-1',
           colorObj: field.colorObj || {},
           sortOrder: typeof field.sortOrder === 'number' ? field.sortOrder : index
         }))
@@ -829,7 +830,7 @@ Page({
       payload[key] = {
         value,
         name: field.name,
-        icon: field.icon || 'client-icon',
+        icon: field.icon || 'user-1',
         colorObj: field.colorObj
       }
     })
@@ -868,7 +869,7 @@ Page({
         return {
           ...field,
           value,
-          icon: field.icon || 'tag-icon'
+          icon: field.icon || 'tag'
         }
       })
       .filter(Boolean)

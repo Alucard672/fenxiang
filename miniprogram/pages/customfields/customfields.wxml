@@ -22,7 +22,7 @@
       <!-- 左侧：字段预览 -->
       <view style="display: flex; align-items: center; flex: 1;">
         <view style="width: 49px; height: 21px; background: {{item.colorObj.background || '#F3F4F6'}}; border-radius: 16777200px; margin-right: 14px; display: flex; align-items: center; justify-content: center;">
-          <image src="/assets/images/{{item.icon || 'client-icon'}}.svg" style="width: 10.50px; height: 10.50px; margin-right: 3.50px;"></image>
+          <t-icon name="{{item.icon || 'user-1'}}" size="10.5px" style="margin-right: 3.50px"></t-icon>
           <text style="color: {{item.colorObj.text || '#1F2937'}}; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px;">{{item.name}}</text>
         </view>
         <text style="color: #9CA3AF; font-size: 14px; font-weight: 400;">待点添加</text>
@@ -32,12 +32,12 @@
       <view style="display: flex; align-items: center; gap: 8px;">
         <!-- 上移按钮 -->
         <view wx:if="{{index > 0}}" style="width: 32px; height: 32px; background: #F3F4F6; border-radius: 6px; display: flex; align-items: center; justify-content: center;" catchtap="moveFieldUp" data-id="{{item._id}}">
-          <text style="color: #6B7280; font-size: 16px;">↑</text>
+          <t-icon name="arrow-up-3" size="16px"></t-icon>
         </view>
         
         <!-- 下移按钮 -->
         <view wx:if="{{index < customFields.length - 1}}" style="width: 32px; height: 32px; background: #F3F4F6; border-radius: 6px; display: flex; align-items: center; justify-content: center;" catchtap="moveFieldDown" data-id="{{item._id}}">
-          <text style="color: #6B7280; font-size: 16px;">↓</text>
+          <t-icon name="arrow-down-3" size="16px"></t-icon>
         </view>
         
         <!-- 编辑按钮 -->

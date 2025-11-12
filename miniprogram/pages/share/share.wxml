@@ -10,7 +10,14 @@
   <view class="share-content">
     <view class="share-card">
       <view class="author-card">
-        <image class="author-avatar" src="{{creator.avatar || defaultAvatar}}" mode="aspectFill" />
+        <block wx:if="{{creator.avatar}}">
+          <image class="author-avatar" src="{{creator.avatar}}" mode="aspectFill" />
+        </block>
+        <block wx:else>
+          <view class="author-avatar">
+            <t-icon name="user-1" size="42px" />
+          </view>
+        </block>
         <view class="author-info">
           <text class="author-name">{{creator.name}}</text>
           <text class="author-time">{{shareTime || '分享于刚刚'}}</text>
@@ -44,15 +51,15 @@
 
       <view class="meta-actions">
         <view class="meta-item">
-          <image src="/assets/images/heart-icon.svg" mode="widthFix" />
+          <t-icon name="heart" size="16px" />
           <text>获赞 {{meta.likes || '0'}}</text>
         </view>
         <view class="meta-item">
-          <image src="/assets/images/share_769.svg" mode="widthFix" />
+          <t-icon name="share" size="16px" />
           <text>分享 {{meta.shares || '0'}}</text>
         </view>
         <view class="meta-item">
-          <image src="/assets/images/tags.svg" mode="widthFix" />
+          <t-icon name="bookmark" size="16px" />
           <text>收藏 {{meta.favorites || '0'}}</text>
         </view>
       </view>
@@ -88,11 +95,11 @@
 
   <view class="share-toolbar">
     <button class="toolbar-btn toolbar-btn--secondary" bindtap="toggleLike">
-      <image class="toolbar-icon" src="/assets/images/heart-icon.svg" mode="widthFix" />
+      <t-icon class="toolbar-icon" name="heart" size="18px" />
       <text>{{liked ? '已收藏' : '收藏'}}</text>
     </button>
     <button class="toolbar-btn" open-type="share">
-      <image class="toolbar-icon" src="/assets/images/share_769.svg" mode="widthFix" />
+      <t-icon class="toolbar-icon" name="share" size="18px" />
       <text>分享给好友</text>
     </button>
   </view>

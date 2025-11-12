@@ -121,7 +121,7 @@
           <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">主页中的作品</text>
           <view style="width: 131.25px; height: 17.50px; display: flex; align-items: center; justify-content: space-between;" bindtap="changeHomeSortOrder">
             <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">{{homeSortOrderText}}</text>
-            <image src="/assets/images/arrow-down.svg" style="width: 14px; height: 14px;" />
+            <t-icon name="chevron-down" size="14px" />
           </view>
         </view>
 
@@ -129,7 +129,7 @@
           <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">作品中的内容</text>
           <view style="width: 131.25px; height: 17.50px; display: flex; align-items: center; justify-content: space-between;" bindtap="changeWorkSortOrder">
             <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">{{workSortOrderText}}</text>
-            <image src="/assets/images/arrow-down.svg" style="width: 14px; height: 14px;" />
+            <t-icon name="chevron-down" size="14px" />
           </view>
         </view>
       </view>
@@ -150,7 +150,7 @@
           <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">主页中的作品</text>
           <view style="width: 45.50px; height: 17.50px; display: flex; align-items: center; justify-content: space-between;" bindtap="changeHomeDisplayStyle">
             <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">{{homeDisplayStyleText}}</text>
-            <image src="/assets/images/arrow-down.svg" style="width: 14px; height: 14px;" />
+            <t-icon name="chevron-down" size="14px" />
           </view>
         </view>
 
@@ -158,7 +158,7 @@
           <text style="color: #1A1D2E; font-size: 14px; font-weight: 400">作品中的内容</text>
           <view style="width: 119px; height: 17.50px; display: flex; align-items: center; justify-content: space-between;" bindtap="changeWorkDisplayStyle">
             <text style="color: #6A7282; font-size: 12.25px; font-weight: 400">{{workDisplayStyleText}}</text>
-            <image src="/assets/images/arrow-down.svg" style="width: 14px; height: 14px;" />
+            <t-icon name="chevron-down" size="14px" />
           </view>
         </view>
       </view>
@@ -276,13 +276,13 @@
               style="width: 365px; height: 51px; background: white; border-radius: 14.50px; outline: 1px #E5E7EB solid; outline-offset: -1px; margin-bottom: 7px; display: flex; align-items: center; padding: 0 11.50px;"
             >
               <!-- 拖拽手柄 -->
-              <view style="width: 14px; height: 14px; opacity: 0.30; margin-right: 10.50px;">
-                <image src="/assets/images/drag-handle.svg" style="width: 100%; height: 100%;"></image>
+              <view style="width: 14px; height: 14px; opacity: 0.30; margin-right: 10.50px; display: flex; align-items: center; justify-content: center;">
+                <t-icon name="drag-move" size="14px"></t-icon>
               </view>
               
               <!-- 字段标签 -->
               <view style="width: 49px; height: 21px; background: {{item.colorObj.background}}; border-radius: 16777200px; margin-right: 10.50px; display: flex; align-items: center; justify-content: center;">
-                <image src="/assets/images/{{item.icon}}.svg" style="width: 10.50px; height: 10.50px; margin-right: 3.50px;"></image>
+                <t-icon name="{{item.icon}}" size="10.5px" style="margin-right: 3.50px"></t-icon>
                 <text style="color: {{item.colorObj.text}}; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px;">{{item.name}}</text>
               </view>
               
@@ -315,7 +315,7 @@
                   bindtap="editField" 
                   data-field="{{item.id}}"
                 >
-                  <image src="/assets/images/edit-icon.svg" style="width: 14px; height: 14px; margin: 7px;"></image>
+                  <t-icon name="edit-1" size="14px" style="margin: 7px"></t-icon>
                 </view>
                 
                 <!-- 删除按钮 -->
@@ -325,7 +325,7 @@
                   bindtap="deleteField" 
                   data-field="{{item.id}}"
                 >
-                  <image src="/assets/images/delete-icon.svg" style="width: 14px; height: 14px; margin: 7px;"></image>
+                  <t-icon name="delete-1" size="14px" style="margin: 7px"></t-icon>
                 </view>
               </view>
             </view>
@@ -334,7 +334,7 @@
           
           <!-- 添加新字段按钮 -->
           <view style="width: 365px; height: 42px; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px; display: flex; align-items: center; justify-content: center;" bindtap="addNewField">
-            <image src="/assets/images/add-icon.svg" style="width: 14px; height: 14px; margin-right: 7px;"></image>
+            <t-icon name="add" size="14px" style="margin-right: 7px"></t-icon>
             <text style="color: white; font-size: 12.25px; font-weight: 500;">添加新字段</text>
           </view>
           

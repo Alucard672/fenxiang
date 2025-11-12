@@ -8,16 +8,16 @@ Page({
     isEditMode: false,
     editFieldId: '',
     
-    // 图标列表
+    // 图标列表（已统一为 TDesign 名称）
     iconList: [
-      'client-icon',
-      'industry-icon', 
-      'amount-icon',
-      'description-icon',
-      'remark-icon',
-      'star-icon',
-      'tag-icon',
-      'heart-icon'
+      'user-1',
+      'building-1', 
+      'money',
+      'file-1',
+      'chat',
+      'star',
+      'tag',
+      'heart'
     ],
     
     // 颜色列表

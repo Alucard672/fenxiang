@@ -6,12 +6,12 @@
     <view style="width: 365px; height: 35px; left: 14px; top: 10.50px; position: absolute">
       <view style="width: 140px; height: 35px; left: 0px; top: 0px; position: absolute">
         <!-- 头像: 35px × 35px -->
-        <view style="width: 35px; height: 35px; left: 0px; top: 0px; position: absolute; overflow: hidden; border-radius: 16777200px" bindtap="showProfile">
-          <image src="/assets/images/8.svg" style="width: 35px; height: 35px; left: 0px; top: 0px; position: absolute" />
+        <view style="width: 35px; height: 35px; left: 0px; top: 0px; position: absolute; overflow: hidden; border-radius: 16777200px; display: flex; align-items: center; justify-content: center;" bindtap="showProfile">
+          <t-icon name="user-avatar" size="35px" />
         </view>
         <!-- 新建按钮: 94.50px × 31.50px -->
         <view style="width: 94.50px; height: 31.50px; left: 45.50px; top: 1.75px; position: absolute; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px" bindtap="onNewWork">
-          <image src="/assets/images/9.svg" style="left: 10.50px; top: 8.75px; position: absolute; width: 14px; height: 14px" />
+          <t-icon name="add" size="14px" style="left: 10.50px; top: 8.75px; position: absolute" />
           <text style="left: 35px; top: 7.50px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 500">新建作品</text>
         </view>
       </view>
@@ -33,7 +33,7 @@
       </view>
       <!-- 搜索按钮: 61.25px × 28px -->
       <view style="width: 61.25px; height: 28px; left: 303.75px; top: 0px; position: absolute; background: #F3F4F6; border-radius: 8.50px" bindtap="onSearch">
-        <image src="/assets/images/1.svg" style="left: 8.75px; top: 7px; position: absolute; width: 14px; height: 14px" />
+        <t-icon name="search" size="14px" style="left: 8.75px; top: 7px; position: absolute" />
         <text style="left: 31.50px; top: 7px; position: absolute; color: #1A1D2E; font-size: 10.50px; font-family: Inter; font-weight: 500; letter-spacing: 0.09px">搜索</text>
       </view>
     </view>
@@ -50,7 +50,7 @@
           <view class="card-footer__row">
             <text class="card-footer__title">{{item.name || '未命名作品'}}</text>
             <view class="card-more" bindtap="showEditModal" data-id="{{item._id}}" data-name="{{item.name}}">
-              <image src="/assets/images/18.svg" class="card-more__icon" />
+              <t-icon name="more" size="16px" class="card-more__icon" />
             </view>
           </view>
           <view class="card-tags">
@@ -83,40 +83,39 @@
       <view class="edit-modal__subtitle">项目编辑</view>
       <view class="edit-modal__list">
         <view class="edit-modal__item" bindtap="editWork">
-          <image src="/assets/images/10.svg" class="edit-modal__icon" />
+          <t-icon name="edit-1" size="16px" class="edit-modal__icon" />
           <text class="edit-modal__text">编辑作品</text>
         </view>
         <view class="edit-modal__item" bindtap="renameWork">
-          <image src="/assets/images/11.svg" class="edit-modal__icon" />
+          <t-icon name="text" size="16px" class="edit-modal__icon" />
           <text class="edit-modal__text">重命名</text>
         </view>
         <view class="edit-modal__item" bindtap="setCover">
-          <image src="/assets/images/12.svg" class="edit-modal__icon" />
+          <t-icon name="image" size="16px" class="edit-modal__icon" />
           <text class="edit-modal__text">设置封面</text>
         </view>
         <view class="edit-modal__item" bindtap="openTagSheet">
-          <image src="/assets/images/13.svg" class="edit-modal__icon" />
+          <t-icon name="tag" size="16px" class="edit-modal__icon" />
           <text class="edit-modal__text">作品标签</text>
         </view>
         <view class="edit-modal__item" bindtap="cardDecoration">
-          <image src="/assets/images/14.svg" class="edit-modal__icon" />
+          <t-icon name="brush" size="16px" class="edit-modal__icon" />
           <text class="edit-modal__text">卡片装饰</text>
         </view>
       </view>
-      <view class="edit-modal__divider"></view>
       <view class="edit-modal__list">
         <view class="edit-modal__item" bindtap="shareWork">
-          <image src="/assets/images/15.svg" class="edit-modal__icon" />
+          <t-icon name="share-1" size="16px" class="edit-modal__icon" />
           <text class="edit-modal__text">分享作品</text>
         </view>
         <view class="edit-modal__item" bindtap="copyWork">
-          <image src="/assets/images/16.svg" class="edit-modal__icon" />
+          <t-icon name="copy" size="16px" class="edit-modal__icon" />
           <text class="edit-modal__text">复制作品</text>
         </view>
       </view>
       <view class="edit-modal__divider"></view>
       <view class="edit-modal__item edit-modal__item--danger" bindtap="deleteWork">
-        <image src="/assets/images/17.svg" class="edit-modal__icon" />
+        <t-icon name="delete" size="16px" class="edit-modal__icon" />
         <text class="edit-modal__text edit-modal__text--danger">删除作品</text>
       </view>
       <view class="edit-modal__cancel" bindtap="hideEditModal">
@@ -195,12 +194,12 @@
             <view style="width: 342px; height: 28px; left: 11.50px; top: 11.50px; position: absolute">
               <!-- 拖拽图标 -->
               <view style="width: 14px; height: 14px; left: 0px; top: 7px; position: absolute; {{index === 0 ? 'opacity: 0.30' : ''}}">
-                <image src="/assets/images/10.svg" style="left: 0px; top: 0px; position: absolute; width: 14px; height: 14px" />
+                <t-icon name="drag-move" size="14px" />
               </view>
               
               <!-- 字段标签 -->
               <view style="width: 49px; height: 21px; left: 24.50px; top: 3.50px; position: absolute; background: {{item.colorObj.background}}; border-radius: 16777200px">
-                <image src="/assets/images/{{item.icon}}.svg" style="left: 7px; top: 5.25px; position: absolute; width: 10.50px; height: 10.50px" />
+                <t-icon name="{{item.icon}}" size="10.5px" style="left: 7px; top: 5.25px; position: absolute" />
                 <text style="left: 21px; top: 3.50px; position: absolute; color: {{item.colorObj.text}}; font-size: 10.50px; font-family: Inter; font-weight: 400; letter-spacing: 0.09px">{{item.name}}</text>
               </view>
               
@@ -208,22 +207,22 @@
               <view style="width: 258px; height: 28px; left: 84px; top: 0px; position: absolute">
                 <!-- 上移按钮 -->
                 <view wx:if="{{index > 0}}" style="width: 28px; height: 28px; left: 0px; top: 0px; position: absolute; border-radius: 8.50px" bindtap="moveFieldUp" data-id="{{item.id}}">
-                  <image src="/assets/images/12.svg" style="left: 7px; top: 7px; position: absolute; width: 14px; height: 14px" />
+                  <t-icon name="arrow-up-3" size="14px" style="left: 7px; top: 7px; position: absolute;" />
                 </view>
                 
                 <!-- 下移按钮 -->
                 <view wx:if="{{index < customFields.length - 1}}" style="width: 28px; height: 28px; left: 31.50px; top: 0px; position: absolute; border-radius: 8.50px" bindtap="moveFieldDown" data-id="{{item.id}}">
-                  <image src="/assets/images/13.svg" style="left: 7px; top: 7px; position: absolute; width: 14px; height: 14px" />
+                  <t-icon name="arrow-down-3" size="14px" style="left: 7px; top: 7px; position: absolute;" />
                 </view>
                 
                 <!-- 编辑按钮 - 移到最右侧 -->
                 <view style="width: 28px; height: 28px; left: 198.50px; top: 0px; position: absolute; border-radius: 8.50px" bindtap="editField" data-id="{{item.id}}">
-                  <image src="/assets/images/28.svg" style="left: 7px; top: 7px; position: absolute; width: 14px; height: 14px" />
+                  <t-icon name="edit-1" size="14px" style="left: 7px; top: 7px; position: absolute;" />
                 </view>
                 
                 <!-- 删除按钮 - 移到最右侧 -->
                 <view style="width: 28px; height: 28px; left: 230px; top: 0px; position: absolute; border-radius: 8.50px" bindtap="deleteField" data-id="{{item.id}}" data-name="{{item.name}}">
-                  <image src="/assets/images/29.svg" style="left: 7px; top: 7px; position: absolute; width: 14px; height: 14px" />
+                  <t-icon name="delete-1" size="14px" style="left: 7px; top: 7px; position: absolute;" />
                 </view>
               </view>
             </view>
@@ -233,7 +232,7 @@
       
       <!-- 添加新字段按钮: 365px × 42px - 放在最高层级 -->
       <view style="width: 365px; height: 42px; left: 14px; top: 405px; position: absolute; background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%); box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.10),0px 4px 6px -1px rgba(0, 0, 0, 0.10); border-radius: 16777200px; z-index: 9999" bindtap="goToAddField">
-        <image src="/assets/images/30.svg" style="left: 137.88px; top: 14px; position: absolute; width: 14px; height: 14px" />
+        <t-icon name="add" size="14px" style="left: 137.88px; top: 14px; position: absolute;" />
         <text style="left: 165.88px; top: 12.75px; position: absolute; color: white; font-size: 12.25px; font-family: Inter; font-weight: 500">添加新字段</text>
       </view>
     </view>

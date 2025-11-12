@@ -1,13 +1,10 @@
-const DEFAULT_AVATAR = '/assets/images/8.svg'
-
 Page({
   data: {
-    defaultAvatar: DEFAULT_AVATAR,
     loading: true,
     workId: '',
     creator: {
       name: '云作品创作者',
-      avatar: DEFAULT_AVATAR
+      avatar: ''
     },
     workDetail: {
       title: '作品详情',
@@ -43,7 +40,7 @@ Page({
       },
       creator: {
         name: decodedName || this.data.creator.name,
-        avatar: decodedAvatar || DEFAULT_AVATAR
+        avatar: decodedAvatar || ''
       },
       shareTime: decodedTime || this.data.shareTime
     })

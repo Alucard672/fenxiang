@@ -30,7 +30,7 @@
           bindtap="selectIcon"
           data-icon="{{item}}"
         >
-          <image src="/assets/images/{{item}}.svg" style="width: 21px; height: 21px;"></image>
+          <t-icon name="{{item}}" size="21px"></t-icon>
         </view>
       </view>
     </view>
@@ -65,7 +65,7 @@
     </view>
     <view style="width: 365px; height: 49px; background: white; border-radius: 10.50px; outline: 1px #E5E7EB solid; outline-offset: -1px; padding: 0 14px; display: flex; align-items: center;">
       <view style="width: 49px; height: 21px; background: {{selectedColorObj.background}}; border-radius: 16777200px; margin-right: 14px; display: flex; align-items: center; justify-content: center;">
-        <image src="/assets/images/{{selectedIcon}}.svg" style="width: 10.50px; height: 10.50px; margin-right: 3.50px;"></image>
+        <t-icon name="{{selectedIcon}}" size="10.5px" style="margin-right: 3.50px;"></t-icon>
         <text style="color: {{selectedColorObj.text}}; font-size: 10.50px; font-weight: 400; letter-spacing: 0.09px;">{{fieldName || '字段名称'}}</text>
       </view>
       <text style="color: #9CA3AF; font-size: 14px; font-weight: 400;">待点添加</text>
