@@ -44,7 +44,14 @@
       <view wx:for="{{works}}" wx:key="_id" wx:for-index="index" 
             style="width: 177.25px; height: 300.33px; margin-bottom: 32px; background: white; box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.10),0px 1px 3px rgba(0, 0, 0, 0.10); overflow: hidden; border-radius: 14px; position: relative;">
         <!-- 图片区: 177.25px × 236.33px - 可点击进入详情 -->
-        <image src="{{item.coverPreview || item.cover || '/assets/images/3.png'}}" style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute" bindtap="goToDetail" data-id="{{item._id}}" data-name="{{item.name}}" />
+        <block wx:if="{{item.coverPreview || item.cover}}">
+          <image src="{{item.coverPreview || item.cover}}" style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute" bindtap="goToDetail" data-id="{{item._id}}" data-name="{{item.name}}" />
+        </block>
+        <block wx:else>
+          <view style="width: 177.25px; height: 236.33px; left: 0px; top: 0px; position: absolute; display: flex; align-items: center; justify-content: center; background: #F3F4F6;" bindtap="goToDetail" data-id="{{item._id}}" data-name="{{item.name}}">
+            <t-icon name="image" size="36px" />
+          </view>
+        </block>
         <!-- 卡片内容区: 156.25px × 43px -->
         <view class="card-footer">
           <view class="card-footer__row">
