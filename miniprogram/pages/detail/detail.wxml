@@ -1,5 +1,5 @@
 <!-- 根据新版Figma设计重构 -->
-<view style="width: 393px; height: 852px; left: 0px; top: 0px; position: absolute; background: #F8F9FD; overflow: hidden;">
+<view style="width: 100%; max-width: 393px; min-height: 100vh; margin: 0 auto; background: #F8F9FD; overflow: hidden;">
   <view style="width: 100%; background: #F9FAFB; padding: 14px 14px 140px; box-sizing: border-box; overflow-y: hidden;">
     <view style="display: flex; flex-wrap: wrap; gap: 12px;">
       <block wx:for="{{workDetail.imagePreviews}}" wx:key="*this">
